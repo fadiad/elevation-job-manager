@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
-
-router.get('/', function(req, res) {
+const mocData = require("../models/mocData");
+router.get('/loginPage', function(req, res) {
+    console.log(mocData);
     res.send("Hello WORLD!")
 })
+
 module.exports = router
