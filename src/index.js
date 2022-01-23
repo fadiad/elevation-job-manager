@@ -3,10 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {AdminStore} from './stores/AdminStore';
+import { Provider } from  'mobx-react';
 
+const adminStore =  new AdminStore()
+const store = {
+  adminStore
+}
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider {...store}><App /></Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

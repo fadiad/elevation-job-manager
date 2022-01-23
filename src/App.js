@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import Admin from './Components/Admin';
 
 export class App extends Component {
   render() {
     return <div>
-      app 
+     <Admin />
     </div>;
   }
 }
