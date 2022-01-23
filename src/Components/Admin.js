@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 
 class Admin extends Component {
-    componentDidMount(){
-        this.props.AdminStore.getUsersInterviews()
+    componentDidMount() {
+        this.props.adminStore.getUsersInterviews()
     }
-    render(){
-        return(
+    render() {
+        return (
             <div>
-                you : {this.props.AdminStore.x}
+                you : {this.props.adminStore.x}
             </div>
         );
     }
 }
-export default inject("AdminStore")(observer(Admin));
+export default inject("adminStore")(observer(Admin))

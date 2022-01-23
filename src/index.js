@@ -4,18 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {AdminStore} from './stores/AdminStore';
-import { Provider } from  'mobx-react';
+import { Provider } from 'mobx-react'
 
 const adminStore =  new AdminStore()
+
 const store = {
   adminStore
 }
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider {...store}><App /></Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
