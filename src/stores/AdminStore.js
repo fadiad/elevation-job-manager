@@ -14,7 +14,9 @@ export class AdminStore {
     }
 
     async getUsersInterviews() {
+        console.log("entered admin store")
         let p = await axios.get("http://localhost:8888/loginPage")
         this.x = p.data
+        console.log("entered admin store")
     }
 }
