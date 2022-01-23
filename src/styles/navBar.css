@@ -1,0 +1,44 @@
+.navBar-Container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+    background-color: #426696;
+}
+
+h2 {
+    display: inline;
+    vertical-align: middle;
+    color: #658ec6;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+button {
+    background-color: #ff96aa;
+    border-radius: 999px;
+    box-shadow: #ff96aa 0 10px 20px -10px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    opacity: 1;
+    outline: 0 solid transparent;
+    padding: 8px 8px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+    word-break: break-word;
+    border: 0;
+}
+
+.logoButtons {
+    justify-self: end;
+    justify-content: center;
+}
+
+.logoButtons button {
+    margin: 15px;
+}
