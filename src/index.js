@@ -5,11 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {AdminStore} from './stores/AdminStore';
 import { Provider } from 'mobx-react'
+import { UserStore } from './stores/UserStore';
 
 const adminStore =  new AdminStore()
-
+const userStore = new UserStore()
 const store = {
-  adminStore
+  adminStore,
+  userStore
 }
 
 ReactDOM.render(
