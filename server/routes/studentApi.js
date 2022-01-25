@@ -22,7 +22,7 @@ router.get('/userData/:id', function (req, res) { // id : user id
 
 router.get('/processes/:id', function (req, res) { // id : user id 
     sequelize
-        .query(`SELECT p.companyName , p.jobTitle , p.location , p.foundBy , p.link , p.status
+        .query(`SELECT p.id , p.companyName , p.jobTitle , p.location , p.foundBy , p.link , p.status
     FROM Candidate AS c  , Process AS p
     WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
         .then(function ([results, metadata]) {
@@ -31,13 +31,13 @@ router.get('/processes/:id', function (req, res) { // id : user id
 })
 
 router.post('/processes/:id', async function (req, res) { // id : user id
+    console.log(req.body);
+    console.log(req.params.id);
     let query = `INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
-                VALUES(NULL,"${req.body.companyName}","${req.body.jobTitle}","${req.body.location}","${req.body.foundBy}","${req.body.link}",${req.body.UserId});`
+                VALUES(NULL,'${req.body.companyName}','${req.body.jobTitle}','${req.body.location}','${req.body.foundBy}','${req.body.link}',${req.params.id});`
     let result = await sequelize.query(query)
     res.send(result)
 })
-
-
 
 
 

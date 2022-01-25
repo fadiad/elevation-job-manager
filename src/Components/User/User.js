@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import Processes from './Processes';
 
+import AddProcess from './AddProcess';
+
 class User extends Component {
 
-    componentDidMount() {
-        this.props.userStore.getUserData()
-
-    }
     render() {
         return (
             <div>
-
-                <button>add process</button>
+                <AddProcess/>
+                {/* <button>add process</button> */}
+                <br />
+                <br />
+                <br />
+                <br />
                 <Processes />
             </div>
         );

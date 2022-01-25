@@ -1,34 +1,31 @@
 /* eslint-disable */
 import axios from 'axios';
 import { observable, action, makeAutoObservable } from 'mobx'
+import Interviews from './Interviews';
 
 export class Process {
-    constructor(id , CompanyName , JobTitle , Location , foundBy , link , status) {
+    constructor(companyName, foundBy, id, jobTitle, link, location, status,interviews) {
+
         this.id = id,
-        this.CompanyName = CompanyName,
-        this.JobTitle = JobTitle,
-        this.Location = Location,
-        this.foundBy = foundBy ,
-        this.link = link,
-        this.status = status,
-        this.interviews = [],
-        // this.userId = ""  
+            this.companyName = companyName,
+            this.jobTitle = jobTitle,
+            this.location = location,
+            this.foundBy = foundBy,
+            this.link = link,
+            this.status = status,
+            this.interviews = interviews,
+
+
         makeAutoObservable(this, {
-            id  : observable,
-            CompanyName : observable,
-            JobTitle : observable,
-            Location : observable,
-            foundBy : observable,
-            link  : observable,
-            status : observable ,
-            // userId : observable,
-            interviews : observable
+            id: observable,
+            CompanyName: observable,
+            JobTitle: observable,
+            Location: observable,
+            foundBy: observable,
+            link: observable,
+            status: observable,
+            interviews: observable
         })
     }
-    // async getInterviews(){
-    //     let temp = await  axios.get("http://localhost:8888/Processes")
-    //     this.processes = temp.data
-    // }
-  
 }
 

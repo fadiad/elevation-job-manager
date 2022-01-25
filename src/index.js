@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {AdminStore} from './stores/AdminStore.tsx';
+import {AdminStore} from './stores/AdminStore';
 import { Provider } from 'mobx-react'
 import { UserStore } from './stores/UserStore';
 
