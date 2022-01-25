@@ -3,9 +3,11 @@ import { observer, inject } from 'mobx-react'
 import Process from './Process'
 
 class Processes extends Component {
+
     componentDidMount() {
         this.props.userStore.getProcesses(this.props.userStore.userID)
     }
+
     render() {
         return (
             <div className='Processes' >

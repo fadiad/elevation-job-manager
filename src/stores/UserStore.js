@@ -13,7 +13,8 @@ export class UserStore {
             user: observable,
             processes: observable,
             getUserData: action,
-            getprocesses: action
+            getprocesses: action,
+            addProcess: action
         })
 
     }
