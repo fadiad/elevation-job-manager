@@ -1,10 +1,11 @@
 const express = require('express')
 const path = require('path')
-// const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const loginApi = require('./server/routes/loginApi')
 const studentapi = require('./server/routes/studentApi')
 const adminApi = require('./server/routes/adminApi')
+
+
 // const moment = require('moment')
 
 // mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/elevationJobManagerDB', { useNewUrlParser: true })
