@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
 import Admin from './Components/Admin/Admin';
 import User from './Components/User/User';
-import NavBar from './Components/NavBar';
-// import NavBar from './Components/Login';
+import Login from './Components/Login';
 import './styles/App.css';
 
 export class App extends Component {
+  constructor(){
+    super();
+    this.state={
+      user:""
+    }
+  }
+  setUser = (user) => {
+    this.setState({user : user});
+  }
 
- 
-  render() {
-    return <div>
-      <NavBar />
-      {/* <Login /> */}
-     {/* <Admin /> */}
-     <User />
-
-    </div>;
+  render(){
+    let user = this.state.user
+    return(
+      <div>
+        {typeof user == "object" 
+        ? 
+          (user.isAdmin ? <Admin /> : <User />)
+        :
+          <Login setUser={this.setUser} />
+       }
+        
+      </div>
+    );
   }
 }
 

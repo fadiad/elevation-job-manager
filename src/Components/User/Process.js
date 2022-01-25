@@ -4,7 +4,6 @@ import Interviews from './Interviews';
 
 class Process extends Component {
     render() {
-        // console.log(this.props.process.interviews[0]);
         return (
             <div className='Process'>
                 {this.props.process.companyName}

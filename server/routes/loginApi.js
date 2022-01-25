@@ -1,14 +1,27 @@
 const express = require('express')
 const router = express.Router()
-const mocData = require("../models/mocData");
+const login = require('../login-utils');
 
+router.post('/', async(req, res) => {
 
-router.get('/loginPage', function(req, res) {
-    console.log(mocData);
-    res.send("Hello WORLD!")
+    let session = req.session;
+    let email = req.body.email
+    let password = req.body.password
+
+    if (await login.isVerified(email, password)) {
+        await login.storeUserInSession(session, email)
+        if (login.isLoggedIn(session)) {
+            if (login.isAdmin(session)) {
+                res.send(await login.getUserData(session))
+            } else if (login.isStudent(session)) {
+                res.send(await login.getUserData(session))
+            }
+        } else {
+            res.send("Please Login")
+        }
+    } else {
+        res.send('Invalid email or password');
+    }
 })
 
-
-
-
-module.exports = router
+module.exports = router;

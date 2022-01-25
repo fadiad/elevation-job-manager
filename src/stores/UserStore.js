@@ -33,7 +33,7 @@ export class UserStore {
     }
 
 
-    addProcess = async (companyName, jobTitle, location, foundBy, link) => {
+    addProcess = async(companyName, jobTitle, location, foundBy, link) => {
         let processe = {
             companyName: companyName,
             jobTitle: jobTitle,
@@ -43,16 +43,14 @@ export class UserStore {
         }
 
         fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(processe)
-        })
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(processe)
+            })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
             })
     }
 
 }
-
-
