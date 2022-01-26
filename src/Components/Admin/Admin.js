@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import UsersInterviews from './UsersInterviews';
 import Statistics from './Statistics'
+import NavBar from '../NavBar';
 class Admin extends Component {
     componentDidMount() {
         this.props.adminStore.getAdminData()
@@ -9,6 +10,7 @@ class Admin extends Component {
     render() {
         return (
             <div>
+                <NavBar/>
                 adminName : {this.props.adminStore.adminName}
                 <Statistics />
                 <UsersInterviews />

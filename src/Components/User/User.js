@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
-import  Processes  from './Processes';
-
+import Processes from './Processes';
+import NavBar from '../NavBar';
+import AddProcess from './AddProcess';
+import '../../'
 class User extends Component {
-   
-    componentDidMount() {
-        this.props.userStore.getUserData()    
-          
-    }
+
     render() {
         return (
             <div>
-                <span>email : </span>
-                <span>{this.props.userStore.user.email }</span>
-                <br/>
-                <span>first Name : </span>
-                <span>{this.props.userStore.user.firstName }</span>
-                <br/>
-                <span>last Name : </span>
-                <span>{this.props.userStore.user.lastName }</span>
-                <Processes  />
+                <NavBar />
+                <AddProcess/>
+                {/* <button>add process</button> */}
+                <br />
+                <br />
+                <br />
+                <br />
+                <Processes />
             </div>
         );
     }

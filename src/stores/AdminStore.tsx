@@ -5,7 +5,7 @@ const axios = require('axios')
 import {UserInterview} from './UserInterview';
 
 export class AdminStore {
-    adminName: string;
+    adminName: String;
     usersInterViews : Array<UserInterview>  ; 
     Statistics : Object
     constructor() {

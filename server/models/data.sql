@@ -53,3 +53,8 @@ VALUES('Technical',"yosi","Scheduled",4);
     select * 
     from userproporties inner join Candidate on userproporties.id = Candidate.id
     where userproporties.email = "amir@gmail.com"
+
+    USE jobManagerDB;
+
+INSERT INTO userproporties VALUES(NULL,Null,"Ameer","","admin@gmail.com","","1234",true);
+INSERT INTO Admin VALUES(3,true);

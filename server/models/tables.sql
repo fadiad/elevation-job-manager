@@ -59,3 +59,14 @@ CREATE TABLE Interview(
     processId MEDIUMINT NOT NULL,
     FOREIGN KEY(processId) REFERENCES Process(id)
 );
+
+Use jobmanagerdb;
+
+ALTER TABLE UserProporties
+  ADD isAdmin boolean DEFAULT false
+    AFTER password;
+
+ALTER TABLE UserProporties
+  ADD session_id varchar(50) 
+    AFTER id;
+

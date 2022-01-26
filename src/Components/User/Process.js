@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import Interviews  from './Interviews';
-class Process extends Component {
-  
+import { observer, inject } from 'mobx-react'
+import Interviews from './Interviews';
 
-    render(){
-       
-        return(
+class Process extends Component {
+    render() {
+        return (
             <div className='Process'>
-               CompanyName :  {this.props.process.CompanyName}
-               JobTitle : {this.props.process.JobTitle}
-               Location : {this.props.process.Location}
-               foundBy : {this.props.process.foundBy}
-                <br/>
-                <br/>
-                 <Interviews />
+                {this.props.process.companyName}
+                {this.props.process.jobTitle}
+                {this.props.process.Location}
+                {this.props.process.foundBy}
+                <Interviews interviews={this.props.process.interviews} />
             </div>
         );
     }
 }
-export default Process;
+// export default Process;
+export default inject("userStore")(observer(Process))

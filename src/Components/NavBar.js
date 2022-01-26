@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import '../styles/navBar.css';
 
 class NavBar extends Component {
+    logout = () => {
+        // axios.get("http://localhost:8888/logout",function(req,res){
+        //     console.log(res)
+        // })
+    }
     render(){
         return(
             <div class="navBar-Container">
@@ -9,7 +16,7 @@ class NavBar extends Component {
                 <h2>Elevation</h2>
                 <div class="logoButtons">
                     <button>Profile</button>
-                    <button>Logout</button>
+                    <button onClick={this.logout}>Logout</button>
                 </div> 
             </div>
         );
