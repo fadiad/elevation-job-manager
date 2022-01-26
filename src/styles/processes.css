@@ -1,0 +1,6 @@
+.processes {
+    display: grid;
+    grid-template-columns: 1fr  ;
+    box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.8);
+    text-align: center;
+}

@@ -1,0 +1,8 @@
+.addProcess{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr ;
+}
+
+button{
+    margin-right: 5px;
+}
