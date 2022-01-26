@@ -23,11 +23,11 @@ app.use(function(req, res, next) {
 app.use('/login', loginApi)
 
 app.use('/studentPage', (req, res, next) => {
-    // if (login.isStudentLoggedIn(req.session)) {
+    if (login.isStudentLoggedIn(req.session)) {
     next();
-    // } else {
-    // res.send('you are not a Student - you dont have a permission')
-    // }
+    } else {
+    res.send('you are not a Student - you dont have a permission')
+    }
 })
 app.use('/studentPage', studentapi)
 
@@ -38,6 +38,7 @@ app.use('/adminPage', (req, res, next) => {
         res.send('you are not an Admin - you dont have a permission')
     }
 })
+
 app.use('/adminPage', adminApi)
 
 app.get('/logout', async(req, res) => {

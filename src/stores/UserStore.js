@@ -17,7 +17,6 @@ export class UserStore {
             getprocesses: action,
             addProcess: action
         })
-
     }
 
     // async getUserData(userID) {
