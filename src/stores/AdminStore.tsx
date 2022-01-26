@@ -1,29 +1,49 @@
 /* eslint-disable */
+import { lastIndexOf } from 'core-js/core/array';
 import { observable, action, makeAutoObservable } from 'mobx'
 const axios = require('axios')
+import {UserInterview} from './UserInterview';
 
 export class AdminStore {
-    x: string;
-    usersInterViews : Array<string>  ; 
-
+    adminName: string;
+    usersInterViews : Array<UserInterview>  ; 
+    Statistics : Object
     constructor() {
         this.usersInterViews = [];
-        this.x = ' ';
+        this.adminName = ' ';
+        this.Statistics = {
+            InProcess : '',
+            employed : '',
+            student : '',
+            unEmployed : '',
+            NotActive : ''
+        }
         makeAutoObservable(this, {
             usersInterViews: observable,
-            x: observable,
-            getUsersInterviews: action
+            adminName: observable,
+            Statistics : observable ,
+            getUsersInterviews: action,
+            getAdminData : action
         })
     }
 
-    move(distanceInMeters: number = 0) {
-        console.log(`Animal moved ${distanceInMeters}m.`);
+    async getAdminData(){
+        let user = await axios.get("http://localhost:8888/adminPage/AdminData")
+        this.adminName = user.data
     }
 
-    async getUsersInterviews() {
-        let p = await axios.get("http://localhost:8888/loginPage")
-        console.log(p.data);
+    async getStatistics(){
+        let Statistics = await axios.get("http://localhost:8888/adminPage/Statistics")
+        this.Statistics = Statistics.data
         
-        this.x = p.data
+    }
+    
+    async getUsersInterviews() {
+        let users = await axios.get("http://localhost:8888/adminPage/interviews"
+        , { params: { cohort: 'all' , interViewStatus : 'all'} });
+        users.data.forEach(e  => {
+            this.usersInterViews.push(new UserInterview(e.firstName ,e.lastName ,e.cohort , e.companyName , e.type , e.date , e.status))
+        });
     }
 }
+

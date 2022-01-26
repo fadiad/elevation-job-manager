@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { observer, inject } from 'mobx-react'
-
+import { observer, inject } from 'mobx-react';
+import UsersInterviews from './UsersInterviews';
+import Statistics from './Statistics'
 class Admin extends Component {
     componentDidMount() {
-        this.props.adminStore.getUsersInterviews()
+        this.props.adminStore.getAdminData()
     }
     render() {
         return (
             <div>
-                you : {this.props.adminStore.x}
+                adminName : {this.props.adminStore.adminName}
+                <Statistics />
+                <UsersInterviews />
             </div>
         );
     }

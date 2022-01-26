@@ -17,6 +17,7 @@ CREATE TABLE UserProporties(
     PRIMARY KEY(id)
 );
 
+USE jobManagerDB;
 CREATE TABLE Candidate(
     id MEDIUMINT NOT NULL PRIMARY KEY,
     status ENUM('Student','Graduate') DEFAULT 'Student',
@@ -26,12 +27,14 @@ CREATE TABLE Candidate(
     FOREIGN KEY (id) REFERENCES UserProporties(id)
 );
 
+USE jobManagerDB;
 CREATE TABLE Admin(
     id MEDIUMINT NOT NULL PRIMARY KEY,
     isNotified Boolean,
     FOREIGN KEY (id) REFERENCES UserProporties(id)
 );
 
+USE jobManagerDB;
 CREATE TABLE Process(
     id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     companyName varchar(20),
@@ -44,6 +47,8 @@ CREATE TABLE Process(
     FOREIGN KEY(UserId) REFERENCES Candidate(id)
 );
 
+
+USE jobManagerDB;
 CREATE TABLE Interview(
     id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     type ENUM ('Phone','HR','Technical','Contract'),
@@ -54,5 +59,3 @@ CREATE TABLE Interview(
     processId MEDIUMINT NOT NULL,
     FOREIGN KEY(processId) REFERENCES Process(id)
 );
-
-

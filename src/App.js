@@ -7,17 +7,13 @@ import './styles/App.css';
 
 export class App extends Component {
 
-  deleteUser(x:number) {
- 
-  }
-
 
   render() {
     return <div>
       <NavBar />
       {/* <Login /> */}
      <Admin />
-     <User  />
+     {/* <User  /> */}
     </div>;
   }
 }

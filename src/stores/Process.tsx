@@ -4,16 +4,22 @@ import { observable, action, makeAutoObservable } from 'mobx'
 // import Interviews from '../Components/User/Interviews';
 
 export class Process {
-    
+    id : Number ;
+    CompanyName : String ; 
+    JobTitle : String ;
+    Location : String;
+    foundBy : String;
+    link: String;
+    status : String
     // interviews : Array<Interviews>
-    constructor(id  , CompanyName  , JobTitle  , Location , foundBy , link , status) {
+    constructor(id : number , CompanyName : String , JobTitle : String , Location : String, foundBy : String, link : String, status: String) {
         this.id = id,
         this.CompanyName = CompanyName,
         this.JobTitle = JobTitle,
         this.Location = Location,
         this.foundBy = foundBy ,
         this.link = link,
-        this.status = status
+        this.status = status,
         // this.interviews = [],
         // this.userId = ""  
         makeAutoObservable(this, {
