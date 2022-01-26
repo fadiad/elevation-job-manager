@@ -19,13 +19,14 @@ export class App extends Component {
     let user = this.state.user
     return(
       <div>
-        <User />
-        {/* {typeof user == "object" 
+        {/* <User /> */}
+        
+        {typeof user == "object" 
         ? 
           (user.isAdmin ? <Admin /> : <User />)
         :
           <Login setUser={this.setUser} />
-       } */}
+       }
         
       </div>
     );

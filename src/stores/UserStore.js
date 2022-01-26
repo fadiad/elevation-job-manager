@@ -39,10 +39,11 @@ export class UserStore {
     async getProcesses(userID) {
         this.processes = []
         let temp = await axios.get(`http://localhost:8888/studentPage/processes/${userID}`)
-        temp.data.forEach(async e => {
-            let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
-            this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
-        });
+        console.log(temp);
+        // temp.data.forEach(async e => {
+        //     let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
+        //     this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
+        // });
     }
 
 
