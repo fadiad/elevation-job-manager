@@ -15,7 +15,6 @@ class User extends Component {
             <div>
                 <NavBar />
                 <AddProcess/>
-                {/* <button>add process</button> */}
                 <br />
                 <br />
                 <Processes processes = {this.props.userStore.processes}/>
