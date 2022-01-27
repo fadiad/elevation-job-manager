@@ -20,6 +20,7 @@ export class App extends Component {
     return(
       <div>
         <Admin /> 
+        {/* <User /> */}
         {/* {typeof user == "object" 
         ? 
           (user.isAdmin ? <Admin /> : <User />)
