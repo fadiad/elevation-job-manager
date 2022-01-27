@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import Process from './Process'
 
-class Processes extends Component {
+import '../../styles/processes.css'
 
-    componentDidMount() {
-        this.props.userStore.getProcesses(this.props.userStore.userID)
-    }
+
+class Processes extends Component {
 
     render() {
         return (
-            <div className='Processes' >
-                {this.props.userStore.processes.map((p, index) => {
+            <div className='processes' >
+                {this.props.processes.map((p, index) => {
                     return (
                         <Process process={p} key={index} />
                     )

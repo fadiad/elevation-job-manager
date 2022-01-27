@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 
+import '../../styles/addProcess.css'
+
 
 class AddProcess extends Component {
 
@@ -56,7 +58,7 @@ class AddProcess extends Component {
 
     render() {
         return (
-            <div>
+            <div className='addProcess'>
 
                 <input type="text" placeholder='CompanyName' onChange={this.setCompanyName} />
                 <input type="text" placeholder='Job Title' onChange={this.setJobTitle} />
@@ -69,6 +71,9 @@ class AddProcess extends Component {
                     <option value="friend">friend</option>
                     <option value="other">other</option>
                 </select>
+
+               
+
                 <button onClick={this.addProcess}>add process</button>
 
             </div>

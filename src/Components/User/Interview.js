@@ -1,41 +1,20 @@
 import React, { Component } from 'react';
+
+import '../../styles/interview.css'
+
+
 class Interview extends Component {
     render() {
         return (
-            <div>
-
-                <span>
-                    {
-                        this.props.interview.interviewerName
-                    }
-                </span>
-
-                <span>
-                    {
-                        this.props.interview.date
-                    }
-                </span>
-                <span>
-                    {
-                        this.props.interview.processId
-                    }
-                </span>
-
-                <span>
-                    {
-                        this.props.interview.simulationDate
-                    }
-                </span>
-                <span>
-                    {
-                        this.props.interview.status
-                    }
-                </span>
-                <span>
-                    {
-                        this.props.interview.type
-                    }
-                </span>
+            <div className='interview'>
+                <div>{this.props.interview.type}</div>
+                <div>{this.props.interview.interviewerName}</div>
+                <div>{this.props.interview.date}</div>
+                {/* <div> <button >passed</button></div>
+                <div> <button  >fail</button></div> */}
+                {/* <div>{this.props.interview.processId}</div> */}
+                {/* <div>{this.props.interview.simulationDate}</div> */}
+                {/* <div>{this.props.interview.status}</div> */}
             </div>
         );
     }
