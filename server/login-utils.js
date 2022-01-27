@@ -16,7 +16,7 @@ async function getUserProporties(email) {
                 FROM UserProporties AS u 
                 WHERE u.email="${email}";`)
     user = result[0][0]
-    return user
+    return result[0][0]
 }
 
 function isLoggedIn(session) {
@@ -65,7 +65,7 @@ async function destroySession() {
 }
 
 async function getUserData(session) {
-    if (session) {
+    if (session.email) {
         return await getUserProporties(session.email)
     }
     return { msg: "session Not Found" }

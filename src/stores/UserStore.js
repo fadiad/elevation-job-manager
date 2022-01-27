@@ -62,20 +62,20 @@ export class UserStore {
         }
 
         if (this.isValid(companyName, jobTitle, location, foundBy, link)) {
-        fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(processe)
-        })
-            .then(res => res.json())
-            .then(data => {
-                this.processes = []
+            fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(processe)
+                })
+                .then(res => res.json())
+                .then(data => {
+                    this.processes = []
 
-                data.forEach(async e => {
-                    let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
-                    this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
-                });
-            })
+                    data.forEach(async e => {
+                        let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
+                        this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
+                    });
+                })
         }
     }
 }
