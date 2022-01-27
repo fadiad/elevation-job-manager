@@ -19,8 +19,8 @@ export class App extends Component {
     let user = this.state.user
     return(
       <div>
-        <Admin /> 
-        {/* <User /> */}
+        {/* <Admin />  */}
+        <User />
         {/* {typeof user == "object" 
         ? 
           (user.isAdmin ? <Admin /> : <User />)
