@@ -61,7 +61,6 @@ class UsersInterviews extends Component {
         </TableHead>
         <TableBody>
         {/* .slice(page* rowsPerPage , page * rowsPerPage + rowsPerPage) */}
-
           {this.props.adminStore.usersInterViews.map((row) => (
             <TableRow  key={row.firstName}>
                 <TableCell>

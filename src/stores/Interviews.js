@@ -1,5 +1,0 @@
-export class Process {
-    constructor() {
-
-    }
-}

@@ -17,7 +17,7 @@ class User extends Component {
                 <AddProcess/>
                 <br />
                 <br />
-                <Processes processes = {this.props.userStore.processes}/>
+                <Processes processes = {this.props.userStore.processes} userId={this.props.userStore.userID}/>
             </div>
         );
     }

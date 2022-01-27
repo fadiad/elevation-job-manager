@@ -56,6 +56,17 @@ VALUES('Technical',"yosi","Scheduled",4);
     where userproporties.email = "amir@gmail.com"
 
     USE jobManagerDB;
-
+    SELECT *
+    FROM Process AS p , Interview AS i
 INSERT INTO userproporties VALUES(NULL,Null,"Ameer","","admin@gmail.com","","1234",true);
 INSERT INTO Admin VALUES(3,true);
+
+
+
+
+INSERT INTO Interview(type , date ,interviewerName,status,processId)
+    VALUES("${req.body.type}", '2022-02-01' ,"${req.body.interviewerName}","${req.body.status}",${req.body.processId});`
+
+INSERT INTO Interview(type, date , interviewerName,status,processId)
+VALUES('Phone' , '2022-02-01',"yosi","Scheduled",1);
+USE jobManagerDB;

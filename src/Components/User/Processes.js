@@ -8,7 +8,9 @@ import '../../styles/processes.css'
 class Processes extends Component {
 
     render() {
+        // console.log(this.props.processes); 
         return (
+            
             <div className='processes' >
                 {this.props.processes.map((p, index) => {
                     return (

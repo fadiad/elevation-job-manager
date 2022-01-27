@@ -3,7 +3,7 @@ import { isValidDateValue } from '@testing-library/user-event/dist/utils';
 import axios from 'axios';
 import { observable, action, makeAutoObservable } from 'mobx'
 import { Process } from './Process';
-
+import { Interview } from './Interview'
 export class UserStore {
     constructor() {
         this.userID = 1
@@ -15,7 +15,8 @@ export class UserStore {
             processes: observable,
             getUserData: action,
             getprocesses: action,
-            addProcess: action
+            addProcess: action ,
+            addInterView : action
         })
     }
 
@@ -24,6 +25,28 @@ export class UserStore {
     //     this.userData = userData.data
     // }
 
+    async addInterView(processId , type , date , interViewerName){
+        const interview = { 
+            processId : processId ,
+            type : type ,
+            date : date , 
+            interViewerName : interViewerName ,
+            status : 'Scheduled' 
+        }
+        await fetch(`http://localhost:8888/studentPage/interviews`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(interview)
+                })
+
+        let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${processId}`)
+        this.processes.find(p => p.id == processId).interviews = [];
+        interviews.data.forEach(i => 
+            this.processes.find(p => p.id == processId).interviews
+            .push( new Interview(i.id , i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId))
+            )
+           
+    }
     isValid(companyName, jobTitle, location, foundBy, link) {
 
         if (companyName.trim().length === 0 || jobTitle.trim().length === 0 ||
@@ -46,7 +69,9 @@ export class UserStore {
         let temp = await axios.get(`http://localhost:8888/studentPage/processes/${userID}`)
         temp.data.forEach(async e => {
             let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
-            this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
+            let process = new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status)
+            interviews.data.forEach(i => process.addInterView(i.id , i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId))
+            this.processes.push(process) 
         });
     }
 

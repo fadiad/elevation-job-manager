@@ -72,11 +72,9 @@ WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
 })
 
 
-
-
 router.get('/interviews/:id', function (req, res) { // id : process id 
     sequelize
-        .query(`SELECT i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId
+        .query(`SELECT i.id , i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId
     FROM Process AS p , Interview AS i
     WHERE i.processId = '${req.params.id}' AND  p.id = i.processId`)
         .then(function ([results, metadata]) {
@@ -84,43 +82,11 @@ router.get('/interviews/:id', function (req, res) { // id : process id
         })
 })
 
-router.post('/interviews/:id', async function (req, res) { // id : process id
-    let query = `INSERT INTO Interview(type,interviewerName,status,processId)
-                VALUES("${req.body.type}","${req.body.interviewerName}","${req.body.status}",${req.body.processId});`
+router.post('/interviews', async function (req, res) { // id : process id
+    let query = `INSERT INTO Interview(type , date ,interviewerName,status,processId)
+        VALUES("${req.body.type}", "${req.body.date}" ,"${req.body.interViewerName}","${req.body.status}",${req.body.processId});`
     let result = await sequelize.query(query)
     res.send(result)
 })
 
-
-
 module.exports = router;
-
-
-
-
-/*
-
-You can send an object such as bellow , to the link http://localhost:8888/studentPage/processes/id
-to save a process to a specific user , AND the id in the link belonges to the user.
-{
-    "companyName" : "sony",
-    "jobTitle" : "team manager",
-    "location" : "tel aviv",
-    "foundBy":"friend",
-    "link" : "link...",
-    "UserId": 1
-}
-
-
-
-You can send an object such as bellow , to the link http://localhost:8888/studentPage/interviews/1
-to save an enterview to a specific process , AND the id in the link belonges to the process.
-
-{
-    "type" : "phone",
-    "interviewerName" : "amir",
-    "status" : "pending",
-    "processId":1
-}
-
-*/

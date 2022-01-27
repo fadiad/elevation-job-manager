@@ -30,7 +30,6 @@ export class App extends Component {
             <Route path="/adminPage" exact render={() => <Admin />} />
           </div>
         </Router>
-
         {
          role==="admin"?<Admin />:
          role==="student"?<User />:null
