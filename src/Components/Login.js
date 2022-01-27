@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router";
+import { Redirect } from "react-router-dom";
 
 export default function Login(props) {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -19,12 +19,13 @@ export default function Login(props) {
         .then(function (response) {
             console.log(response)
             if(response.data.isAdmin){
-                console.log("you are an admin")
-                props.setRole("admin")
-                navigate("/adminPage");
+                console.log("you are an admin");
+                props.setRole("admin");
+                <Redirect to='/adminPage' />
             }else if(response.data.isAdmin == false){
                 console.log("you are a student")
-                props.setRole("student")
+                props.setRole("student");
+                <Redirect to='/studentPage' />
             }
         })
     }

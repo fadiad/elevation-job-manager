@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {AdminStore} from './stores/AdminStore.tsx';
 import { Provider } from 'mobx-react'
 import { UserStore } from './stores/UserStore';
-import { BrowserRouter } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
 
 const adminStore =  new AdminStore()
 const userStore = new UserStore()
@@ -16,10 +16,10 @@ const store = {
 }
 
 ReactDOM.render(
-  <BrowserRouter>
+  // <BrowserRouter>
     <Provider {...store}><App /></Provider>
-  </BrowserRouter>,
-  document.getElementById('root')
+  // </BrowserRouter>
+  ,document.getElementById('root')
 );
 
 

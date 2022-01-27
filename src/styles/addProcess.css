@@ -1,0 +1,19 @@
+.addProcess{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr ;
+    padding: 5px;
+}
+
+button{
+    border-radius: 999px;
+    margin: 5px;
+}
+
+input{
+    border-radius: 999px;
+    margin: 5px;
+}
+select{
+    border-radius: 999px;
+    margin: 5px;
+}
