@@ -1,7 +1,6 @@
 /* eslint-disable */
-import { isValidDateValue } from '@testing-library/user-event/dist/utils';
 import axios from 'axios';
-import { observable, action, makeAutoObservable } from 'mobx'
+import { observable, action, makeAutoObservable, computed } from 'mobx'
 import { Process } from './Process';
 
 export class UserStore {
@@ -16,6 +15,8 @@ export class UserStore {
             getUserData: action,
             getprocesses: action,
             addProcess: action
+                // getInterViewStatus: computed
+
         })
     }
 
@@ -77,5 +78,60 @@ export class UserStore {
                     });
                 })
         }
+    }
+
+    changeStatus = (interviewId, processId, status) => {
+        let bodyParams = {
+            processId: processId,
+            interViewId: interviewId,
+            status: status
+        }
+        console.log("entered client change status")
+        console.log(bodyParams)
+        let self = this;
+        //         console.log("Status Before:" + this.getInterViewById(interviewId, processId))
+        fetch(`http://localhost:8888/studentPage/interViewStatus/${this.userID}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyParams),
+                // mode: 'no-cors'
+            })
+            .then(data => {
+                //                 console.log("Status Before:" + self.getInterViewById(interviewId, processId))
+                //                 self.getInterViewById(interviewId, processId).status = status
+                //                 console.log("Status After:" + self.getInterViewById(interviewId, processId))
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+
+    getProcessById = (id) => {
+        this.processes.forEach(process => {
+            if (process.id === id)
+                return process
+        });
+        return null;
+    }
+
+    getInterViewById = (interviewId, ProcessId) => {
+        this.processes.forEach(process => {
+            if (process.id === ProcessId) {
+                process.interviews.forEach(interview => {
+                    if (interview.id === interviewId)
+                        return interview;
+                });
+            }
+        });
+        return null;
+    }
+    getInterViewStatus = (interviewId, processId) => {
+        this.processes.forEach(p => {
+            if (p.processId === processId) {
+                p.interviews.forEach(i => {
+                    if (i.id === interviewId)
+                        return i.status;
+                })
+            }
+        })
     }
 }

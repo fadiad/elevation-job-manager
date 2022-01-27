@@ -25,16 +25,16 @@ export class App extends Component {
       <div>
         <Router>
           <div>
-            <Route path="/" exact render={() => <Login setRole={this.setRole} />} />
+            {/* <Route path="/" exact render={() => <Login setRole={this.setRole} />} /> */}
             <Route path="/studentPage" exact render={() => <User />} />
             <Route path="/adminPage" exact render={() => <Admin />} />
           </div>
         </Router>
-
-        {
+      <User />
+        {/* {
          role==="admin"?<Admin />:
          role==="student"?<User />:null
-        }
+        } */}
       </div>
     );
   }

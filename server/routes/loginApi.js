@@ -16,8 +16,9 @@ router.post('/', async(req, res) => {
                 req.session.save()
                     // return res.redirect('/adminPage');
                 console.log("entered /login")
+                let id = login.getUserId(session)
                 console.log(req.session)
-                res.send({ isAdmin: true })
+                res.send({ isAdmin: true, id: id })
             } else if (login.isStudent(session)) {
                 res.send({ isAdmin: false })
             }

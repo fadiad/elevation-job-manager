@@ -1,10 +1,10 @@
 /* eslint-disable */
 import axios from 'axios';
 import { observable, action, makeAutoObservable } from 'mobx'
-import Interviews from './Interviews';
+import Interview from '../Components/User/Interview';
 
 export class Process {
-    constructor(companyName, foundBy, id, jobTitle, link, location, status,interviews) {
+    constructor(companyName, foundBy, id, jobTitle, link, location, status, interviews) {
 
         this.id = id,
             this.companyName = companyName,
@@ -13,8 +13,7 @@ export class Process {
             this.foundBy = foundBy,
             this.link = link,
             this.status = status,
-            this.interviews = interviews,
-
+            this.interviews = interviews
 
         makeAutoObservable(this, {
             id: observable,
@@ -24,8 +23,9 @@ export class Process {
             foundBy: observable,
             link: observable,
             status: observable,
-            interviews: observable
+            interviews: observable,
+            addInterView: action
         })
+
     }
 }
-
