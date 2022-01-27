@@ -4,12 +4,32 @@ const studentapi = require('./routes/studentApi')
 const adminApi = require('./routes/adminApi')
 const login = require('./login-utils');
 const session = require('express-session');
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const crypto = require("crypto");
 
 const app = express()
 
 app.use(express.json())
-    // app.use(express.urlencoded({ extended: false }))
-app.use(session({ secret: "elevation" }))
+app.use(
+    cors({
+        origin: ["http://localhost:3000"],
+        methods: ["GET", "POST"],
+        credentials: true,
+    })
+);
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(session({
+    secret: crypto.randomBytes(16).toString("hex"),
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}))
+
+
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
@@ -22,20 +42,23 @@ app.use(function(req, res, next) {
 app.use('/login', loginApi)
 
 app.use('/studentPage', (req, res, next) => {
-    if (login.isStudentLoggedIn(req.session)) {
+    // if (login.isStudentLoggedIn(req.session)) {
     next();
-    } else {
-    res.send('you are not a Student - you dont have a permission')
-    }
+    // } else {
+    //     res.send('you are not a Student - you dont have a permission')
+    // }
 })
 app.use('/studentPage', studentapi)
 
-app.use('/adminPage', (req, res, next) => {
-    if (login.isAdminLoggedIn(req.session)) {
-        next();
-    } else {
-        res.send('you are not an Admin - you dont have a permission')
-    }
+app.use('/adminPage', async(req, res, next) => {
+    console.log("Entered /adminPage")
+    console.log(req.session)
+        // await login.getUserData(req.session)
+        // if (login.isAdminLoggedIn(req.session)) {
+    next();
+    // } else {
+    //     res.send('you are not an Admin - you dont have a permission')
+    // }
 })
 
 app.use('/adminPage', adminApi)

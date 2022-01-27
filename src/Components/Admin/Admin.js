@@ -8,16 +8,13 @@ class Admin extends Component {
         this.props.adminStore.getAdminData()
     }
     render() {
-        return ( <
-            div >
-            <
-            NavBar / >
-            adminName: { this.props.adminStore.adminName } <
-            Statistics / >
-            <
-            UsersInterviews / >
-            <
-            /div>
+        return (
+            <div>
+                <NavBar/>
+                adminName : {this.props.adminStore.adminName}
+                <Statistics />
+                <UsersInterviews />
+            </div>
         );
     }
 }

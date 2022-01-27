@@ -12,9 +12,14 @@ router.post('/', async(req, res) => {
         await login.storeUserInSession(session, email)
         if (login.isLoggedIn(session)) {
             if (login.isAdmin(session)) {
-                res.send(await login.getUserData(session))
+                // req.session.cookie.expires = false;
+                req.session.save()
+                    // return res.redirect('/adminPage');
+                console.log("entered /login")
+                console.log(req.session)
+                res.send({ isAdmin: true })
             } else if (login.isStudent(session)) {
-                res.send(await login.getUserData(session))
+                res.send({ isAdmin: false })
             }
         } else {
             res.send("Please Login")

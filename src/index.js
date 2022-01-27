@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {AdminStore} from './stores/AdminStore.tsx';
 import { Provider } from 'mobx-react'
 import { UserStore } from './stores/UserStore';
+import { BrowserRouter } from 'react-router-dom';
 
 const adminStore =  new AdminStore()
 const userStore = new UserStore()
@@ -15,9 +16,9 @@ const store = {
 }
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     <Provider {...store}><App /></Provider>
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
