@@ -10,6 +10,8 @@ class Interview extends Component {
                 <div>{this.props.interview.type}</div>
                 <div>{this.props.interview.interviewerName}</div>
                 <div>{this.props.interview.date}</div>
+                {/* <div> <button >passed</button></div>
+                <div> <button  >fail</button></div> */}
                 {/* <div>{this.props.interview.processId}</div> */}
                 {/* <div>{this.props.interview.simulationDate}</div> */}
                 {/* <div>{this.props.interview.status}</div> */}
