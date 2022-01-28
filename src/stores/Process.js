@@ -35,4 +35,3 @@ export class Process {
         this.interviews.push(interview)
     }
 }
-

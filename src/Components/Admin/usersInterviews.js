@@ -36,7 +36,30 @@ import {Table ,
 // }
 // const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 class UsersInterviews extends Component {
+  constructor(){
+    super();
+    this.state ={
+      page : 0 ,
+      rowsPerPage : 10
+    }
+  }
 
+   handleChangePage = (event , newPage) => {
+    this.setState({
+      rowsPerPage:+event.target.value,
+      page:newPage})
+
+    // setRowsPage(+event.target.value);
+    // setPage(newPage);
+}
+ handleChangeRowsPerPage = (event) => {
+  this.setState({
+    rowsPerPage:+event.target.value,
+    page:0})
+    // setRowsPage(+event.target.value);
+    // setPage(0);
+}
+//  dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
     componentDidMount() {
         this.props.adminStore.getUsersInterviews()
@@ -61,7 +84,7 @@ class UsersInterviews extends Component {
         </TableHead>
         <TableBody>
         {/* .slice(page* rowsPerPage , page * rowsPerPage + rowsPerPage) */}
-          {this.props.adminStore.usersInterViews.map((row) => (
+          {this.props.adminStore.usersInterViews.slice(this.state.page* this.state.rowsPerPage , this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row) => (
             <TableRow  key={row.firstName}>
                 <TableCell>
                 <Grid container>
@@ -105,17 +128,17 @@ class UsersInterviews extends Component {
           ))}
         </TableBody>
 
-        {/* <TableFooter>
+        <TableFooter>
                 <TablePagination>
-                    rowsPerPageOptions = {[10,25,100]}
+                    rowsPerPageOptions = {[5 , 10 , 15]}
                     component="div"
-                    count={rows.length}
-                    rowsPerPage = {rowsPerPage}
-                    page = {page}
-                    onChangePage = {handleChangePage}
-                    onChangeRowsPerPage = {handleChangeRowsPerPage}
+                    {/* count={this.props.adminStore.usersInterViews.length} */}
+                    rowsPerPage = {this.state.rowsPerPage}
+                    page = {this.state.page}
+                    onChangePage = {this.handleChangePage}
+                    onChangeRowsPerPage = {this.handleChangeRowsPerPage}
                 </TablePagination>
-        </TableFooter> */}
+        </TableFooter>
       </Table>
     </TableContainer>
                 

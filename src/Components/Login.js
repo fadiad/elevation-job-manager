@@ -22,7 +22,7 @@ export default function Login(props) {
                 console.log("you are an admin");
                 props.setRole("admin");
                 <Redirect to='/adminPage' />
-            }else if(response.data.isAdmin == false){
+            }else if(response.data.isAdmin === false){
                 console.log("you are a student")
                 props.setRole("student");
                 <Redirect to='/studentPage' />

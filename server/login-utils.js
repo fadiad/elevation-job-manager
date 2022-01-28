@@ -19,6 +19,15 @@ async function getUserProporties(email) {
     return result[0][0]
 }
 
+async function getUserId(session) {
+    let result = await sequelize
+        .query(`SELECT u.id
+            FROM UserProporties AS u 
+            WHERE u.email="${session.email}";`)
+    console.log(result[0][0])
+    return result[0][0].id;
+}
+
 function isLoggedIn(session) {
     return isEmailExist(session) && user.session_id === session.id
 }
@@ -71,4 +80,4 @@ async function getUserData(session) {
     return { msg: "session Not Found" }
 }
 
-module.exports = { isVerified, isLoggedIn, storeUserInSession, getUserData, isStudent, isAdmin, destroySession, isStudentLoggedIn, isAdminLoggedIn }
+module.exports = { getUserId, isVerified, isLoggedIn, storeUserInSession, getUserData, isStudent, isAdmin, destroySession, isStudentLoggedIn, isAdminLoggedIn }

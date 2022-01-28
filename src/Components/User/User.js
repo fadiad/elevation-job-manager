@@ -3,10 +3,9 @@ import { observer, inject } from 'mobx-react'
 import Processes from './Processes';
 import NavBar from '../NavBar';
 import AddProcess from './AddProcess';
-import '../../'
 class User extends Component {
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.props.userStore.getProcesses(this.props.userStore.userID)
     }
 

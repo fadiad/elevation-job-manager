@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { observer, inject } from 'mobx-react'
 import Admin from './Components/Admin/Admin';
 import User from './Components/User/User';
 import Login from './Components/Login';
-import { BrowserRouter as Router, Route ,Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route  } from 'react-router-dom';
 import './styles/App.css';
 
 export class App extends Component {
@@ -33,7 +32,7 @@ export class App extends Component {
         {
          role==="admin"?<Admin />:
          role==="student"?<User />:null
-        }
+        } 
       </div>
     );
   }

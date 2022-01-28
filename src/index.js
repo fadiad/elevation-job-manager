@@ -16,9 +16,9 @@ const store = {
 }
 
 ReactDOM.render(
-  // <BrowserRouter>
+  <React.StrictMode>
     <Provider {...store}><App /></Provider>
-  // </BrowserRouter>
+  </React.StrictMode>
   ,document.getElementById('root')
 );
 
