@@ -4,8 +4,9 @@ from Interview
 
 INSERT INTO userproporties VALUES(NULL,"Sara","Ziada","sziada276@gmail.com","050-7339214","1234");
 INSERT INTO Candidate VALUES(1,'Student',false,'Atidna 1',NULL);
--- INSERT INTO Admin VALUES(1,true);
--- DELETE FROM Admin;
+
+DELETE FROM Admin;
+
 INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
 VALUES(NULL,"Intel","Full Stack Developer","Haifa",'linkedIn',"h://..",1);
 
@@ -55,6 +56,17 @@ VALUES('Technical',"yosi","Scheduled",4);
     where userproporties.email = "amir@gmail.com"
 
     USE jobManagerDB;
-
+    SELECT *
+    FROM Process AS p , Interview AS i
 INSERT INTO userproporties VALUES(NULL,Null,"Ameer","","admin@gmail.com","","1234",true);
 INSERT INTO Admin VALUES(3,true);
+
+
+
+
+INSERT INTO Interview(type , date ,interviewerName,status,processId)
+    VALUES("${req.body.type}", '2022-02-01' ,"${req.body.interviewerName}","${req.body.status}",${req.body.processId});`
+
+INSERT INTO Interview(type, date , interviewerName,status,processId)
+VALUES('Phone' , '2022-02-01',"yosi","Scheduled",1);
+USE jobManagerDB;

@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
-
 import '../../styles/interview.css'
+import { observer, inject } from 'mobx-react'
 
 
 class Interview extends Component {
+    pass= () => {
+        this.props.userStore.changeStatus(this.props.interview.id,this.props.interview.processId,"Passed")
+    }
+
+    fail = () =>{
+        this.props.userStore.changeStatus(this.props.interview.id,this.props.interview.processId,"Failed")
+    }
     render() {
+        let interview = this.props.interview
+        console.log(this.props.interview);
         return (
             <div className='interview'>
-                <div>{this.props.interview.type}</div>
-                <div>{this.props.interview.interviewerName}</div>
-                <div>{this.props.interview.date}</div>
-                {/* <div> <button >passed</button></div>
-                <div> <button  >fail</button></div> */}
+                <div>{interview.type}</div>
+                <div>{interview.interViewerName}</div>
+                <div>{interview.date}</div>
+
+                <div>{interview.status === "Scheduled" ?
+                    <div><button onClick={this.pass} >pass</button>
+                    <button onClick={this.fail}>fail</button> </div>:null
+                }
+                   
+                </div>
+                
                 {/* <div>{this.props.interview.processId}</div> */}
                 {/* <div>{this.props.interview.simulationDate}</div> */}
                 {/* <div>{this.props.interview.status}</div> */}
@@ -19,4 +34,4 @@ class Interview extends Component {
         );
     }
 }
-export default Interview;
+export default inject("userStore")(observer(Interview));

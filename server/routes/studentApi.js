@@ -26,17 +26,17 @@ router.get('/user', async function(req, res) {
 })
 
 router.get('/Processes', function(req, res) {
-    const  arrProcesses = mocData.processes
+    const arrProcesses = mocData.processes
     res.send(arrProcesses)
 })
 
-router.get('/userData/:id', function (req, res) { // id : user id 
+router.get('/userData/:id', function(req, res) { // id : user id 
     sequelize
         .query(`SELECT c.id , status , isEmployeed , cohort ,cv ,
                        firstName , lastName , email , phone
         FROM Candidate AS c  , UserProporties AS u
         WHERE c.id = '${req.params.id}' AND c.id = u.id`)
-        .then(function ([results, metadata]) {
+        .then(function([results, metadata]) {
             res.send(results)
         })
 })
@@ -45,52 +45,85 @@ router.get('/userData/:id', function (req, res) { // id : user id
 
 
 
-router.get('/processes/:id', function (req, res) { // id : user id 
+router.get('/processes/:id', function(req, res) { // id : user id 
     sequelize
         .query(`SELECT p.id , p.companyName , p.jobTitle , p.location , p.foundBy , p.link , p.status
     FROM Candidate AS c  , Process AS p
     WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
-        .then(function ([results, metadata]) {
+        .then(function([results, metadata]) {
             res.send(results)
         })
 })
 
-router.post('/processes/:id', async function (req, res) { // id : user id
+router.post('/processes/:id', async function(req, res) { // id : user id
 
     let query = `INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
                 VALUES(NULL,'${req.body.companyName}','${req.body.jobTitle}','${req.body.location}','${req.body.foundBy}','${req.body.link}',${req.params.id});`
-    let result = await sequelize.query(query)
+    await sequelize.query(query)
 
     sequelize
         .query(`SELECT p.id , p.companyName , p.jobTitle , p.location , p.foundBy , p.link , p.status
 FROM Candidate AS c  , Process AS p
 WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
-        .then(function ([results, metadata]) {
+        .then(function([results, metadata]) {
             res.send(results)
         })
-    // res.send(result)
+        // res.send(result)
 })
 
 
 
 
-router.get('/interviews/:id', function (req, res) { // id : process id 
+router.get('/interviews/:id', function(req, res) { // id : process id 
     sequelize
-        .query(`SELECT i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId
+        .query(`SELECT i.id, i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId
     FROM Process AS p , Interview AS i
     WHERE i.processId = '${req.params.id}' AND  p.id = i.processId`)
-        .then(function ([results, metadata]) {
+        .then(function([results, metadata]) {
             res.send(results)
         })
 })
 
-router.post('/interviews/:id', async function (req, res) { // id : process id
-    let query = `INSERT INTO Interview(type,interviewerName,status,processId)
-                VALUES("${req.body.type}","${req.body.interviewerName}","${req.body.status}",${req.body.processId});`
+router.post('/interviews', async function (req, res) { // id : process id
+    let query = `INSERT INTO Interview(type , date ,interviewerName,status,processId)
+        VALUES("${req.body.type}", "${req.body.date}" ,"${req.body.interViewerName}","${req.body.status}",${req.body.processId});`
     let result = await sequelize.query(query)
     res.send(result)
 })
 
+
+router.post('/interViewStatus/:id', async function(req, res) {
+    let interViewId = req.body.interViewId;
+    let processId = req.body.processId;
+    let status = req.body.status;
+    console.log("Entered change status")
+    console.log(req.body)
+    let query = `Update interview SET STATUS="${status}" WHERE id=${interViewId} AND processId=${processId};`
+    let result = await sequelize.query(query)
+    res.send(result)
+})
+
+
+// -------------------------------------
+
+router.post('/processStatus', async function(req, res) {
+    // process status 
+    // status ENUM('In progress','Passed','Failed') DEFAULT 'In progress' NOT NULL,
+
+    // Candidate
+    // isEmployeed BOOLEAN
+    console.log(req.body)
+    let processQuery = `Update Process SET status="Passed" WHERE id=${req.body.processId};`
+    let processResult = await sequelize.query(processQuery)
+
+    
+    let userQuery = `Update Candidate SET isEmployeed="1" WHERE id=${req.body.userID};`
+    let userResult = await sequelize.query(userQuery)
+    
+    res.send("result")
+})
+
+// -------------------------------------
 
 
 module.exports = router;
