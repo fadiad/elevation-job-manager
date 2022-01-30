@@ -83,34 +83,44 @@ class AddInterview extends Component {
                         Add Interview
                     </div>
                 </DialogTitle>
+
+
                 <div className='inputs' >
-                    <FormControl className='FormControl'  >
-                        <InputLabel className='InputLabel'>Type</InputLabel>
-                        <Select className='Select' value={this.state.status} onChange={this.setStatus}>
-                            <MenuItem value={'Phone'}>Phone</MenuItem>
-                            <MenuItem value={'HR'}>HR</MenuItem>
-                            <MenuItem value={'Technical'}>Technical</MenuItem>
-                            <MenuItem value={'Contract'}>Contract</MenuItem>
-                        </Select>
-                    </FormControl>
-                    {/* <select value={this.state.status} onChange={this.setStatus}>
-                                <option value="Phone">Phone</option>
-                                <option value="HR">HR</option>
-                                <option value="Technical">Technical</option>
-                                <option value="Contract">Contract</option>
-                            </select> */}
-                    <MuiPickersUtilsProvider utils={DateMomentUtils}>
-                        <DatePicker value={this.state.date} onChange={this.handleDateChange} />
-                        {/* <TimePicker value={this.state.selectedDate} onChange={this.handleDateChange}/> */}
-                        {/* <DateTimePicker value={this.state.selectedDate} onChange={this.handleDateChange} /> */}
-                    </MuiPickersUtilsProvider>
-                    <TextField
-                        variant="outlined"
-                        label="Interviewer Name"
-                        value={this.state.interviewerName}
-                        onChange={this.setInterviewerName}
-                    />
+
+                    <div className='x'>
+                        <FormControl className='FormControl'  >
+                            <InputLabel className='InputLabel'>Type</InputLabel>
+                            <Select className='Select' value={this.state.status} onChange={this.setStatus}>
+                                <MenuItem value={'Phone'}>Phone</MenuItem>
+                                <MenuItem value={'HR'}>HR</MenuItem>
+                                <MenuItem value={'Technical'}>Technical</MenuItem>
+                                <MenuItem value={'Contract'}>Contract</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
+
+                    
+                    <div className='x'>
+                        <TextField
+                            variant="outlined"
+                            label="Interviewer Name"
+                            value={this.state.interviewerName}
+                            onChange={this.setInterviewerName}
+                        />
+                    </div>
+
+                    <div className='x'>
+                        <MuiPickersUtilsProvider utils={DateMomentUtils}>
+                            <DatePicker value={this.state.date} onChange={this.handleDateChange} />
+                            {/* <TimePicker value={this.state.selectedDate} onChange={this.handleDateChange}/> */}
+                            {/* <DateTimePicker value={this.state.selectedDate} onChange={this.handleDateChange} /> */}
+                        </MuiPickersUtilsProvider>
+                    </div>
+
+
                 </div>
+
+
                 <button onClick={this.addInterView}>Add</button>
                 <button onClick={this.handleClose}> cancel</button>
             </Dialog>

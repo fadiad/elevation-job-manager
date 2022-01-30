@@ -67,9 +67,6 @@ class AddProcess extends Component {
         return (
             <div className='addProcess'>
 
-
-
-
                 <TextField
 
                     label="Company Name"
@@ -112,7 +109,7 @@ class AddProcess extends Component {
                     /> */}
 
 
-                <input type="text" placeholder='Company Name' onChange={this.setCompanyName} />
+                {/* <input type="text" placeholder='Company Name' onChange={this.setCompanyName} />
                 <input type="text" placeholder='Job Title' onChange={this.setJobTitle} />
                 <input type="text" placeholder='Location' onChange={this.setLocation} />
                 <input type="text" placeholder='Link' onChange={this.setLink} />
@@ -125,7 +122,7 @@ class AddProcess extends Component {
                 </select>
 
 
-                <button onClick={this.addProcess}>add process</button>
+                <button onClick={this.addProcess}>add process</button> */}
 
             </div>
         );

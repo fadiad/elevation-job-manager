@@ -1,5 +1,15 @@
+.inputs{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr  ;
+}
 
-.dialogPaper {
+.x{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* .dialogPaper {
     min-height : 80vh;
     max-height: 80vh;    
 }
@@ -9,7 +19,8 @@ height: 250px;
 width: 150px;
 text-align: center;
 }
+
 .InputLabel{
     margin-left: auto;
     margin-right: auto;
-}
+} */
