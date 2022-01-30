@@ -13,58 +13,70 @@ import {Table ,
     Avatar,
     Grid,
     Typography ,
-    TablePagination,
-    TableFooter
+    TablePagination
 }from '@material-ui/core';
 
 // eslint-disable-next-line no-undef
-;
+// ;
 
 
 
-
-// const [page , setPage] = React.useState(0);
-// const [rowsPerPage , setRowsPage] = React.useState(10);
-
-// const handleChangePage = (event , newPage) => {
-//     setRowsPage(+event.target.value);
-//     setPage(newPage);
-// }
-// const handleChangeRowsPerPage = (event) => {
-//     setRowsPage(+event.target.value);
-//     setPage(0);
-// }
-// const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 class UsersInterviews extends Component {
   constructor(){
     super();
     this.state ={
       page : 0 ,
-      rowsPerPage : 10
+      rowsPerPage : 5 , 
+      order : '' ,
+      orderBy : ''
     }
   }
+ 
+
 
    handleChangePage = (event , newPage) => {
-    this.setState({
-      rowsPerPage:+event.target.value,
-      page:newPage})
+    // let rows = this.props.adminStore.usersInterViews.length
+    // let numOfPage
+    // let rowInLastPage
+    // if ((rows/this.state.rowsPerPage) === 0) {
+    //   numOfPage =parseInt(rows/this.state.rowsPerPage) 
+    //   rowInLastPage = rows%this.state.rowsPerPage      
+    // }else{
+    //   numOfPage =parseInt(rows/this.state.rowsPerPage) +1
+    //   rowInLastPage = rows%(this.state.rowsPerPage)
+    // }
 
-    // setRowsPage(+event.target.value);
-    // setPage(newPage);
-}
+    // if((numOfPage-1) === newPage )
+    // {
+    // this.setState({
+    //   rowsPerPage : rowInLastPage ,
+    //   page:newPage})
+    // }
+    // else {
+    //     this.setState({
+    //       rowsPerPage :this.state.rowsPerPage +0 ,
+    //       page:newPage})      
+    // }
+        this.setState({
+          page:newPage})      
+  }
  handleChangeRowsPerPage = (event) => {
   this.setState({
-    rowsPerPage:+event.target.value,
+    rowsPerPage:event.target.value,
     page:0})
     // setRowsPage(+event.target.value);
     // setPage(0);
 }
+
+
+
 //  dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
     componentDidMount() {
         this.props.adminStore.getUsersInterviews()
     }
-    render() {
+    render() { 
+      console.log(this.props.adminStore.usersInterViews.length);
         return (
              <div>
                  <TableContainer component={Paper} className='TableContainer'>
@@ -79,12 +91,13 @@ class UsersInterviews extends Component {
             <TableCell className='tableHeaderCell'>DATE</TableCell>
             <TableCell className='tableHeaderCell'>STATUS</TableCell>
             <TableCell className='tableHeaderCell'></TableCell>
-
+            
           </TableRow>
         </TableHead>
         <TableBody>
         {/* .slice(page* rowsPerPage , page * rowsPerPage + rowsPerPage) */}
-          {this.props.adminStore.usersInterViews.slice(this.state.page* this.state.rowsPerPage , this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row) => (
+          {this.props.adminStore.usersInterViews.slice(
+            this.state.page* this.state.rowsPerPage , this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row , index)  => (
             <TableRow  key={row.firstName}>
                 <TableCell>
                 <Grid container>
@@ -125,21 +138,23 @@ class UsersInterviews extends Component {
                 
 
             </TableRow>
-          ))}
+          ))
+          }
         </TableBody>
 
-        <TableFooter>
-                <TablePagination>
-                    rowsPerPageOptions = {[5 , 10 , 15]}
-                    component="div"
-                    {/* count={this.props.adminStore.usersInterViews.length} */}
-                    rowsPerPage = {this.state.rowsPerPage}
-                    page = {this.state.page}
-                    onChangePage = {this.handleChangePage}
-                    onChangeRowsPerPage = {this.handleChangeRowsPerPage}
-                </TablePagination>
-        </TableFooter>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={this.props.adminStore.usersInterViews.length}
+          rowsPerPage={this.state.rowsPerPage}
+          page={this.state.page}
+          onPageChange={this.handleChangePage}
+          onRowsPerPageChange={this.handleChangeRowsPerPage}
+        />
+            
+       
       </Table>
+     
     </TableContainer>
                 
              </div> 

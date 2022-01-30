@@ -1,41 +1,44 @@
+
 import React, { Component } from 'react';
 import Admin from './Components/Admin/Admin';
 import User from './Components/User/User';
 import Login from './Components/Login';
-import { BrowserRouter as Router, Route  } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 import './styles/App.css';
 
 export class App extends Component {
 
-  constructor(){
+  constructor() {
     super()
-    this.state={
-      role:""
+    this.state = {
+      role: ""
     }
   }
 
-  setRole = (role) =>{
-    this.setState({role:role})
+  setRole = (role) => {
+    this.setState({ role: role })
   }
-  render(){
+  render() {
 
     let role = this.state.role
-    return(
+    return (
       <div>
         <Router>
           <div>
             <Route path="/" exact render={() => <Login setRole={this.setRole} />} />
             <Route path="/studentPage" exact render={() => <User />} />
             <Route path="/adminPage" exact render={() => <Admin />} />
+            {
+         role==="admin"? <Redirect to='/adminPage' />:
+         role==="student"?<Redirect to='/studentPage' />:null
+        } 
           </div>
         </Router>
-        {
-         role==="admin"?<Admin />:
-         role==="student"?<User />:null
-        } 
       </div>
     );
   }
 }
+
 
 export default App;

@@ -5,9 +5,9 @@ import { Process } from './Process';
 import { Interview } from './Interview'
 export class UserStore {
     constructor() {
-        this.userID = 1
+        this.userID 
         this.userData = {};
-        this.processes = []
+        this.processes = [];
 
         makeAutoObservable(this, {
             user: observable,
@@ -19,10 +19,10 @@ export class UserStore {
         })
     }
 
-    // async getUserData(userID) {
-    //     let userData = await axios.get(`http://localhost:8888/studentPage/userData/${userID}`)
-    //     this.userData = userData.data
-    // }
+    async getUserData(email) {
+        let userData = await axios.get(`http://localhost:8888/studentPage/userData/${email}`)
+        this.userData = userData.data
+    }
 
     async addInterView(processId , type , date , interViewerName){
         const interview = { 

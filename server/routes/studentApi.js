@@ -83,10 +83,34 @@ router.get('/interviews/:id', function(req, res) { // id : process id
             res.send(results)
         })
 })
-
+// function converDate () {
+//     Date.prototype.toYMD = Date_toYMD;
+//     function Date_toYMD() {
+//         var year, month, day;
+//         year = String(this.getFullYear());
+//         month = String(this.getMonth() + 1);
+//         if (month.length == 1) {
+//             month = "0" + month;
+//         }
+//         day = String(this.getDate());
+//         if (day.length == 1) {
+//             day = "0" + day;
+//         }
+//         return year + "-" + month + "-" + day;
+//     }
+// }
 router.post('/interviews', async function (req, res) { // id : process id
+    // converDate(req.body.date)
+    // let year = String(req.body.date);
+    // let month = String(req.body.date + 1);
+    // let day = String(req.body.date);
+    // if (day.length == 1) {
+    //     day = "0" + day;
+    // }
+    let date =   req.body.date.toString().slice(0,10)
+   
     let query = `INSERT INTO Interview(type , date ,interviewerName,status,processId)
-        VALUES("${req.body.type}", "${req.body.date}" ,"${req.body.interViewerName}","${req.body.status}",${req.body.processId});`
+        VALUES("${req.body.type}", "${date}" ,"${req.body.interViewerName}","${req.body.status}",${req.body.processId});`
     let result = await sequelize.query(query)
     res.send(result)
 })
