@@ -127,6 +127,29 @@ router.post('/interViewStatus/:id', async function(req, res) {
     res.send(result)
 })
 
+
+// -------------------------------------
+
+router.post('/processStatus', async function(req, res) {
+    // process status 
+    // status ENUM('In progress','Passed','Failed') DEFAULT 'In progress' NOT NULL,
+
+    // Candidate
+    // isEmployeed BOOLEAN
+    console.log(req.body)
+    let processQuery = `Update Process SET status="Passed" WHERE id=${req.body.processId};`
+    let processResult = await sequelize.query(processQuery)
+
+    
+    let userQuery = `Update Candidate SET isEmployeed="1" WHERE id=${req.body.userID};`
+    let userResult = await sequelize.query(userQuery)
+    
+    res.send("result")
+})
+
+// -------------------------------------
+
+
 module.exports = router;
 
 

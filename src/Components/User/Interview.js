@@ -13,11 +13,13 @@ class Interview extends Component {
     }
     render() {
         let interview = this.props.interview
+        console.log(this.props.interview);
         return (
             <div className='interview'>
                 <div>{interview.type}</div>
-                <div>{interview.interviewerName}</div>
+                <div>{interview.interViewerName}</div>
                 <div>{interview.date}</div>
+
                 <div>{interview.status === "Scheduled" ?
                     <div><button onClick={this.pass} >pass</button>
                     <button onClick={this.fail}>fail</button> </div>:null

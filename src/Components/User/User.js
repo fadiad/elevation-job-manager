@@ -3,6 +3,9 @@ import { observer, inject } from 'mobx-react'
 import Processes from './Processes';
 import NavBar from '../NavBar';
 import AddProcess from './AddProcess';
+import '../../styles/User.css'
+
+
 class User extends Component {
 
     componentDidMount = () => {
@@ -20,8 +23,13 @@ console.log(this.props.userStore.userID);
                 <AddProcess/>
 
                 <br />
+                {
+                    this.props.userStore.userData.isEmployeed === 1 ?
+                        <div className='Start-Working'> Start working </div>
+                        : null
+                }
                 <br />
-                <Processes processes = {this.props.userStore.processes} userId={this.props.userStore.userID}/>
+                <Processes processes={this.props.userStore.processes} userId={this.props.userStore.userID} />
             </div>
         );
     }

@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
 import './styles/App.css';
 
-export class App extends Component {
+ class App extends Component {
 
   constructor() {
     super()
@@ -30,9 +30,9 @@ export class App extends Component {
             <Route path="/studentPage" exact render={() => <User />} />
             <Route path="/adminPage" exact render={() => <Admin />} />
             {
-         role==="admin"? <Redirect to='/adminPage' />:
-         role==="student"?<Redirect to='/studentPage' />:null
-        } 
+              role === "admin" ? <Redirect to='/adminPage' /> :
+                role === "student" ? <Redirect to='/studentPage' /> : null
+            }
           </div>
         </Router>
       </div>

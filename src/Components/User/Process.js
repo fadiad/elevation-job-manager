@@ -61,16 +61,23 @@ import AddInterview from './AddInterview';
     addProcess = () => {
         this.props.userStore.addProcess(this.state.companyName, this.state.jobTitle, this.state.location, this.state.foundBy, this.state.link)
     }
-    addInterView =() =>{
-        this.props.userStore.addInterView(this.props.process.id , this.state.status , this.state.date , this.state.interviewerName)
+    addInterView = () => {
+        this.props.userStore.addInterView(this.props.process.id, this.state.status, this.state.date, this.state.interviewerName)
     }
+
     toggleInterViews = () => {
-        if(this.state.showInterViews){
-            this.setState({icon:"+",showInterViews:false})
-        }else{
-            this.setState({icon:"-",showInterViews:true})
+        if (this.state.showInterViews) {
+            this.setState({ icon: "+", showInterViews: false })
+        } else {
+            this.setState({ icon: "-", showInterViews: true })
         }
     }
+
+
+    assignAsAccepted = () => {
+        this.props.userStore.assignAsAccepted(this.props.process.id)
+    }
+
     render() {
         return (
             <div className='Process'>
@@ -102,7 +109,7 @@ import AddInterview from './AddInterview';
                 />
             </from>
                 <div class="mdc-card">
-                <h3 className='icon' onClick={this.toggleInterViews}>{this.state.icon}</h3>
+                    <h3 className='icon' onClick={this.toggleInterViews}>{this.state.icon}</h3>
                     <h3>
                         {this.props.process.companyName}
                     </h3>
@@ -117,12 +124,12 @@ import AddInterview from './AddInterview';
                     </h3>
                 </div>
                 {this.state.showInterViews ?
-                <div>
-                <div className='interviews'>
-                    <div><h2>Interviews</h2></div>
-                    <div><button onClick={this.addInterView} >add interView</button></div>
-                    <div><button>accepted</button></div>
-                </div>
+                    <div>
+                        <div className='interviews'>
+                            <div><h2>Interviews</h2></div>
+                            <div><button onClick={this.addInterView} >add interView</button></div>
+                            <div><button onClick={this.assignAsAccepted}>accepted</button></div>
+                        </div>
 
                 <Interviews interviews={this.props.process.interviews} />
                 </div>:
@@ -136,7 +143,7 @@ import AddInterview from './AddInterview';
     }
 
 }
- 
+
 
 
 export default inject("userStore")(observer(Process))
