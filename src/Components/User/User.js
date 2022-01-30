@@ -16,7 +16,7 @@ class User extends Component {
         // console.log(this.props.userStore.userData);
 
     
-console.log(this.props.userStore.userID);
+// console.log(this.props.userStore.userID);
         return (
             <div>
                 <NavBar />

@@ -12,7 +12,7 @@ class Processes extends Component {
         return (
             
             <div className='processes' >
-                <h1>{this.props.userStore.userID}</h1>
+                {/* <h1>{this.props.userStore.userID}</h1> */}
                 {this.props.processes.map((p, index) => {
                     return (
                         <Process process={p} key={index} />

@@ -2,8 +2,8 @@ USE jobManagerDB;
 select * 
 from Interview
 
-INSERT INTO userproporties VALUES(NULL,"Sara","Ziada","sziada276@gmail.com","050-7339214","1234");
-INSERT INTO Candidate VALUES(1,'Student',false,'Atidna 1',NULL);
+-- INSERT INTO userproporties VALUES(NULL,"Sara","Ziada","sziada276@gmail.com","050-7339214","1234");
+-- INSERT INTO Candidate VALUES(1,'Student',false,'Atidna 1',NULL);
 
 DELETE FROM Admin;
 
@@ -32,6 +32,24 @@ VALUES(3,"Apple","C++ Developer","Tel Aviv",'linkedIn',"h://..",2);
 
 INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
 VALUES(4,"philips","Full Stack","caesarea",'friend',"h://..",2);
+
+
+
+
+-- USE jobManagerDB;
+-- INSERT INTO userproporties VALUES(NULL,NULL,"fadi","idkeidek","fadi@gmail.com","050-2312673","1234",0);
+-- INSERT INTO Candidate VALUES(2,'Student',false,'Atidna 4',NULL);
+
+-- INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
+-- VALUES(3,"Apple","C++ Developer","Tel Aviv",'linkedIn',"h://..",3);
+
+-- INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
+-- VALUES(4,"philips","Full Stack","caesarea",'friend',"h://..",3);
+
+
+
+
+
 
 
 INSERT INTO Interview(type,interviewerName,status,processId)
