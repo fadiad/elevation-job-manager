@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import UsersInterviews from './usersInterviews';
+import UsersInterviews from './UsersInterviews';
 import Statistics from './Statistics'
 import Filter from './Filter'
 import NavBar from '../NavBar';
