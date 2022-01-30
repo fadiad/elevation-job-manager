@@ -68,7 +68,7 @@ class AddProcess extends Component {
             <div className='addProcess'>
 
                 <TextField
-
+                    required
                     label="Company Name"
                     onChange={this.setCompanyName}
                 />
@@ -122,7 +122,7 @@ class AddProcess extends Component {
                 </select>
 
 
-                <button onClick={this.addProcess}>add process</button> */}
+                <button onClick={this.addProcess}>add process</button>  */}
 
             </div>
         );
