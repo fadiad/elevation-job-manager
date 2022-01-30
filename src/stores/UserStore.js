@@ -5,7 +5,7 @@ import { Process } from './Process';
 import { Interview } from './Interview'
 export class UserStore {
     constructor() {
-        this.userID 
+        this.userID = 2 
         this.userData = {};
         this.processes = [];
 
@@ -24,6 +24,7 @@ export class UserStore {
         let userData = await axios.get(`http://localhost:8888/studentPage/userData/${email}`)
         this.userData = userData.data
     }
+
     assignAsAccepted(processId) {
         let body = {
             processId: processId,
@@ -42,11 +43,11 @@ export class UserStore {
             })
     }
 
-    // async getUserData(userID) {
-    //     let userData = await axios.get(`http://localhost:8888/studentPage/userData/${userID}`)
-    //     console.log(userData.data[0]);
-    //     this.userData = userData.data[0]
-    // }
+    async getUserData(userID) {
+        let userData = await axios.get(`http://localhost:8888/studentPage/userData/${userID}`)
+        console.log(userData.data[0]);
+        this.userData = userData.data[0]
+    }
 
     async addInterView(processId, type, date, interViewerName) {
         const interview = {
@@ -62,12 +63,15 @@ export class UserStore {
             body: JSON.stringify(interview)
         })
 
-        let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${processId}`)
-        this.processes.find(p => p.id == processId).interviews = [];
-        interviews.data.forEach(i =>
-            this.processes.find(p => p.id == processId).interviews
-                .push(new Interview(i.id, i.type, i.date, i.simulationDate, i.interviewerName, i.status, i.processId))
-        )
+
+        this.getProcesses(this.userID)
+
+        // let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${processId}`)
+        // this.processes.find(p => p.id == processId).interviews = [];
+        // interviews.data.forEach(i =>
+        //     this.processes.find(p => p.id == processId).interviews
+        //         .push(new Interview(i.id, i.type, i.date, i.simulationDate, i.interviewerName, i.status, i.processId))
+        // )
 
     }
     isValid(companyName, jobTitle, location, foundBy, link) {
@@ -117,12 +121,13 @@ export class UserStore {
             })
                 .then(res => res.json())
                 .then(data => {
-                    this.processes = []
+                    // this.processes = []
 
-                    data.forEach(async e => {
-                        let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
-                        this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
-                    });
+                    // data.forEach(async e => {
+                    //     let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
+                    //     this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
+                    // });
+                    this.getProcesses(this.userID)
                 })
         }
     }

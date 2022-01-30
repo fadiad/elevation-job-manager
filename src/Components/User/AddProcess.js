@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 
+
+import Button from '@mui/material/Button';
+
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+
 import '../../styles/addProcess.css'
 
 
@@ -26,6 +32,7 @@ class AddProcess extends Component {
 
     setCompanyName = (event) => {
         let companyName = event.target.value
+
         this.setState({
             companyName: companyName
         })
@@ -60,7 +67,52 @@ class AddProcess extends Component {
         return (
             <div className='addProcess'>
 
-                <input type="text" placeholder='CompanyName' onChange={this.setCompanyName} />
+
+
+
+                <TextField
+
+                    label="Company Name"
+                    onChange={this.setCompanyName}
+                />
+
+                <TextField
+                    required
+                    label="Job Title"
+                    onChange={this.setJobTitle}
+                />
+
+
+
+                <TextField
+                    required
+                    id="outlined-textarea"
+                    label="Location"
+                    onChange={this.setLocation}
+                />
+
+                <TextField
+                    id="outlined-textarea"
+                    label="Link"
+                    onChange={this.setLink}
+                />
+
+
+
+                <Button color="primary" variant="contained" onClick={this.addProcess}>add process</Button>
+
+
+
+
+                {/* <TextField
+                        variant="outlined"
+                        label="Interviewer Name"
+                        value={this.state.interviewerName}
+                        onChange={this.setInterviewerName}
+                    /> */}
+
+
+                <input type="text" placeholder='Company Name' onChange={this.setCompanyName} />
                 <input type="text" placeholder='Job Title' onChange={this.setJobTitle} />
                 <input type="text" placeholder='Location' onChange={this.setLocation} />
                 <input type="text" placeholder='Link' onChange={this.setLink} />
@@ -72,7 +124,6 @@ class AddProcess extends Component {
                     <option value="other">other</option>
                 </select>
 
-               
 
                 <button onClick={this.addProcess}>add process</button>
 
