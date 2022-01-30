@@ -4,53 +4,36 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import Interviews from './Interviews';
 import '../../styles/process.css'
-import DateMomentUtils from '@date-io/moment' 
-import { 
-    DatePicker ,
-    MuiPickersUtilsProvider ,
+import DateMomentUtils from '@date-io/moment'
+import {
+    DatePicker,
+    MuiPickersUtilsProvider,
 } from '@material-ui/pickers'
 import TextField from '@mui/material/TextField';
 import AddInterview from './AddInterview';
 // import  Controls  from '@mui/material';
- class Process extends Component {
+class Process extends Component {
 
     constructor() {
         super()
         this.state = {
-            status: ' ',
-            interviewerName: ' ',
             icon: "-",
-            showInterViews:true,
-            date : new Date(),
-            openDialog : false
+            showInterViews: true,
+            openDialog: false
         }
     }
 
-    setOpenDialog = () =>{
+    setOpenDialog = () => {
         this.setState({
-            openDialog : true
+            openDialog: true
+        })
+    }
+    setCloseDialog = () => {
+        this.setState({
+            openDialog: false
         })
     }
 
-    handleDateChange = (value) => {
-        this.setState({
-            date : value
-        })
-    }
-    
-    
-    setDate = (event) => {
-        let date = event.target.value
-        this.setState({
-            date: date
-        })
-    }
-    setInterviewerName = (event) => {
-        let interviewerName = event.target.value
-        this.setState({
-            interviewerName: interviewerName
-        })
-    }
 
     setStatus = (event) => {
         let status = event.target.value
@@ -73,7 +56,6 @@ import AddInterview from './AddInterview';
         }
     }
 
-
     assignAsAccepted = () => {
         this.props.userStore.assignAsAccepted(this.props.process.id)
     }
@@ -81,33 +63,8 @@ import AddInterview from './AddInterview';
     render() {
         return (
             <div className='Process'>
-                <button                 
-                text = "Add new Interivew"
-                onClick={this.setOpenDialog}
-                >
-                </button>
 
-                
-            <from className='inputs'>
-                <select value={this.state.status} onChange={this.setStatus}>
-                    <option value="Phone">Phone</option>
-                    <option value="HR">HR</option>
-                    <option value="Technical">Technical</option>
-                    <option value="Contract">Contract</option>
-                </select>
-               <MuiPickersUtilsProvider utils={DateMomentUtils}>
-                    <DatePicker value={this.state.date} onChange={this.handleDateChange}/>
-                    {/* <TimePicker value={this.state.selectedDate} onChange={this.handleDateChange}/> */}
-                    {/* <DateTimePicker value={this.state.selectedDate} onChange={this.handleDateChange} /> */}
-               </MuiPickersUtilsProvider>
-                <input type="text" placeholder='interviewer Name' onChange={this.setInterviewerName} />
-                <TextField 
-                variant="outlined"
-                label="Interviewer Name"
-                value={this.state.interviewerName}
-                onChange={this.setInterviewerName}
-                />
-            </from>
+
                 <div class="mdc-card">
                     <h3 className='icon' onClick={this.toggleInterViews}>{this.state.icon}</h3>
                     <h3>
@@ -127,23 +84,27 @@ import AddInterview from './AddInterview';
                     <div>
                         <div className='interviews'>
                             <div><h2>Interviews</h2></div>
-                            <div><button onClick={this.addInterView} >add interView</button></div>
+                            <button
+                                text="Add new Interivew"
+                                onClick={this.setOpenDialog}
+                            >add interView
+                            </button>
                             <div><button onClick={this.assignAsAccepted}>accepted</button></div>
                         </div>
 
-                <Interviews interviews={this.props.process.interviews} />
-                </div>:
-                null}
-                <AddInterview 
-                    openDialog = {this.state.openDialog}
-                    setOpenDialog = {this.setOpenDialog}
+                        <Interviews interviews={this.props.process.interviews} />
+                    </div> :
+                    null}
+                <AddInterview
+                    openDialog={this.state.openDialog}
+                    setOpenDialog={this.setOpenDialog}
+                    processId={this.props.process.id}
+                    setCloseDialog={this.setCloseDialog}
                 ></AddInterview>
             </div>
         );
     }
 
 }
-
-
 
 export default inject("userStore")(observer(Process))

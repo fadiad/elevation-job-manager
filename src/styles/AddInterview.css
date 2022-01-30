@@ -1,0 +1,15 @@
+
+.dialogPaper {
+    min-height : 80vh;
+    max-height: 80vh;    
+}
+
+.inputs{
+height: 250px;
+width: 150px;
+text-align: center;
+}
+.InputLabel{
+    margin-left: auto;
+    margin-right: auto;
+}
