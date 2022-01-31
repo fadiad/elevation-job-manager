@@ -8,6 +8,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const crypto = require("crypto");
+const sessionHandler = require('./sessionHandler');
 
 const app = express()
 
@@ -19,16 +20,20 @@ app.use(
         credentials: true,
     })
 );
+
+
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: crypto.randomBytes(16).toString("hex"),
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-}))
-
+        secret: crypto.randomBytes(16).toString("hex"),
+        resave: true,
+        saveUninitialized: true,
+        cookie: { secure: true }
+    }))
+    // app.use(function(req, res, next) {
+    //     sessionHandler(req, res, next);
+    // })
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
@@ -38,13 +43,12 @@ app.use(function(req, res, next) {
     next()
 })
 
-
 app.use('/login', loginApi)
 
 app.use('/studentPage', (req, res, next) => {
     // if (login.isStudentLoggedIn(req.session)) {
-    console.log("--------------")
-    console.log(req.body)
+    console.log("entered /studentPage")
+    console.log(req.session.id)
     next();
     // } else {
     //     res.send('you are not a Student - you dont have a permission')
@@ -56,11 +60,11 @@ app.use('/studentPage', studentapi)
 app.use('/adminPage', async(req, res, next) => {
     console.log("Entered /adminPage")
     console.log(req.session)
-        // await login.getUserData(req.session)
+    await login.getUserData(req.session)
         // if (login.isAdminLoggedIn(req.session)) {
     next();
     // } else {
-    //     res.send('you are not an Admin - you dont have a permission')
+    //     res.status(401).send('you are not an Admin - you dont have a permission')
     // }
 })
 
@@ -69,6 +73,7 @@ app.use('/adminPage', adminApi)
 app.get('/logout', async(req, res) => {
     req.session.destroy()
     await login.destroySession();
+    res.clearCookie('userId');
     res.send("logged out")
 })
 const port = 8888

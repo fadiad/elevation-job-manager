@@ -5,23 +5,27 @@ import { Process } from './Process';
 import { Interview } from './Interview'
 export class UserStore {
     constructor() {
-        this.userID = 2
+        this.userID
         this.userData = {};
         this.processes = [];
 
         makeAutoObservable(this, {
-            user: observable,
+            userID: observable,
             processes: observable,
             userData: observable,
+            setuserID: observable,
             getUserData: action,
             getprocesses: action,
             addProcess: action,
             addInterView: action
         })
     }
+    setuserID = (id) => {
+        this.userID = id
+    }
 
-    async getUserData(email) {
-        let userData = await axios.get(`http://localhost:8888/studentPage/userData/${email}`)
+    async getUserData(id) {
+        let userData = await axios.get(`http://localhost:8888/studentPage/userData/${id}`)
         this.userData = userData.data
     }
 
@@ -32,10 +36,10 @@ export class UserStore {
         }
 
         fetch('http://localhost:8888/studentPage/processStatus', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
-        })
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            })
             .then(data => {
                 this.getUserData(this.userID)
             }).catch(err => {
@@ -49,7 +53,7 @@ export class UserStore {
         this.userData = userData.data[0]
     }
 
-    async addInterView(processId, type, date, interViewerName , status = 'Scheduled' ) {
+    async addInterView(processId, type, date, interViewerName, status = 'Scheduled') {
         const interview = {
             processId: processId,
             type: type,
@@ -114,10 +118,10 @@ export class UserStore {
 
         if (this.isValid(companyName, jobTitle, location, foundBy, link)) {
             fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(processe)
-            })
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(processe)
+                })
                 .then(res => res.json())
                 .then(data => {
                     // this.processes = []
@@ -144,14 +148,14 @@ export class UserStore {
         let self = this;
         //         console.log("Status Before:" + this.getInterViewById(interviewId, processId))
         fetch(`http://localhost:8888/studentPage/interViewStatus/${this.userID}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(bodyParams),
-            // mode: 'no-cors'
-        })
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyParams),
+                // mode: 'no-cors'
+            })
             .then(data => {
                 if (bodyParams.type == 'Contract') {
-                    this.assignAsAccepted(bodyParams.processId)                
+                    this.assignAsAccepted(bodyParams.processId)
                 }
                 //                 console.log("Status Before:" + self.getInterViewById(interviewId, processId))
                 //                 self.getInterViewById(interviewId, processId).status = status
@@ -159,7 +163,7 @@ export class UserStore {
             }).catch(err => {
                 console.log(err)
             })
-            
+
     }
 
     getProcessById = (id) => {
