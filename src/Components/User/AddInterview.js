@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-undef */
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
-
+import Button from '@mui/material/Button';
 import { Dialog, DialogTitle, Grid, } from '@material-ui/core'
 import DateMomentUtils from '@date-io/moment'
 import {
@@ -10,7 +10,10 @@ import {
 } from '@material-ui/pickers'
 import TextField from '@mui/material/TextField';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
+
+
 import '../../styles/AddInterview.css'
+import { invalid } from 'moment';
 
 class AddInterview extends Component {
 
@@ -18,21 +21,27 @@ class AddInterview extends Component {
     constructor() {
         super()
         this.state = {
-            status: ' ',
+            type: 'Phone',
             interviewerName: ' ',
             date: new Date(),
+            dateError: false
         }
     }
-    setDate = (event) => {
-        let date = event.target.value
-        this.setState({
-            date: date
-        })
-    }
+
+    // setDate = (event) => {
+    //     let date = event.target.value
+    //     this.setState({
+    //         date: date
+    //     })
+    // }
 
     handleDateChange = (value) => {
         this.setState({
-            date: value
+            dateError: false
+        }, function () {
+            this.setState({
+                date: value
+            })
         })
     }
 
@@ -43,17 +52,32 @@ class AddInterview extends Component {
         })
     }
 
-    setStatus = (event) => {
-        let status = event.target.value
+    setType = (event) => {
+        let type = event.target.value
         this.setState({
-            status: status
+            type: type
         })
     }
+
     addInterView = () => {
-        // let date =this.state.date._d 
-        // let date = this.state.date._d.getFullYear() + "-" + "-"
-        this.props.userStore.addInterView(this.props.processId, this.state.status, this.state.date._d, this.state.interviewerName)
-        this.handleClose();
+        console.log(this.state.date._d);
+        if (this.isValid(this.state.date._d)) {
+            console.log("add interview ");
+            this.props.userStore.addInterView(this.props.processId, this.state.type, this.state.date._d, this.state.interviewerName)
+            this.handleClose();
+        } else {
+            console.log("did not add interview ");
+            this.setState({
+                dateError: true
+            })
+        }
+    }
+
+    isValid = (date) => {
+        if (!date) {
+            return false
+        }
+        return true
     }
 
     handleClose = () => {
@@ -77,7 +101,7 @@ class AddInterview extends Component {
             >
 
                 <DialogTitle>
-                    <div>
+                    <div className='DialogTitle'>
                         Add Interview
                     </div>
                 </DialogTitle>
@@ -85,10 +109,10 @@ class AddInterview extends Component {
 
                 <div className='inputs' >
 
-                    <div className='x'>
+                    <div className='inpt'>
                         <FormControl className='FormControl'  >
                             <InputLabel className='InputLabel'>Type</InputLabel>
-                            <Select className='Select' value={this.state.status} onChange={this.setStatus}>
+                            <Select className='Select' value={this.state.type} onChange={this.setType} required>
                                 <MenuItem value={'Phone'}>Phone</MenuItem>
                                 <MenuItem value={'HR'}>HR</MenuItem>
                                 <MenuItem value={'Technical'}>Technical</MenuItem>
@@ -97,8 +121,8 @@ class AddInterview extends Component {
                         </FormControl>
                     </div>
 
-                    
-                    <div className='x'>
+
+                    <div className='inpt'>
                         <TextField
                             variant="outlined"
                             label="Interviewer Name"
@@ -107,9 +131,10 @@ class AddInterview extends Component {
                         />
                     </div>
 
-                    <div className='x'>
+                    <div className='inpt'>
                         <MuiPickersUtilsProvider utils={DateMomentUtils}>
-                            <DatePicker value={this.state.date} onChange={this.handleDateChange} />
+                            <DatePicker error={this.state.dateError} value={this.state.date} onChange={this.handleDateChange} />
+
                             {/* <TimePicker value={this.state.selectedDate} onChange={this.handleDateChange}/> */}
                             {/* <DateTimePicker value={this.state.selectedDate} onChange={this.handleDateChange} /> */}
                         </MuiPickersUtilsProvider>
@@ -119,8 +144,11 @@ class AddInterview extends Component {
                 </div>
 
 
-                <button onClick={this.addInterView}>Add</button>
-                <button onClick={this.handleClose}> cancel</button>
+                <div className='Buttons'>
+                    <Button style={{ margin: "10px" }} size="medium" variant="contained" onClick={this.addInterView}>Add</Button>
+                    <Button size="medium" variant="contained" onClick={this.handleClose}>cancel</Button>
+                </div>
+
             </Dialog>
         );
     }
