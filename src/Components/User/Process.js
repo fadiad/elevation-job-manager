@@ -1,17 +1,10 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable no-undef */
+
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import Interviews from './Interviews';
 import '../../styles/process.css'
-import DateMomentUtils from '@date-io/moment'
-import {
-    DatePicker,
-    MuiPickersUtilsProvider,
-} from '@material-ui/pickers'
-import TextField from '@mui/material/TextField';
 import AddInterview from './AddInterview';
-// import  Controls  from '@mui/material';
+import Accepted from './Accepted'
 class Process extends Component {
 
     constructor() {
@@ -19,21 +12,38 @@ class Process extends Component {
         this.state = {
             icon: "-",
             showInterViews: true,
-            openDialog: false
+            openDialog: false,
+            isProcessActive: true,
+            AcceptedOpenDialog : false
         }
     }
 
+    setProcessUnActive = () => {
+        this.setState({
+            isProcessActive: false
+        })
+    }
     setOpenDialog = () => {
         this.setState({
             openDialog: true
         })
     }
+    
     setCloseDialog = () => {
         this.setState({
             openDialog: false
         })
     }
-
+    setAcceptedOpenDialog = () => {
+        this.setState({
+            AcceptedOpenDialog: true
+        })
+    }
+    setAcceptedCloseDialog = () => {
+        this.setState({
+            AcceptedOpenDialog: false
+        })
+    }
 
     setStatus = (event) => {
         let status = event.target.value
@@ -56,15 +66,15 @@ class Process extends Component {
         }
     }
 
-    assignAsAccepted = () => {
-        this.props.userStore.assignAsAccepted(this.props.process.id)
-    }
+    // assignAsAccepted = () => {
+    //     this.props.userStore.assignAsAccepted(this.props.process.id)
+    //     this.setProcessUnActive();
+    // }
 
     render() {
+        console.log(this.props.userStore.processes);
         return (
             <div className='Process'>
-
-
                 <div class="mdc-card">
                     <h3 className='icon' onClick={this.toggleInterViews}>{this.state.icon}</h3>
                     <h3>
@@ -84,17 +94,36 @@ class Process extends Component {
                     <div>
                         <div className='interviews'>
                             <div><h2>Interviews</h2></div>
-                            <button
-                                text="Add new Interivew"
-                                onClick={this.setOpenDialog}
-                            >add interView
-                            </button>
-                            <div><button onClick={this.assignAsAccepted}>accepted</button></div>
-                        </div>
 
-                        <Interviews interviews={this.props.process.interviews} />
+                            <div>
+                                {  this.props.process.status === "In progress"?
+                                    <div>
+                                        <button
+                                            text="Add new Interivew"
+                                            onClick={this.setOpenDialog}
+                                        >add interView
+                                        </button>
+                                        <button 
+                                        onClick={this.setAcceptedOpenDialog}
+                                        >accepted</button>
+                                    </div> : null
+                                }
+                            </div>
+
+                        </div>
+                      
+                        <Interviews setProcessUnActive={this.setProcessUnActive} interviews={this.props.process.interviews} />
                     </div> :
                     null}
+                      <Accepted
+                         openDialog={this.state.AcceptedOpenDialog}
+                         setOpenDialog={this.setAcceptedOpenDialog}
+                         setCloseDialog={this.setAcceptedCloseDialog}
+                         processId={this.props.process.id}
+                         id = {this.props.process.id}
+                         
+                         setProcessUnActive = {this.props.setProcessUnActive}
+                    ></Accepted> 
                 <AddInterview
                     openDialog={this.state.openDialog}
                     setOpenDialog={this.setOpenDialog}

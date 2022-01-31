@@ -25,3 +25,10 @@ select{
     border-radius: 999px;
     margin: 5px;
 } */
+.root{
+          width: '80%';
+          margin : 20px
+}
+.TextField{
+    margin: 20px;
+}

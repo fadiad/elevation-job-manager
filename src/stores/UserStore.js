@@ -5,7 +5,7 @@ import { Process } from './Process';
 import { Interview } from './Interview'
 export class UserStore {
     constructor() {
-        this.userID = 2 
+        this.userID = 2
         this.userData = {};
         this.processes = [];
 
@@ -29,8 +29,8 @@ export class UserStore {
         let body = {
             processId: processId,
             userID: this.userID,
-        } 
-    
+        }
+
         fetch('http://localhost:8888/studentPage/processStatus', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -49,13 +49,13 @@ export class UserStore {
         this.userData = userData.data[0]
     }
 
-    async addInterView(processId, type, date, interViewerName) {
+    async addInterView(processId, type, date, interViewerName , status = 'Scheduled' ) {
         const interview = {
             processId: processId,
             type: type,
             date: date,
             interViewerName: interViewerName,
-            status: 'Scheduled'
+            status: status
         }
         await fetch(`http://localhost:8888/studentPage/interviews`, {
             method: 'POST',
@@ -87,7 +87,6 @@ export class UserStore {
             typeof link === 'string' || link instanceof String) {
             return true
         }
-
         return false
     }
 
@@ -132,12 +131,14 @@ export class UserStore {
         }
     }
 
-    changeStatus = (interviewId, processId, status) => {
+    changeStatus = (interviewId, processId, status, type) => {
         let bodyParams = {
             processId: processId,
             interViewId: interviewId,
-            status: status
+            status: status,
+            type: type
         }
+
         console.log("entered client change status")
         console.log(bodyParams)
         let self = this;
@@ -149,12 +150,16 @@ export class UserStore {
             // mode: 'no-cors'
         })
             .then(data => {
+                if (bodyParams.type == 'Contract') {
+                    this.assignAsAccepted(bodyParams.processId)                
+                }
                 //                 console.log("Status Before:" + self.getInterViewById(interviewId, processId))
                 //                 self.getInterViewById(interviewId, processId).status = status
                 //                 console.log("Status After:" + self.getInterViewById(interviewId, processId))
             }).catch(err => {
                 console.log(err)
             })
+            
     }
 
     getProcessById = (id) => {

@@ -3,10 +3,9 @@ import { observer, inject } from 'mobx-react'
 
 
 import Button from '@mui/material/Button';
-
-import Box from '@mui/material/Box';
+import { Dialog, DialogTitle, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
 import TextField from '@mui/material/TextField';
-
+import { Grid } from '@material-ui/core';
 import '../../styles/addProcess.css'
 
 
@@ -37,12 +36,14 @@ class AddProcess extends Component {
             companyName: companyName
         })
     }
+
     setJobTitle = (event) => {
         let jobTitle = event.target.value
         this.setState({
             jobTitle: jobTitle
         })
     }
+
     setLocation = (event) => {
         let location = event.target.value
         this.setState({
@@ -57,75 +58,77 @@ class AddProcess extends Component {
         })
     }
 
-
     addProcess = () => {
         this.props.userStore.addProcess(this.state.companyName, this.state.jobTitle, this.state.location, this.state.foundBy, this.state.link)
+        this.handleClose();
     }
-
+    handleClose = () => {
+        this.props.setCloseDialog()
+    }
 
     render() {
         return (
+
             <div className='addProcess'>
 
+                <Dialog
+                    onClose={this.handleClose}
+                    open={this.props.openDialog}
+                    fullWidth
+                    // maxWidth = {'xs'}
+                    PaperProps={{
+                        sx: {
+                            width: "30%",
+                            maxHeight: "100%"
+                        }
+                    }}
+                >
+                    <DialogTitle>
+                        <div>
+                            Add Process
+                        </div>
+                    </DialogTitle>
+                    <form className='root'>
+                        <Grid container>
+                            <Grid item lg={1}>
+                                <TextField
+                                    variant="outlined"
+                                    label="Company Name"
+                                    onChange={this.setCompanyName}
+                                />
+                                <TextField
+                                    required
+                                    label="Job Title"
+                                    onChange={this.setJobTitle}
+                                />
+                                <TextField
+                                    required
+                                    id="outlined-textarea"
+                                    label="Location"
+                                    onChange={this.setLocation}
+                                />
+                                <TextField
+                                    id="outlined-textarea"
+                                    label="Link"
+                                    onChange={this.setLink}
+                                />
+                                <FormControl className='FormControl' >
+                                    <InputLabel className='InputLabel'>status</InputLabel>
+                                    <Select className='Select' value={this.state.foundBy} onChange={this.setFoundBy}>
+                                        <MenuItem value={'facebook'}>facebook</MenuItem>
+                                        <MenuItem value={'linkedIn'}>linkedIn</MenuItem>
+                                        <MenuItem value={'friend'}>friend</MenuItem>
+                                        <MenuItem value={'other'}>other</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <Button color="primary" variant="contained" onClick={this.addProcess}>add process</Button>
+                                <Button  variant="contained" onClick={this.handleClose}>cancel</Button>
 
+                            </Grid>
+                        </Grid>
+                    </form>
 
-
-                <TextField
-
-                    label="Company Name"
-                    onChange={this.setCompanyName}
-                />
-
-                <TextField
-                    required
-                    label="Job Title"
-                    onChange={this.setJobTitle}
-                />
-
-
-
-                <TextField
-                    required
-                    id="outlined-textarea"
-                    label="Location"
-                    onChange={this.setLocation}
-                />
-
-                <TextField
-                    id="outlined-textarea"
-                    label="Link"
-                    onChange={this.setLink}
-                />
-
-
-
-                <Button color="primary" variant="contained" onClick={this.addProcess}>add process</Button>
-
-
-
-
-                {/* <TextField
-                        variant="outlined"
-                        label="Interviewer Name"
-                        value={this.state.interviewerName}
-                        onChange={this.setInterviewerName}
-                    /> */}
-
-
-                <input type="text" placeholder='Company Name' onChange={this.setCompanyName} />
-                <input type="text" placeholder='Job Title' onChange={this.setJobTitle} />
-                <input type="text" placeholder='Location' onChange={this.setLocation} />
-                <input type="text" placeholder='Link' onChange={this.setLink} />
-
-                <select value={this.state.foundBy} onChange={this.setFoundBy}>
-                    <option value="facebook">facebook</option>
-                    <option value="linkedIn">linkedIn</option>
-                    <option value="friend">friend</option>
-                    <option value="other">other</option>
-                </select>
-
-
-                <button onClick={this.addProcess}>add process</button>
+                </Dialog>
 
             </div>
         );

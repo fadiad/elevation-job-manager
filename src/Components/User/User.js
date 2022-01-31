@@ -7,21 +7,44 @@ import '../../styles/User.css'
 
 
 class User extends Component {
+    constructor() {
+        super()
+        this.state = {
+            openDialog: false
+        }
+    }
 
     componentDidMount = () => {
         this.props.userStore.getUserData(this.props.userStore.userID)
         this.props.userStore.getProcesses(this.props.userStore.userID)
     }
-    render() {
-        // console.log(this.props.userStore.userData);
 
-    
-// console.log(this.props.userStore.userID);
+    setOpenDialog = () => {
+        this.setState({
+            openDialog: true
+        })
+    }
+    setCloseDialog = () => {
+        this.setState({
+            openDialog: false
+        })
+    }
+
+    render() {
         return (
             <div>
+                <h1>{this.props.userStore.userID}</h1>
                 <NavBar />
-                <AddProcess/>
-
+                <button
+                    text="Add new Process"
+                    onClick={this.setOpenDialog}
+                >add Process
+                </button>
+                <AddProcess
+                    openDialog={this.state.openDialog}
+                    setOpenDialog={this.setOpenDialog}
+                    setCloseDialog={this.setCloseDialog}
+                />
                 <br />
                 {
                     this.props.userStore.userData.isEmployeed === 1 ?
@@ -34,7 +57,4 @@ class User extends Component {
         );
     }
 }
-
 export default inject("userStore")(observer(User))
-
-

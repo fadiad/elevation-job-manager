@@ -1,4 +1,3 @@
-    /* eslint-disable react-hooks/rules-of-hooks */
 
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
@@ -16,8 +15,6 @@ import {Table ,
     TablePagination
 }from '@material-ui/core';
 
-// eslint-disable-next-line no-undef
-// ;
 
 
 
@@ -76,7 +73,6 @@ class UsersInterviews extends Component {
         this.props.adminStore.getUsersInterviews()
     }
     render() { 
-      console.log(this.props.adminStore.usersInterViews.length);
         return (
              <div>
                  <TableContainer component={Paper} className='TableContainer'>

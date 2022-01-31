@@ -64,11 +64,9 @@ class AddInterview extends Component {
     render() {
         return (
             <Dialog
-
                 onClose={this.handleClose}
                 open={this.props.openDialog}
                 fullWidth
-
                 // maxWidth = {'xs'}
                 PaperProps={{
                     sx: {
@@ -93,13 +91,13 @@ class AddInterview extends Component {
                             <MenuItem value={'Contract'}>Contract</MenuItem>
                         </Select>
                     </FormControl>
-                    {/* <select value={this.state.status} onChange={this.setStatus}>
-                                <option value="Phone">Phone</option>
-                                <option value="HR">HR</option>
-                                <option value="Technical">Technical</option>
-                                <option value="Contract">Contract</option>
-                            </select> */}
-                    <MuiPickersUtilsProvider utils={DateMomentUtils}>
+                        {/* <select value={this.state.status} onChange={this.setStatus}>
+                            <option value="Phone">Phone</option>
+                            <option value="HR">HR</option>
+                            <option value="Technical">Technical</option>
+                            <option value="Contract">Contract</option>
+                        </select> */}
+                    <MuiPickersUtilsProvider utils={DateMomentUtils} >
                         <DatePicker value={this.state.date} onChange={this.handleDateChange} />
                         {/* <TimePicker value={this.state.selectedDate} onChange={this.handleDateChange}/> */}
                         {/* <DateTimePicker value={this.state.selectedDate} onChange={this.handleDateChange} /> */}
