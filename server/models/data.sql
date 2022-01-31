@@ -2,8 +2,8 @@ USE jobManagerDB;
 select * 
 from Interview
 
-INSERT INTO userproporties VALUES(NULL,"Sara","Ziada","sziada276@gmail.com","050-7339214","1234");
-INSERT INTO Candidate VALUES(1,'Student',false,'Atidna 1',NULL);
+-- INSERT INTO userproporties VALUES(NULL,"Sara","Ziada","sziada276@gmail.com","050-7339214","1234");
+-- INSERT INTO Candidate VALUES(1,'Student',false,'Atidna 1',NULL);
 
 DELETE FROM Admin;
 
@@ -32,6 +32,24 @@ VALUES(3,"Apple","C++ Developer","Tel Aviv",'linkedIn',"h://..",2);
 
 INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
 VALUES(4,"philips","Full Stack","caesarea",'friend',"h://..",2);
+
+
+
+
+-- USE jobManagerDB;
+-- INSERT INTO userproporties VALUES(NULL,NULL,"fadi","idkeidek","fadi@gmail.com","050-2312673","1234",0);
+-- INSERT INTO Candidate VALUES(2,'Student',false,'Atidna 4',NULL);
+
+-- INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
+-- VALUES(3,"Apple","C++ Developer","Tel Aviv",'linkedIn',"h://..",3);
+
+-- INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
+-- VALUES(4,"philips","Full Stack","caesarea",'friend',"h://..",3);
+
+
+
+
+
 
 
 INSERT INTO Interview(type,interviewerName,status,processId)
@@ -64,9 +82,30 @@ INSERT INTO Admin VALUES(3,true);
 
 
 
-INSERT INTO Interview(type , date ,interviewerName,status,processId)
-    VALUES("${req.body.type}", '2022-02-01' ,"${req.body.interviewerName}","${req.body.status}",${req.body.processId});`
+-- INSERT INTO Interview(type , date ,interviewerName,status,processId)
+--     VALUES("${req.body.type}", '2022-02-01' ,"${req.body.interviewerName}","${req.body.status}",${req.body.processId});`
 
-INSERT INTO Interview(type, date , interviewerName,status,processId)
-VALUES('Phone' , '2022-02-01',"yosi","Scheduled",1);
+-- INSERT INTO Interview(type, date , interviewerName,status,processId)
+-- VALUES('Phone' , '2022-02-01',"yosi","Scheduled",1);
+-- USE jobManagerDB;
+
+
 USE jobManagerDB;
+DELETE FROM Candidate
+where Candidate.id = 3
+
+select *
+from Candidate
+
+INSERT INTO userproporties VALUES(NULL,"Amir","Halaby","amir@gmail.com","050-2312673","1234");
+INSERT INTO Candidate VALUES(2,'Student',false,'Atidna 4',NULL);
+
+
+
+USE jobManagerDB;
+INSERT INTO userproporties VALUES(Null,NULL,"fady","fady","fady@gmail.com","050-2487588","1234" , 0);
+USE jobManagerDB;
+INSERT INTO Candidate VALUES(4,'Student',false,'Atidna 4',NULL);
+
+
+select * from Candidate c inner join userproporties u on c.id = u.id

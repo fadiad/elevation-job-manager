@@ -28,6 +28,7 @@ export class UserStore {
         let userData = await axios.get(`http://localhost:8888/studentPage/userData/${id}`)
         this.userData = userData.data
     }
+
     assignAsAccepted(processId) {
         let body = {
             processId: processId,
@@ -46,19 +47,19 @@ export class UserStore {
             })
     }
 
-    // async getUserData(userID) {
-    //     let userData = await axios.get(`http://localhost:8888/studentPage/userData/${userID}`)
-    //     console.log(userData.data[0]);
-    //     this.userData = userData.data[0]
-    // }
+    async getUserData(userID) {
+        let userData = await axios.get(`http://localhost:8888/studentPage/userData/${userID}`)
+        console.log(userData.data[0]);
+        this.userData = userData.data[0]
+    }
 
-    async addInterView(processId, type, date, interViewerName) {
+    async addInterView(processId, type, date, interViewerName, status = 'Scheduled') {
         const interview = {
             processId: processId,
             type: type,
             date: date,
             interViewerName: interViewerName,
-            status: 'Scheduled'
+            status: status
         }
         await fetch(`http://localhost:8888/studentPage/interviews`, {
             method: 'POST',
@@ -66,12 +67,15 @@ export class UserStore {
             body: JSON.stringify(interview)
         })
 
-        let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${processId}`)
-        this.processes.find(p => p.id == processId).interviews = [];
-        interviews.data.forEach(i =>
-            this.processes.find(p => p.id == processId).interviews
-            .push(new Interview(i.id, i.type, i.date, i.simulationDate, i.interviewerName, i.status, i.processId))
-        )
+
+        this.getProcesses(this.userID)
+
+        // let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${processId}`)
+        // this.processes.find(p => p.id == processId).interviews = [];
+        // interviews.data.forEach(i =>
+        //     this.processes.find(p => p.id == processId).interviews
+        //         .push(new Interview(i.id, i.type, i.date, i.simulationDate, i.interviewerName, i.status, i.processId))
+        // )
 
     }
     isValid(companyName, jobTitle, location, foundBy, link) {
@@ -87,7 +91,6 @@ export class UserStore {
             typeof link === 'string' || link instanceof String) {
             return true
         }
-
         return false
     }
 
@@ -121,22 +124,25 @@ export class UserStore {
                 })
                 .then(res => res.json())
                 .then(data => {
-                    this.processes = []
+                    // this.processes = []
 
-                    data.forEach(async e => {
-                        let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
-                        this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
-                    });
+                    // data.forEach(async e => {
+                    //     let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
+                    //     this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
+                    // });
+                    this.getProcesses(this.userID)
                 })
         }
     }
 
-    changeStatus = (interviewId, processId, status) => {
+    changeStatus = (interviewId, processId, status, type) => {
         let bodyParams = {
             processId: processId,
             interViewId: interviewId,
-            status: status
+            status: status,
+            type: type
         }
+
         console.log("entered client change status")
         console.log(bodyParams)
         let self = this;
@@ -148,12 +154,16 @@ export class UserStore {
                 // mode: 'no-cors'
             })
             .then(data => {
+                if (bodyParams.type == 'Contract') {
+                    this.assignAsAccepted(bodyParams.processId)
+                }
                 //                 console.log("Status Before:" + self.getInterViewById(interviewId, processId))
                 //                 self.getInterViewById(interviewId, processId).status = status
                 //                 console.log("Status After:" + self.getInterViewById(interviewId, processId))
             }).catch(err => {
                 console.log(err)
             })
+
     }
 
     getProcessById = (id) => {

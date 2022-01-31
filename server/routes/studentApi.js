@@ -100,13 +100,7 @@ router.get('/interviews/:id', function(req, res) { // id : process id
 //     }
 // }
 router.post('/interviews', async function (req, res) { // id : process id
-    // converDate(req.body.date)
-    // let year = String(req.body.date);
-    // let month = String(req.body.date + 1);
-    // let day = String(req.body.date);
-    // if (day.length == 1) {
-    //     day = "0" + day;
-    // }
+    
     let date =   req.body.date.toString().slice(0,10)
    
     let query = `INSERT INTO Interview(type , date ,interviewerName,status,processId)
@@ -114,7 +108,6 @@ router.post('/interviews', async function (req, res) { // id : process id
     let result = await sequelize.query(query)
     res.send(result)
 })
-
 
 router.post('/interViewStatus/:id', async function(req, res) {
     let interViewId = req.body.interViewId;
@@ -124,11 +117,13 @@ router.post('/interViewStatus/:id', async function(req, res) {
     console.log(req.body)
     let query = `Update interview SET STATUS="${status}" WHERE id=${interViewId} AND processId=${processId};`
     let result = await sequelize.query(query)
+    if (status==="Failed") {
+        let processQuery = `Update Process SET status="Failed" WHERE id=${processId};`
+        await sequelize.query(processQuery)            
+    }
     res.send(result)
 })
 
-
-// -------------------------------------
 
 router.post('/processStatus', async function(req, res) {
     // process status 
@@ -139,11 +134,8 @@ router.post('/processStatus', async function(req, res) {
     console.log(req.body)
     let processQuery = `Update Process SET status="Passed" WHERE id=${req.body.processId};`
     let processResult = await sequelize.query(processQuery)
-
-    
     let userQuery = `Update Candidate SET isEmployeed="1" WHERE id=${req.body.userID};`
     let userResult = await sequelize.query(userQuery)
-    
     res.send("result")
 })
 

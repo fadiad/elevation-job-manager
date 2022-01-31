@@ -21,9 +21,7 @@ class Statistics extends Component {
                 <br />
                 <span>InProcess {this.props.adminStore.Statistics.InProcess }</span>
                 <br/>
-                <span>NotActive {this.props.adminStore.Statistics.NotActive }</span>
-
-                
+                <span>NotActive {this.props.adminStore.Statistics.NotActive }</span>              
             </div>
         );
     }
