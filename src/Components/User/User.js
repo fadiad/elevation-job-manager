@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react'
 import Processes from './Processes';
 import NavBar from '../NavBar';
 import AddProcess from './AddProcess';
+
 import '../../styles/User.css'
 
 
@@ -15,8 +16,8 @@ class User extends Component {
     }
 
     componentDidMount = () => {
-        this.props.userStore.getUserData(this.props.userStore.userID)
         this.props.userStore.getProcesses(this.props.userStore.userID)
+        this.props.userStore.getUserData(this.props.userStore.userID)
     }
 
     setOpenDialog = () => {
