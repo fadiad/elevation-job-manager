@@ -91,12 +91,20 @@ INSERT INTO Admin VALUES(3,true);
 
 
 USE jobManagerDB;
-DELETE FROM Candidate
-where Candidate.id = 3
+DELETE FROM Process
+where Process.id = 32
+32 34 
 
+USE jobManagerDB;
 select *
 from Candidate
 
+USE jobManagerDB;
+UPDATE Candidate 
+SET 
+    isEmployeed = 0
+WHERE
+    id = 2;
 INSERT INTO userproporties VALUES(NULL,"Amir","Halaby","amir@gmail.com","050-2312673","1234");
 INSERT INTO Candidate VALUES(2,'Student',false,'Atidna 4',NULL);
 
