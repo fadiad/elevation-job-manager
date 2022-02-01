@@ -135,10 +135,11 @@ router.post('/interViewStatus/:id', async function (req, res) {
     let mailOptions
     if (status === "Passed" &&  interviewType === "Contract") {
         mailOptions = {
+            
             from: 'elevation744@gmail.com',
             to: admin.email,
             subject: userName + " " + lastName + " , "  + " Passed the " + interviewType + " interview",
-            text: 'Hello ' + admin.firstName  + userName + " " + lastName +' passed the interview and signed a contract with ' +  CompanyName
+            text: 'Hello ' + admin.firstName + " " + userName + " " + lastName +' passed the interview and signed a contract with ' +  CompanyName
         };
     }
     else if (status === "Failed") {
@@ -152,7 +153,7 @@ router.post('/interViewStatus/:id', async function (req, res) {
         mailOptions = {
             from: 'elevation744@gmail.com',
             to: admin.email,
-            subject: userName + " " + lastName +" , " + " Passed the " + interviewType + " interview",
+            subject: userName + " " + lastName + " , " + " Passed the " + interviewType + " interview",
             text: 'Hello ' + adminName  + userName + " " + lastName +' Passed the interview in ' +  CompanyName
         };
     }
