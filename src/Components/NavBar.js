@@ -5,8 +5,8 @@ import ExitToAppSharpIcon from '@mui/icons-material/ExitToAppSharp';
 import AccountCircleSharpIcon from '@mui/icons-material/AccountCircleSharp';
 import Stack from '@mui/material/Stack';
 import {ThemeProvider} from '@mui/material/styles';
-import theme from './theme';
 import '../styles/navBar.css';
+import theme from './theme';
 import { Redirect } from 'react-router-dom';
 class NavBar extends Component {
     logout = () => {
@@ -23,8 +23,8 @@ class NavBar extends Component {
                 <h2>Elevation</h2>
                 <Stack className='nav-Buttons' spacing={2} direction="row">
                     <ThemeProvider theme={theme}>
-                    <Button variant="outlined" startIcon={<AccountCircleSharpIcon />}>Profile</Button>
-                    <Button variant="outlined" startIcon={<ExitToAppSharpIcon />} onClick={this.logout}>Logout</Button>
+                        <Button color="primary" variant="outlined" startIcon={<AccountCircleSharpIcon />}>Profile</Button>
+                        <Button variant="outlined" startIcon={<ExitToAppSharpIcon />} onClick={this.logout}>Logout</Button>
                     </ThemeProvider>
                 </Stack>
             </div>

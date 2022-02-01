@@ -17,7 +17,8 @@ export class UserStore {
             getUserData: action,
             getprocesses: action,
             addProcess: action,
-            addInterView: action
+            addInterView: action,
+            changeStatus: action
         })
     }
     setuserID = (id) => {
@@ -158,8 +159,8 @@ export class UserStore {
                     this.assignAsAccepted(bodyParams.processId)
                 }
                 //                 console.log("Status Before:" + self.getInterViewById(interviewId, processId))
-                //                 self.getInterViewById(interviewId, processId).status = status
-                //                 console.log("Status After:" + self.getInterViewById(interviewId, processId))
+                self.getInterViewById(interviewId, processId).status = status
+                    //                 console.log("Status After:" + self.getInterViewById(interviewId, processId))
             }).catch(err => {
                 console.log(err)
             })

@@ -1,16 +1,18 @@
-.FormControl{
-    Width : 100;
+.FormControl {
+    Width: 100;
 }
-.Filter{
-    text-align: center;
 
+.Filter {
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
-.Select{
-    margin-left:  20px;
-    padding : 20px;
 
+.Select {
+    margin-left: 20px;
+    padding: 20px;
 }
+
 .App {
     font-family: sans-serif;
     text-align: center;
-  }
+}

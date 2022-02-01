@@ -1,39 +1,12 @@
-// import axios from 'axios';
-// import { Redirect } from "react-router-dom";
-// import React, { Component } from 'react';
-// import { observer, inject } from 'mobx-react'
 
-// class Login extends Component {
-//     constructor() {
-//         super();
-//         this.state = {
-//             email: "",
-//             password: ""
-//         }
-//     }
-//     handleEmail = (event) => this.setState({ email: event.target.value })
-//     handlePassword = (event) => this.setState({ password: event.target.value })
-//     
-//     render() {
-//         return (
-//             <div>
-//                 <label>Email:</label> <input type='text' placeholder="email" value={this.state.email} onChange={this.handleEmail} />
-//                 <label>password:</label> <input type='text' placeholder="password" value={this.state.password} onChange={this.handlePassword} />
-//                 <button onClick={this.login}>Login</button>
-
-//             </div>
-//         );
-//     }
-// }
-
-// export default inject("userStore")(observer(Login))
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Grid, Paper, Avatar, TextField, Button, Typography } from '@material-ui/core'
+import { Grid, Paper, TextField, Button, Typography, ThemeProvider } from '@material-ui/core'
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import theme from './theme';
 const Login = (props) => {
 
     const [email, setEmail] = useState("");
@@ -83,7 +56,9 @@ const Login = (props) => {
                     }
                     label="Remember me"
                 />
-                <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth onClick={login}>Sign in</Button>
+                 <ThemeProvider theme={theme}>
+                    <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth onClick={login}>Sign in</Button>
+                </ThemeProvider>
                 <Typography >
                     {/* <Link href="#" >
                         Forgot password ?

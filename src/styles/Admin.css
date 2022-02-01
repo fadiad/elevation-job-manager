@@ -1,0 +1,17 @@
+@media only screen and (min-width: 800px) {
+    .all-statistics {
+        display: grid;
+        grid-template-columns: auto auto;
+    }
+}
+
+.statistics {
+    margin: 15px;
+    padding: 10px;
+    box-shadow: 5px 5px 5px 5px rgb(198 202 209 / 80%);
+}
+
+.charts {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}

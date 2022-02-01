@@ -1,8 +1,8 @@
 
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import PieChartByFilter from './PieChartByFilter'
-
+import PieChartByFilter from './PieChartByFilter';
+import '../../styles/Admin.css';
 class GeneralStatistics extends Component {
     componentDidMount() {
         this.props.adminStore.getStatistics()
@@ -10,10 +10,8 @@ class GeneralStatistics extends Component {
     render() {
 
         return (
-            <div>
-                <span>General Statistics : </span>
-                <br />
-                <span>student {this.props.adminStore.generalStatistics.student }</span>
+            <div className='statistics'>
+                <h3>General Statistics : </h3>
                 <PieChartByFilter
                     student    = {this.props.adminStore.generalStatistics.student}    
                     employed   = {this.props.adminStore.generalStatistics.employed}  

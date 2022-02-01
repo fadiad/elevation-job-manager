@@ -7,38 +7,35 @@ import AddSimulationDate from './AddSimulationDate'
 
 import Filter from './Filter'
 import NavBar from '../NavBar';
+import '../../styles/Admin.css'
+import '../theme';
 
 class Admin extends Component {
-    constructor() {
-        super()
-        this.state = {
-            openDialog: false
-        }
-    }
-
+    
     componentDidMount() {
         this.props.adminStore.getAdminData()
     }
 
-    setOpenDialog = () => { this.setState({ openDialog: true }) }
-    setCloseDialog = () => { this.setState({ openDialog: false }) }
+   
 
     render() {
         return (
             <div>
                 <NavBar />
 
-                <AddSimulationDate
+                {/* <AddSimulationDate
                     openDialog={this.state.openDialog}
                     setOpenDialog={this.setOpenDialog}
                     setCloseDialog={this.setCloseDialog}
-                />
+                /> */}
 
                 <Filter />
                 adminName : {this.props.adminStore.adminName}
-                <GeneralStatistics />
-                <StatisticsByFilter />
-
+                <div className='all-statistics'>
+                    <GeneralStatistics/>
+                    <StatisticsByFilter/>
+                </div>
+                
                 {/* <PieChartByFilter/> */}
 
                 <UsersInterviews setOpenDialog = {this.setOpenDialog} />

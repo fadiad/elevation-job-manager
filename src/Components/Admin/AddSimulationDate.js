@@ -14,21 +14,31 @@ class AddSimulationDate extends Component {
     constructor() {
         super()
         this.state = {
-            date: new Date(),
-            dateError: false
+            primaryDate: new Date(),
+            secondaryDate1: '',
+            secondaryDate2: ''
         }
     }
 
 
-    handleDateChange = (value) => {
+    handlePrimaryDateChange = (e) => {
         this.setState({
-            dateError: false
-        }, function () {
-            this.setState({
-                date: value
-            })
+            primaryDate: e.target.value
         })
     }
+
+    handleSecondary1DateChange = (e) => {
+        this.setState({
+            secondaryDate1: e.target.value
+        })
+    }
+
+    handleSecondary2DateChange = (e) => {
+        this.setState({
+            secondaryDate2: e.target.value
+        })
+    }
+
 
     handleClose = () => {
         this.props.setCloseDialog()
@@ -36,17 +46,8 @@ class AddSimulationDate extends Component {
 
 
     addSimulationDate = () => {
-        if (this.isValid(this.state.date._d)) {
-            console.log("add addSimulationDate ");
-            console.log(this.state.date._d);
-            // this.props.userStore.addInterView(this.props.processId, this.state.type, this.state.date._d, this.state.interviewerName)
-            this.handleClose();
-        } else {
-            console.log("did not add addSimulationDate ");
-            this.setState({
-                dateError: true
-            })
-        }
+        this.props.adminStore.addSimulationDate(this.state.primaryDate, this.state.secondaryDate1, this.state.secondaryDate2)
+        this.handleClose();
     }
 
     isValid = (date) => {
@@ -81,38 +82,42 @@ class AddSimulationDate extends Component {
                         <MuiPickersUtilsProvider utils={DateMomentUtils}>
                             <div className='inpt' >
                                 <TextField
+                                    required
                                     id="datetime-local"
-                                    label="Next appointment"
+                                    label="Primary Simulation Date"
                                     type="datetime-local"
                                     defaultValue="2017-05-24T10:30"
                                     sx={{ width: 250 }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
+                                    onChange={this.handlePrimaryDateChange}
                                 />
                             </div>
                             <div className='inpt'>
                                 <TextField
                                     id="datetime-local"
-                                    label="Next appointment"
+                                    label="Optional Simulation Date"
                                     type="datetime-local"
                                     defaultValue="2017-05-24T10:30"
                                     sx={{ width: 250 }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
+                                    onChange={this.handleSecondary1DateChange}
                                 />
                             </div>
                             <div className='inpt'>
                                 <TextField
                                     id="datetime-local"
-                                    label="Next appointment"
+                                    label="Optional Simulation Date"
                                     type="datetime-local"
                                     defaultValue="2017-05-24T10:30"
                                     sx={{ width: 250 }}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
+                                    onChange={this.handleSecondary2DateChange}
                                 />
                             </div>
                         </MuiPickersUtilsProvider>

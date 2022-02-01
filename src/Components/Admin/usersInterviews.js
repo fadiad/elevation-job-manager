@@ -2,6 +2,12 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../styles/UsersInterview.css'
+import { Button } from '@mui/material';
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
+import { ThemeProvider } from '@material-ui/core';
+import theme from '../theme';
+import AddSimulationDate from './AddSimulationDate'
+
 import {
   Table,
   TableBody,
@@ -26,9 +32,14 @@ class UsersInterviews extends Component {
       page: 0,
       rowsPerPage: 5,
       order: '',
-      orderBy: ''
+      orderBy: '',
+      interviewId: 1,
+      openDialog: false
     }
   }
+
+  setOpenDialog = () => { this.setState({ openDialog: true }) }
+  setCloseDialog = () => { this.setState({ openDialog: false }) }
 
 
 
@@ -59,6 +70,7 @@ class UsersInterviews extends Component {
       page: newPage
     })
   }
+
   handleChangeRowsPerPage = (event) => {
     this.setState({
       rowsPerPage: event.target.value,
@@ -73,14 +85,10 @@ class UsersInterviews extends Component {
     this.props.adminStore.getUsersInterviews()
   }
 
-
-  setSimulationDate = () => {
-    this.props.setOpenDialog()
-  }
-
   render() {
     return (
       <div>
+
         <TableContainer component={Paper} className='TableContainer'>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -97,11 +105,13 @@ class UsersInterviews extends Component {
 
               </TableRow>
             </TableHead>
+
             <TableBody>
               {/* .slice(page* rowsPerPage , page * rowsPerPage + rowsPerPage) */}
               {this.props.adminStore.usersInterViews.slice(
                 this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row, index) => (
                   <TableRow key={row.firstName}>
+
                     <TableCell>
                       <Grid container>
                         <Grid item lg={2}>
@@ -113,9 +123,9 @@ class UsersInterviews extends Component {
                         </Grid>
                       </Grid>
                     </TableCell>
-                    <TableCell >
-                      {row.cohort}
-                    </TableCell>
+
+                    <TableCell > {row.cohort} </TableCell>
+
                     <TableCell >{row.jobTitle}</TableCell>
                     <TableCell >{row.companyName}</TableCell>
                     <TableCell >{row.type}</TableCell>
@@ -139,7 +149,18 @@ class UsersInterviews extends Component {
                         }
                       >{row.status}</Typography>
                     </TableCell>
-                    <TableCell style={{ display: (row.status !== 'Scheduled' && 'none') }} ><button onClick={this.setSimulationDate} >set simulation date</button></TableCell>
+
+                    <TableCell style={{ display: (row.status !== 'Scheduled' && 'none') }} >
+
+                      <ThemeProvider theme={theme}>
+                        <Button variant="contained" onClick={() => {
+                          this.props.adminStore.interviewId = row.id
+                          console.log(this.props.adminStore.interviewId);
+                          this.setOpenDialog()
+                        }} startIcon={<InsertInvitationIcon />}>Schedule Simulation</Button>
+                      </ThemeProvider>
+
+                    </TableCell>
 
 
                   </TableRow>
@@ -161,6 +182,13 @@ class UsersInterviews extends Component {
           </Table>
 
         </TableContainer>
+
+        <AddSimulationDate
+          openDialog={this.state.openDialog}
+          setOpenDialog={this.setOpenDialog}
+          setCloseDialog={this.setCloseDialog}
+          interviewId={this.state.interviewId}
+        />
 
       </div>
     );

@@ -1,8 +1,8 @@
 
 import "../../styles/PieChartByFilter.css";
 import React from "react";
-import { PieChart, Pie, Cell } from "recharts";
-
+import { PieChart, Pie, Cell,Legend } from "recharts";
+import '../../styles/Admin.css';
 const COLORS = ["#426696", "#ff96aa"];
 
 const RADIAN = Math.PI / 180;
@@ -33,58 +33,33 @@ const renderCustomizedLabel = ({
 };
 export default function PieChartByFilter(props) {
   const employed = [
-    { name: "Group A", value: props.employed },
-    { name: "Group B", value: props.unEmployed },
+    { name: "Employeed", value: props.employed },
+    { name: "Un-Employeed", value: props.unEmployed },
 
   ];
   const Process = [
-    { name: "Group A", value: props.InProcess },
-    { name: "Group B", value: props.NotActive },
+    { name: "In Progress", value: props.InProcess },
+    { name: "Not Active", value: props.NotActive },
 
   ];
-
-
+//renderCustomizedLabel
+let renderLabel = function(entry) {
+  return entry.value;
+}
   return (
-    <div>
-      <div>
-        <span>employed   {props.employed}  </span><br />
-        <span>unEmployed {props.unEmployed}</span><br />
-      </div>
-      <PieChart width={400} height={400}>
-        <Pie
-          data={employed}
-          cx={200}
-          cy={200}
-          labelLine={false}
-          label={renderCustomizedLabel}
-          outerRadius={80}
-          fill="#8884d8"
-          dataKey="value"
-        >
+    <div className="charts">
+      <PieChart width={300} height={200}>
+      <Legend layout="vertical" verticalAlign="bottom" align="left"/>
+        <Pie data={employed} cx={80} cy={100} labelLine={false} label={renderCustomizedLabel} outerRadius={80} fill="#8884d8"  >
           {employed.map((entry, index) => (
-            
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-
       </PieChart>
-      <div>
-        <span>InProcess  {props.InProcess} </span>
-        <br />
-        <span>NotActive  {props.NotActive} </span>
-      </div>
-      <PieChart width={400} height={400}>
-
-        <Pie
-          data={Process}
-          cx={200}
-          cy={200}
-          labelLine={false}
-          label={renderCustomizedLabel}
-          outerRadius={80}
-          fill="#8884d8"
-          dataKey="value"
-        >
+     
+      <PieChart width={300} height={200}>
+      <Legend layout="vertical" verticalAlign="bottom" align="left" />
+        <Pie data={Process} cx={80} cy={100}  labelLine={false} label={renderCustomizedLabel} outerRadius={80} fill="#8884d8" >
           {Process.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}

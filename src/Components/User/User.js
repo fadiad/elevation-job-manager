@@ -37,12 +37,13 @@ class User extends Component {
                         <Button variant="contained" startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>add Process</Button>
                     </ThemeProvider>
                 </Stack>
-                
+
                 <AddProcess
                     openDialog={this.state.openDialog}
                     setOpenDialog={this.setOpenDialog}
                     setCloseDialog={this.setCloseDialog}
                 />
+                
                 <br />
                 {
                     this.props.userStore.userData.isEmployeed === 1 ?
