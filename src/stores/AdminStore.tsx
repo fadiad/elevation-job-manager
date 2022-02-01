@@ -9,13 +9,21 @@ export class AdminStore {
     statusByFilter : String;
     CohortByFilter : String;
     usersInterViews : Array<UserInterview>  ; 
-    Statistics : Object
+    generalStatistics : Object ;
+    statisticsByFilter : Object ;
     constructor() {
         this.usersInterViews = [];
         this.adminName = ' ';
-        this.statusByFilter = 'all';
+        this.statusByFilter = 'Scheduled';
         this.CohortByFilter = 'all';
-        this.Statistics = {
+        this.generalStatistics = {
+            InProcess : '',
+            employed : '',
+            student : '',
+            unEmployed : '',
+            NotActive : ''
+        }
+        this.statisticsByFilter = {
             InProcess : '',
             employed : '',
             student : '',
@@ -25,14 +33,15 @@ export class AdminStore {
         makeAutoObservable(this, {
             usersInterViews: observable,
             adminName: observable,
-            Statistics : observable ,
+            generalStatistics : observable ,
             getUsersInterviews: action,
             getAdminData : action,
             setCohort : action , 
-            setStatus : action
+            setStatus : action, 
+            getStatisticsByFilter : action
         })
     }
-    setStatus(status : String){
+    setStatus(status :String ){
         this.statusByFilter = status
     }
     setCohort(cohort : String){
@@ -44,17 +53,38 @@ export class AdminStore {
     }
 
     async getStatistics(){
-        let Statistics = await axios.get("http://localhost:8888/adminPage/Statistics")
-        this.Statistics = Statistics.data
+        let FilterBy = {
+            status : 'all' ,
+            filter : 'all'
+        }
+        let Statistics = await axios.get('http://localhost:8888/adminPage/Statistics', {
+            params: { cohort:  'all' , interViewStatus :  'all'}
+
+        })        
+        this.generalStatistics = Statistics.data
     }
-    
+
+    async getStatisticsByFilter(){
+
+        let FilterBy = {
+            status : this.statusByFilter ,
+            filter : this.CohortByFilter
+        }
+        let Statistics = await axios.get('http://localhost:8888/adminPage/Statistics', {
+                params: { cohort: this.CohortByFilter , interViewStatus : this.statusByFilter}
+        })
+
+        this.statisticsByFilter = Statistics.data
+    }
+
     async getUsersInterviews() {
         this.usersInterViews = [];
         let users = await axios.get("http://localhost:8888/adminPage/interviews"
         , { params: { cohort: this.CohortByFilter , interViewStatus : this.statusByFilter} });
         users.data.forEach(e  => {
-            this.usersInterViews.push(new UserInterview(e.firstName ,e.lastName ,e.cohort , e.companyName , e.type , e.date , e.status))
+            this.usersInterViews.push(new UserInterview(e.firstName ,e.lastName , e.email ,e.cohort , e.companyName  ,e.jobTitle , e.type , e.date , e.status))
         });
     }
+
 }
 
