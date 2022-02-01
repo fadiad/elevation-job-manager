@@ -121,6 +121,8 @@ router.post('/interViewStatus/:id', async function(req, res) {
         let processQuery = `Update Process SET status="Failed" WHERE id=${processId};`
         await sequelize.query(processQuery)
     }
+    query = `Select * From interview  WHERE id=${interViewId} AND processId=${processId};`
+    result = await sequelize.query(query)
     res.send(result)
 })
 

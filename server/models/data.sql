@@ -223,3 +223,5 @@ select count(*) As NumberOfemployed
             on c.id = p.UserId 
         where c.isEmployeed = 0 and p.status = 'In progress'  and c.cohort = 'Atidna 4'
         GROUP BY p.UserId
+
+INSERT INTO simulation VALUES(NULL,"2022-10-10 10:00:00",NULL,NULL,1,2)

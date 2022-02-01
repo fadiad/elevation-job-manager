@@ -50,20 +50,7 @@ class Interview extends Component {
         this.setState({
             fail: true
         })
-    }
-    // pass = () => {
-    //     this.props.userStore.changeStatus(this.props.interview.id, this.props.interview.processId, "Passed" , this.props.interview.type)
-    //     this.props.setPass()
-
-    // }
-
-    // fail = () => {
-    //     this.props.userStore.changeStatus(this.props.interview.id, this.props.interview.processId, "Failed" ,this.props.interview.type)
-    //     this.setState({
-    //         fail: true
-    //     })
-    //     this.props.setProcessUnActive()
-    // }
+        }
     render() {
         let interview = this.props.interview
         console.log(this.props.interview);
@@ -72,8 +59,8 @@ class Interview extends Component {
                 <div>{interview.type}</div>
                 <div>{interview.interViewerName}</div>
                 <div>{interview.date}</div>
+                <div><Button disabled={interview.simulationDate === undefined}>Simulation</Button></div>
                 <div>{interview.status === "Scheduled" ?
-
                     <div>
                         <Stack spacing={2} direction="row">
                             <ThemeProvider theme={theme}>

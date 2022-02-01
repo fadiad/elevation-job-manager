@@ -2,6 +2,10 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../styles/UsersInterview.css'
+import { Button } from '@mui/material';
+import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
+import { ThemeProvider } from '@material-ui/core';
+import theme from '../theme';
 import {
   Table,
   TableBody,
@@ -135,7 +139,12 @@ class UsersInterviews extends Component {
                         }
                       >{row.status}</Typography>
                     </TableCell>
-                    <TableCell style={{ display: (row.status !== 'Scheduled' && 'none') }} ><button>dummy interview</button></TableCell>
+                    <TableCell style={{ display: (row.status !== 'Scheduled' && 'none') }} >
+                    <ThemeProvider theme={theme}>
+                        <Button variant="contained" startIcon={<InsertInvitationIcon />}>Schedule Simulation</Button>
+                    </ThemeProvider>
+                      {/* <button>dummy interview</button> */}
+                      </TableCell>
 
 
                   </TableRow>

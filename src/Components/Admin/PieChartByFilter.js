@@ -42,12 +42,15 @@ export default function PieChartByFilter(props) {
     { name: "Not Active", value: props.NotActive },
 
   ];
-
+//renderCustomizedLabel
+let renderLabel = function(entry) {
+  return entry.value;
+}
   return (
     <div className="charts">
       <PieChart width={300} height={200}>
-      <Legend layout="vertical" verticalAlign="bottom" align="left" label/>
-        <Pie data={employed} cx={80} cy={100} labelLine={true} label outerRadius={80} fill="#8884d8"  >
+      <Legend layout="vertical" verticalAlign="bottom" align="left"/>
+        <Pie data={employed} cx={80} cy={100} labelLine={false} label={renderCustomizedLabel} outerRadius={80} fill="#8884d8"  >
           {employed.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
@@ -56,7 +59,7 @@ export default function PieChartByFilter(props) {
      
       <PieChart width={300} height={200}>
       <Legend layout="vertical" verticalAlign="bottom" align="left" />
-        <Pie data={Process} cx={80} cy={100} labelLine={true} outerRadius={80} fill="#8884d8" >
+        <Pie data={Process} cx={80} cy={100}  labelLine={false} label={renderCustomizedLabel} outerRadius={80} fill="#8884d8" >
           {Process.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}

@@ -6,6 +6,7 @@ import StatisticsByFilter from './StatisticsByFilter'
 import Filter from './Filter'
 import NavBar from '../NavBar';
 import '../../styles/Admin.css'
+import '../theme';
 
 class Admin extends Component {
 

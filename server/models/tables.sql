@@ -70,3 +70,14 @@ ALTER TABLE UserProporties
   ADD session_id varchar(50) 
     AFTER id;
 
+Use jobManagerDB;
+Create TABLE simulation(
+        id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    date1 Date NOT NULL,
+    date2 Date,
+    date3 Date,
+    InterviewId MEDIUMINT,
+    adminId MEDIUMINT,
+    FOREIGN Key(InterviewId) REFERENCES Interview(id),
+    FOREIGN Key(adminId) REFERENCES Admin(id)
+);
