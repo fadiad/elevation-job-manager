@@ -67,6 +67,8 @@ router.get('/interviews', async function (req, res) {
 
 
 router.get('/Statistics', async function (req, res) {
+    // const cohort = req.query.cohort
+    // const interViewStatus = req.query.interViewStatus
     let obj = {};
 
     if (req.query.cohort === 'all' && req.query.interViewStatus === 'all') {
