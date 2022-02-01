@@ -3,10 +3,24 @@
     grid-template-rows: 1fr 1fr 1fr  ;
 }
 
-.x{
+.inpt{
     margin-left: auto;
     margin-right: auto;
+    margin-top: 15px;
 }
+
+.Buttons{
+    column-gap: normal;
+    text-align: center;
+    margin: 10px;
+}
+
+.DialogTitle{
+    text-align: center;
+}
+
+
+
 
 
 /* .dialogPaper {

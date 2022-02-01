@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import AddSharpIcon from '@mui/icons-material/AddSharp';
+import {ThemeProvider} from '@mui/material/styles';
+import theme from '../theme';
 import Processes from './Processes';
 import NavBar from '../NavBar';
 import AddProcess from './AddProcess';
@@ -20,27 +25,18 @@ class User extends Component {
         this.props.userStore.getUserData(this.props.userStore.userID)
     }
 
-    setOpenDialog = () => {
-        this.setState({
-            openDialog: true
-        })
-    }
-    setCloseDialog = () => {
-        this.setState({
-            openDialog: false
-        })
-    }
+    setOpenDialog = () => {this.setState({openDialog: true})}
+    setCloseDialog = () => {this.setState({openDialog: false})}
 
     render() {
         return (
             <div>
-                <h1>{this.props.userStore.userID}</h1>
                 <NavBar />
-                <button
-                    text="Add new Process"
-                    onClick={this.setOpenDialog}
-                >add Process
-                </button>
+                <Stack padding={"15px"} width={"30%"}>
+                    <ThemeProvider theme={theme}>
+                        <Button variant="contained" startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>add Process</Button>
+                    </ThemeProvider>
+                </Stack>
                 <AddProcess
                     openDialog={this.state.openDialog}
                     setOpenDialog={this.setOpenDialog}
