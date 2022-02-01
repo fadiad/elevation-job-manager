@@ -5,7 +5,7 @@ import GeneralStatistics from './GeneralStatistics'
 import StatisticsByFilter from './StatisticsByFilter'
 import Filter from './Filter'
 import NavBar from '../NavBar';
-import PieChartByFilter from './PieChartByFilter'
+import '../../styles/Admin.css'
 
 class Admin extends Component {
 
@@ -19,8 +19,11 @@ class Admin extends Component {
                 <NavBar/>
                 <Filter />
                 adminName : {this.props.adminStore.adminName}
-                <GeneralStatistics/>
-                <StatisticsByFilter/>
+                <div className='all-statistics'>
+                    <GeneralStatistics/>
+                    <StatisticsByFilter/>
+                </div>
+                
                 {/* <PieChartByFilter/> */}
                 <UsersInterviews />
 
