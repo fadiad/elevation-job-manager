@@ -5,12 +5,14 @@ import { observable, action, makeAutoObservable } from 'mobx'
 export class UserInterview {
     
   
-    constructor( firstName ,lastName ,cohort , companyName , type , date , status ) {
+    constructor( firstName ,lastName , email ,cohort , companyName , jobTitle , type , date , status ) {
 
         this.firstName = firstName ,
         this.lastName = lastName ,
+        this.email = email
         this.cohort = cohort , 
         this.companyName = companyName, 
+        this.jobTitle = jobTitle ,
         this.type = type, 
         this.date = date, 
         this.status = status
@@ -18,8 +20,10 @@ export class UserInterview {
         makeAutoObservable(this, {
             firstName : observable ,
             lastName : observable ,
-            cohort   : observable , 
-            companyName: observable, 
+            email : observable ,
+            cohort  : observable , 
+            companyName : observable, 
+            jobTitle : observable ,
             type : observable, 
             date : observable, 
             status : observable

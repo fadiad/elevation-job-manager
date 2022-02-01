@@ -1,34 +1,25 @@
-/* .addProcess{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr ;
-    padding: 5px;
-} */
-
-/* button{
-    border-radius: 999px;
-    background-color: #ff96aa;
-    color: #FFFFFF;
-    box-shadow: #ff96aa 0 10px 20px -10px;
-    margin: 5px;
-} */
-
-/* input{
-    border-radius: 999px;
-    margin: 5px;
+.inputs{
+    /* display: grid;
+    grid-template-rows: fr 1fr 1fr  ; */
+    width: 50%;
+    text-align: center;
+    padding-left: 150px;
 }
-select{
-    border-radius: 999px;
-    margin: 5px;
-} */
-
-/* .b{
-    border-radius: 999px;
-    margin: 5px;
-} */
 .root{
           width: '80%';
           margin : 20px
 }
 .TextField{
-    margin: 20px;
+    margin: 100px;
+}
+
+.DialogTitle{
+    text-align: center;
+}
+
+
+.Buttons{
+    column-gap: normal;
+    text-align: center;
+    margin-right: 10px;
 }
