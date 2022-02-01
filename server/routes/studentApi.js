@@ -49,7 +49,7 @@ router.get('/processes/:id', function(req, res) { // id : user id
     sequelize
         .query(`SELECT p.id , p.companyName , p.jobTitle , p.location , p.foundBy , p.link , p.status
     FROM Candidate AS c  , Process AS p
-    WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
+    WHERE UserId = '${req.params.id}' AND c.id = p.UserId  ORDER BY p.status DESC`)
         .then(function([results, metadata]) {
             res.send(results)
         })
@@ -75,34 +75,34 @@ WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
 
 
 router.get('/interviews/:id', function(req, res) { // id : process id 
-    sequelize
-        .query(`SELECT i.id, i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId
+        sequelize
+            .query(`SELECT i.id, i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId
     FROM Process AS p , Interview AS i
     WHERE i.processId = '${req.params.id}' AND  p.id = i.processId`)
-        .then(function([results, metadata]) {
-            res.send(results)
-        })
-})
-// function converDate () {
-//     Date.prototype.toYMD = Date_toYMD;
-//     function Date_toYMD() {
-//         var year, month, day;
-//         year = String(this.getFullYear());
-//         month = String(this.getMonth() + 1);
-//         if (month.length == 1) {
-//             month = "0" + month;
-//         }
-//         day = String(this.getDate());
-//         if (day.length == 1) {
-//             day = "0" + day;
-//         }
-//         return year + "-" + month + "-" + day;
-//     }
-// }
-router.post('/interviews', async function (req, res) { // id : process id
-    
-    let date =   req.body.date.toString().slice(0,10)
-   
+            .then(function([results, metadata]) {
+                res.send(results)
+            })
+    })
+    // function converDate () {
+    //     Date.prototype.toYMD = Date_toYMD;
+    //     function Date_toYMD() {
+    //         var year, month, day;
+    //         year = String(this.getFullYear());
+    //         month = String(this.getMonth() + 1);
+    //         if (month.length == 1) {
+    //             month = "0" + month;
+    //         }
+    //         day = String(this.getDate());
+    //         if (day.length == 1) {
+    //             day = "0" + day;
+    //         }
+    //         return year + "-" + month + "-" + day;
+    //     }
+    // }
+router.post('/interviews', async function(req, res) { // id : process id
+
+    let date = req.body.date.toString().slice(0, 10)
+
     let query = `INSERT INTO Interview(type , date ,interviewerName,status,processId)
         VALUES("${req.body.type}", "${date}" ,"${req.body.interViewerName}","${req.body.status}",${req.body.processId});`
     let result = await sequelize.query(query)
@@ -117,9 +117,9 @@ router.post('/interViewStatus/:id', async function(req, res) {
     console.log(req.body)
     let query = `Update interview SET STATUS="${status}" WHERE id=${interViewId} AND processId=${processId};`
     let result = await sequelize.query(query)
-    if (status==="Failed") {
+    if (status === "Failed") {
         let processQuery = `Update Process SET status="Failed" WHERE id=${processId};`
-        await sequelize.query(processQuery)            
+        await sequelize.query(processQuery)
     }
     res.send(result)
 })

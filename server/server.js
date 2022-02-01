@@ -73,7 +73,7 @@ app.use('/adminPage', adminApi)
 app.get('/logout', async(req, res) => {
     req.session.destroy()
     await login.destroySession();
-    res.clearCookie('userId');
+    // res.clearCookie('userId');
     res.send("logged out")
 })
 const port = 8888

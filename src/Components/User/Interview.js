@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import '../../styles/interview.css'
 import { observer, inject } from 'mobx-react'
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import DoneSharpIcon from '@mui/icons-material/DoneSharp';
+import ClearSharpIcon from '@mui/icons-material/ClearSharp';
+import {ThemeProvider} from '@mui/material/styles';
+import theme from '../theme';
+
 import Fail from './Fail'
 import Pass from './Pass'
 
@@ -65,30 +72,21 @@ class Interview extends Component {
                 <div>{interview.type}</div>
                 <div>{interview.interViewerName}</div>
                 <div>{interview.date}</div>
-
-                <div>{interview.status === "Scheduled" && this.state.pass === false && this.state.fail === false ?
+                <div>{interview.status === "Scheduled" ?
 
                     <div>
-                        <button
-                            text="fail"
-                            onClick={this.setOpenFailDialog}
-                        >Fail</button>
-                        <button
-                            text="pass"
-                            onClick={this.setOpenPassDialog}>Pass
-                        </button>
-                    </div> : null
-                }
-                </div>
-                <div>{this.props.interview.status === "Passed" ?
-                    <h4 style={{ color: "green" }}>Passed</h4> : null
-                }
-                </div>
-
-                <div>{this.props.interview.status === "Failed" ?
+                        <Stack spacing={2} direction="row">
+                            <ThemeProvider theme={theme}>
+                                <Button color="success" variant="outlined" startIcon={<DoneSharpIcon />} onClick={this.setOpenPassDialog}>Pass</Button>
+                                <Button color="error" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenFailDialog}>Fail</Button>
+                            </ThemeProvider>
+                        </Stack>
+                    </div> : this.props.interview.status === "Passed" ?
+                    <h4 style={{ color: "green" }}>Passed</h4> : this.props.interview.status === "Failed" ?
                     <h4 style={{ color: "red" }}>failed</h4> : null
                 }
                 </div>
+
                 <Fail
                     setFail={this.setFail}
                     id={this.props.interview.id}
