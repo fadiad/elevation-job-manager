@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import UsersInterviews from './UsersInterviews';
-import GeneralStatistics from './GeneralStatistics'
-import StatisticsByFilter from './StatisticsByFilter'
-import Filter from './Filter'
+import GeneralStatistics from './GeneralStatistics';
+import StatisticsByFilter from './StatisticsByFilter';
+import Filter from './Filter';
 import NavBar from '../NavBar';
 import '../../styles/Admin.css'
 import '../theme';
