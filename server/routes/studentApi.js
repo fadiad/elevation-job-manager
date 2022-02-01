@@ -97,8 +97,7 @@ router.post('/interViewStatus/:id', async function (req, res) {
     let interViewId = req.body.interViewId;
     let processId = req.body.processId;
     let status = req.body.status;
-    console.log("Entered change status")
-    console.log(req.body)
+    
     let query = `Update interview SET STATUS="${status}" WHERE id=${interViewId} AND processId=${processId};`
     let result = await sequelize.query(query)
     if (status === "Failed") {
@@ -171,12 +170,8 @@ router.post('/interViewStatus/:id', async function (req, res) {
 res.send(result)
 })
 
-
-router.post('/processStatus', async function (req, res) {
-    // process status 
-    // status ENUM('In progress','Passed','Failed') DEFAULT 'In progress' NOT NULL,
-    // Candidate
-    // isEmployeed BOOLEAN
+router.post('/processStatus', async function(req, res) {
+ 
     console.log(req.body)
     let processQuery = `Update Process SET status="Passed" WHERE id=${req.body.processId};`
     let processResult = await sequelize.query(processQuery)

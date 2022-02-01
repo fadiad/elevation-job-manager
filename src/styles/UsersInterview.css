@@ -1,43 +1,35 @@
-
 .status1 {
     font-weight: bold;
-    font-size:0.75rem;
+    font-size: 0.75rem;
     color: white;
     /* background-color: gray; */
-    border-radius:8px;
+    border-radius: 8px;
     padding: 3px 10px;
     display: inline-block;
 }
+
 .name {
     font-weight: bold;
     color: #ff96aa;
 }
-.avatar  {
+
+.avatar {
     color: aqua;
-    background-color:aqua ; 
+    background-color: aqua;
 }
-.TableContainer{
+
+.TableContainer {
     max-width: 950;
-    border-radius: 15 ;
-    margin : 10px 10px;
+    border-radius: 15;
+    margin: 10px 10px;
 }
-.table{
-    min-width:  650 ;
+
+.table {
+    min-width: 650;
 }
+
 .tableHeaderCell {
     color: #426696;
     background-color: #426696;
     font-weight: 'bold',
-     
 }
-
-
-@use "@material/checkbox"; 
-@use "@material/icon-button";
-@use "@material/data-table/data-table";
-
-@include checkbox.core-styles;
-@include icon-button.core-styles;
-@include data-table.core-styles;
-@include data-table.theme-baseline;
-

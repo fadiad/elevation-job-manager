@@ -17,7 +17,8 @@ export class UserStore {
             getUserData: action,
             getprocesses: action,
             addProcess: action,
-            addInterView: action
+            addInterView: action,
+            changeStatus: action
         })
     }
     setuserID = (id) => {
@@ -36,10 +37,10 @@ export class UserStore {
         }
 
         fetch('http://localhost:8888/studentPage/processStatus', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body),
-            })
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        })
             .then(data => {
                 this.getUserData(this.userID)
             }).catch(err => {
@@ -81,7 +82,7 @@ export class UserStore {
     isValid(companyName, jobTitle, location, foundBy, link) {
 
         if (companyName.trim().length === 0 || jobTitle.trim().length === 0 ||
-            location.trim().length === 0 || foundBy.trim().length === 0 || link.trim().length === 0) {
+            location.trim().length === 0 || foundBy.trim().length === 0) {
             return false
         }
         if (typeof companyName === 'string' || companyName instanceof String &
@@ -118,10 +119,10 @@ export class UserStore {
 
         if (this.isValid(companyName, jobTitle, location, foundBy, link)) {
             fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(processe)
-                })
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(processe)
+            })
                 .then(res => res.json())
                 .then(data => {
                     // this.processes = []
@@ -148,17 +149,17 @@ export class UserStore {
         let self = this;
         //         console.log("Status Before:" + this.getInterViewById(interviewId, processId))
         fetch(`http://localhost:8888/studentPage/interViewStatus/${this.userID}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(bodyParams),
-                // mode: 'no-cors'
-            })
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bodyParams),
+            // mode: 'no-cors'
+        })
             .then(data => {
                 if (bodyParams.type == 'Contract') {
                     this.assignAsAccepted(bodyParams.processId)
                 }
                 //                 console.log("Status Before:" + self.getInterViewById(interviewId, processId))
-                //                 self.getInterViewById(interviewId, processId).status = status
+                self.getInterViewById(interviewId, processId).status = status
                 //                 console.log("Status After:" + self.getInterViewById(interviewId, processId))
             }).catch(err => {
                 console.log(err)

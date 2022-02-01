@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../styles/Filter.css'
+import { Button } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import { ThemeProvider } from '@material-ui/core';
+import theme from '../theme';
+
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
 
 class Filter extends Component {
-
 
     StatusChange = (e) => {
         console.log(e.target.value);
@@ -20,12 +24,14 @@ class Filter extends Component {
         this.props.adminStore.getUsersInterviews()
         this.props.adminStore.getStatisticsByFilter()
     }
+    
+
     render() {
         return (
             <div className='Filter'>
                 <FormControl className='FormControl' >
                     <InputLabel className='InputLabel'>status</InputLabel>
-                    <Select className='Select' onChange={this.StatusChange}>
+                    <Select className='Select' value={this.props.adminStore.statusByFilter} onChange={this.StatusChange}>
                         <MenuItem value={'all'}>all</MenuItem>
                         <MenuItem value={'Scheduled'}>Scheduled</MenuItem>
                         <MenuItem value={'Pending'}>Pending</MenuItem>
@@ -44,7 +50,9 @@ class Filter extends Component {
                         <MenuItem value={'Atidna 4'}>Atidna 4</MenuItem>
                     </Select>
                 </FormControl>
-                <button id='filterButton' onClick={this.filterBy}>search !</button>
+                <ThemeProvider theme={theme}>
+                        <Button color="primary" variant="outlined" startIcon={<SearchIcon />} onClick={this.filterBy}>Search</Button>
+                    </ThemeProvider>
             </div>
         );
     }

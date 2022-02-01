@@ -19,6 +19,49 @@ router.get('/AdminData', function (req, res) {
 })
 
 
+router.post('/simulation', async function (req, res) {
+    let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
+
+    let secondaryDate1 = null
+    let secondaryDate2 = null
+
+    if (primaryDate.length < 17) {
+        primaryDate = primaryDate + ':00'
+    }
+
+    if (req.body.secondaryDate1 != '') {
+        secondaryDate1 = req.body.secondaryDate1.toString().slice(0, 10) + ' ' + req.body.secondaryDate1.toString().slice(11, 19) + ':00'
+    }
+    if (req.body.secondaryDate2 != '') {
+        secondaryDate2 = req.body.secondaryDate2.toString().slice(0, 10) + ' ' + req.body.secondaryDate2.toString().slice(11, 19) + ':00'
+    }
+
+    let interviewId = req.body.interviewId
+    let adminId = req.body.adminId
+
+    
+
+    if (secondaryDate1 === null && secondaryDate2 != null) {
+        let query = `INSERT INTO simulation(id,date1,date2,date3,InterviewId,adminId)
+        VALUES(NULL,"${primaryDate}",null,"${secondaryDate2}",${interviewId},${adminId});`
+        let result = await sequelize.query(query)
+    } else if (secondaryDate1 != null && secondaryDate2 === null) {
+        let query = `INSERT INTO simulation(id,date1,date2,date3,InterviewId,adminId)
+        VALUES(NULL,"${primaryDate}","${secondaryDate1}",null,${interviewId},${adminId});`
+        let result = await sequelize.query(query)
+    } else if (secondaryDate1 != null && secondaryDate2 != null) {
+        let query = `INSERT INTO simulation(id,date1,date2,date3,InterviewId,adminId)
+        VALUES(NULL,"${primaryDate}","${secondaryDate1}","${secondaryDate2}",${interviewId},${adminId});`
+        let result = await sequelize.query(query)
+    } else {
+        let query = `INSERT INTO simulation(id,date1,date2,date3,InterviewId,adminId)
+        VALUES(NULL,"${primaryDate}",null,null,${interviewId},${adminId});`
+        let result = await sequelize.query(query)
+    }
+
+    res.send("result")
+})
+
 router.get('/interviews', async function (req, res) {
     const cohort = req.query.cohort
     const interViewStatus = req.query.interViewStatus
@@ -28,7 +71,7 @@ router.get('/interviews', async function (req, res) {
     let user
     if (cohort === 'all' && interViewStatus === 'all') {
         user = await sequelize.query(`    
-            select u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
+            select i.id , u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
             on u.id = p.UserId inner join interview As i
             on p.id = i.processId
@@ -36,7 +79,7 @@ router.get('/interviews', async function (req, res) {
     }
     else if (cohort === 'all') {
         user = await sequelize.query(`    
-            select u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
+            select i.id ,u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
             on u.id = p.UserId inner join interview As i
             on p.id = i.processId
@@ -45,7 +88,7 @@ router.get('/interviews', async function (req, res) {
     }
     else if (interViewStatus === 'all') {
         user = await sequelize.query(`    
-            select u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
+            select i.id , u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
             on u.id = p.UserId inner join interview As i
             on p.id = i.processId
@@ -54,7 +97,7 @@ router.get('/interviews', async function (req, res) {
     }
     else {
         user = await sequelize.query(`    
-            select u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
+            select i.id, u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
             on u.id = p.UserId inner join interview As i
             on p.id = i.processId
@@ -118,7 +161,7 @@ router.get('/Statistics', async function (req, res) {
         where c.isEmployeed = 0  and i.status = '${req.query.interViewStatus}'
         GROUP BY p.UserId)
         `)
- 
+
 
         let student = await sequelize.query(`    
         

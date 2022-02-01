@@ -224,3 +224,31 @@ select count(*) As NumberOfemployed
         inner join candidate As c on c.id = p.UserId 
         inner join userproporties As u on u.id = c.id
         where i.id =80
+
+        select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and i.status = 'Scheduled'
+        GROUP BY p.UserId
+       
+     USE jobManagerDB;
+     select count(*) As NumberOfemployed
+     from candidate AS c
+     where  c.id In(
+         select  p.UserId
+        from candidate As c  inner join process As p 
+            on c.id = p.UserId inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and  c.cohort = 'Atidna 4' and i.status = 'Scheduled'
+        GROUP BY p.UserId)
+
+      where  c.cohort = 'Atidna 4' and i.status = 'Scheduled'
+      GROUP BY p.UserId) 
+
+      select *
+        from candidate As c  inner join process As p 
+            on c.id = p.UserId 
+        where c.isEmployeed = 0 and p.status = 'In progress'  and c.cohort = 'Atidna 4'
+        GROUP BY p.UserId
+
+INSERT INTO simulation VALUES(NULL,"2022-10-10 10:00:00",NULL,NULL,1,2)
