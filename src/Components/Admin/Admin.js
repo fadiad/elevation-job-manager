@@ -5,7 +5,6 @@ import GeneralStatistics from './GeneralStatistics'
 import StatisticsByFilter from './StatisticsByFilter'
 import Filter from './Filter'
 import NavBar from '../NavBar';
-
 class Admin extends Component {
 
     componentDidMount() {
