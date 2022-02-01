@@ -67,14 +67,17 @@ class UsersInterviews extends Component {
     // setRowsPage(+event.target.value);
     // setPage(0);
   }
-
-
-
   //  dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
   componentDidMount() {
     this.props.adminStore.getUsersInterviews()
   }
+
+
+  setSimulationDate = () => {
+    this.props.setOpenDialog()
+  }
+
   render() {
     return (
       <div>
@@ -118,6 +121,7 @@ class UsersInterviews extends Component {
                     <TableCell >{row.type}</TableCell>
                     <TableCell >{row.date}</TableCell>
                     <TableCell >
+
                       <Typography
                         className='status1'
                         style={
@@ -135,7 +139,7 @@ class UsersInterviews extends Component {
                         }
                       >{row.status}</Typography>
                     </TableCell>
-                    <TableCell style={{ display: (row.status !== 'Scheduled' && 'none') }} ><button>dummy interview</button></TableCell>
+                    <TableCell style={{ display: (row.status !== 'Scheduled' && 'none') }} ><button onClick={this.setSimulationDate} >set simulation date</button></TableCell>
 
 
                   </TableRow>
