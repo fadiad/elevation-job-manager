@@ -86,7 +86,7 @@ class AddSimulationDate extends Component {
                                     id="datetime-local"
                                     label="Primary Simulation Date"
                                     type="datetime-local"
-                                    defaultValue="2017-05-24T10:30"
+                                    defaultValue="2022-05-24T10:30"
                                     sx={{ width: 250 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -99,7 +99,7 @@ class AddSimulationDate extends Component {
                                     id="datetime-local"
                                     label="Optional Simulation Date"
                                     type="datetime-local"
-                                    defaultValue="2017-05-24T10:30"
+                                    defaultValue="2022-05-24T10:30"
                                     sx={{ width: 250 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -112,7 +112,7 @@ class AddSimulationDate extends Component {
                                     id="datetime-local"
                                     label="Optional Simulation Date"
                                     type="datetime-local"
-                                    defaultValue="2017-05-24T10:30"
+                                    defaultValue="2022-05-24T10:30"
                                     sx={{ width: 250 }}
                                     InputLabelProps={{
                                         shrink: true,
