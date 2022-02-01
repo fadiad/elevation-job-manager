@@ -63,8 +63,8 @@ router.post('/processes/:id', async function(req, res) { // id : user id
 
     sequelize
         .query(`SELECT p.id , p.companyName , p.jobTitle , p.location , p.foundBy , p.link , p.status
-FROM Candidate AS c  , Process AS p
-WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
+            FROM Candidate AS c  , Process AS p
+            WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
         .then(function([results, metadata]) {
             res.send(results)
         })
