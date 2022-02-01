@@ -1,6 +1,6 @@
 
 import "../../styles/PieChartByFilter.css";
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { PieChart, Pie, Cell,Legend } from "recharts";
 import '../../styles/Admin.css';
 const COLORS = ["#426696", "#ff96aa"];

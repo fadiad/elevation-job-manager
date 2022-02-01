@@ -12,12 +12,12 @@ class GeneralStatistics extends Component {
         return (
             <div className='statistics'>
                 <h3>General Statistics : </h3>
-                <PieChartByFilter 
-                    student    = {this.props.adminStore.statisticsByFilter.student}    
-                    employed   = {this.props.adminStore.statisticsByFilter.employed}  
-                    unEmployed = {this.props.adminStore.statisticsByFilter.unEmployed}
-                    InProcess  = {this.props.adminStore.statisticsByFilter.InProcess} 
-                    NotActive  = {this.props.adminStore.statisticsByFilter.NotActive}     
+                <PieChartByFilter
+                    student    = {this.props.adminStore.generalStatistics.student}    
+                    employed   = {this.props.adminStore.generalStatistics.employed}  
+                    unEmployed = {this.props.adminStore.generalStatistics.unEmployed}
+                    InProcess  = {this.props.adminStore.generalStatistics.InProcess} 
+                    NotActive  = {this.props.adminStore.generalStatistics.NotActive}     
                 />
             </div>
         );
