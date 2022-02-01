@@ -23,9 +23,31 @@ USE jobManagerDB;
 INSERT INTO Interview(type,interviewerName,status,processId)
 VALUES('Phone',"smir","Passed",2);
 
+INSERT INTO userproporties (id,companyName,jobTitle,location,foundBy,link,UserId)
 
-INSERT INTO userproporties VALUES(NULL,"Amir","Halaby","amir@gmail.com","050-2312673","1234");
-INSERT INTO Candidate VALUES(2,'Student',false,'Atidna 4',NULL);
+USE jobManagerDB;
+INSERT INTO userproporties VALUES( Null,Null,"enbal","Halaby","anbalhalabi@gmail.com","0549329890","1234" , false );
+USE jobManagerDB;
+INSERT INTO userproporties VALUES( Null,Null,"fady","idkeidek","fadi.1997.id@gmail.com","0549329890","1234" , false );
+USE jobManagerDB;
+INSERT INTO userproporties VALUES( Null,Null,"amir","halaby","amirhh007@gmail.com","0502312673","1234" , false );
+USE jobManagerDB;
+INSERT INTO userproporties VALUES( Null,Null,"lotem","lotem","elevation744@gmail.com","0507339214","1234" , true );
+INSERT INTO Candidate VALUES( Null , 'Student' ,false , 'Atidna 4' , NULL);
+INSERT INTO Candidate VALUES( Null , 'Student' ,false , 'Atidna 4' , NULL);
+INSERT INTO Candidate VALUES( Null , 'Student' ,false , 'Atidna 4' , NULL);
+USE jobManagerDB;
+INSERT INTO admin VALUES (10 , true)
+USE jobManagerDB;
+INSERT INTO userproporties VALUES( Null,Null,"amir","jamal","amirhalaby007@gmail.com","0502215161","1234" , true );
+USE jobManagerDB;
+INSERT INTO admin VALUES (11 , true)
+USE jobManagerDB;
+select *
+from  userproporties inner join admin
+on userproporties.id = admin.id
+
+
 
 INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
 VALUES(3,"Apple","C++ Developer","Tel Aviv",'linkedIn',"h://..",2);
@@ -197,6 +219,11 @@ select count(*) As NumberOfemployed
         GROUP BY  c.id)
 
          USE jobManagerDB;
+        select u.firstName , u.lastName , u.email , i.type , p.companyName , i.status
+        from Interview As i inner join process As p on i.processId = p.id
+        inner join candidate As c on c.id = p.UserId 
+        inner join userproporties As u on u.id = c.id
+        where i.id =80
 
         select count(*) As NumberOfemployed
         from candidate As c inner join process As p 

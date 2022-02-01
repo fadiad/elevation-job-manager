@@ -4,6 +4,8 @@ import { observer, inject } from 'mobx-react'
 import Button from '@mui/material/Button';
 import { Dialog, DialogTitle, Grid, } from '@material-ui/core'
 import DateMomentUtils from '@date-io/moment'
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+
 import {
     DatePicker,
     MuiPickersUtilsProvider,
@@ -60,7 +62,6 @@ class AddInterview extends Component {
     }
 
     addInterView = () => {
-        console.log(this.state.date._d);
         if (this.isValid(this.state.date._d)) {
             console.log("add interview ");
             this.props.userStore.addInterView(this.props.processId, this.state.type, this.state.date._d, this.state.interviewerName)
@@ -134,12 +135,11 @@ class AddInterview extends Component {
                     <div className='inpt'>
                         <MuiPickersUtilsProvider utils={DateMomentUtils}>
                             <DatePicker error={this.state.dateError} value={this.state.date} onChange={this.handleDateChange} />
-
                             {/* <TimePicker value={this.state.selectedDate} onChange={this.handleDateChange}/> */}
                             {/* <DateTimePicker value={this.state.selectedDate} onChange={this.handleDateChange} /> */}
                         </MuiPickersUtilsProvider>
+                        <CalendarTodayIcon></CalendarTodayIcon>
                     </div>
-
 
                 </div>
 
