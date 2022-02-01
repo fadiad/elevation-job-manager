@@ -85,9 +85,9 @@ class UsersInterviews extends Component {
 
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>NAME</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>COHORT</TableCell>
+                <TableCell className='tableHeaderCell' style={{ color: "white" }}>JOB TITLE</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>COMPANY</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>TYPE</TableCell>
-                <TableCell className='tableHeaderCell' style={{ color: "white" }}>jOB TITLE</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>DATE</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>STATUS</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>SIMULATION</TableCell>
@@ -104,7 +104,7 @@ class UsersInterviews extends Component {
                         <Grid item lg={2}>
                           <Avatar alt={row.firstName} src='.' className='avatar' />
                         </Grid>
-                        <Grid item lg={10}>
+                        <Grid item lg={2}>
                           <Typography className='name'>{row.firstName + " " + row.lastName} </Typography>
                           <Typography color='textSecondary' variant='body2'>{row.email}</Typography>
                         </Grid>
@@ -113,9 +113,9 @@ class UsersInterviews extends Component {
                     <TableCell >
                       {row.cohort}
                     </TableCell>
+                    <TableCell >{row.jobTitle}</TableCell>
                     <TableCell >{row.companyName}</TableCell>
                     <TableCell >{row.type}</TableCell>
-                    <TableCell >{row.jobTitle}</TableCell>
                     <TableCell >{row.date}</TableCell>
                     <TableCell >
                       <Typography
