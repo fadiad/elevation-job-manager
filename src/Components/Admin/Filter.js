@@ -1,26 +1,26 @@
-
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../styles/Filter.css'
-import {Select , MenuItem , FormControl , InputLabel} from '@material-ui/core'
-class Filter extends Component {
-    
+import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
 
-    StatusChange =(e) =>{
-       console.log(e.target.value); 
-       this.props.adminStore.setStatus(e.target.value)
-       console.log(this.props.adminStore);
+class Filter extends Component {
+
+
+    StatusChange = (e) => {
+        console.log(e.target.value);
+        this.props.adminStore.setStatus(e.target.value)
+        console.log(this.props.adminStore);
     }
-    CohortChange = (e) =>{
-        console.log(e.target.value); 
+    CohortChange = (e) => {
+        console.log(e.target.value);
         this.props.adminStore.setCohort(e.target.value)
         console.log(this.props.adminStore);
     }
     filterBy = () => {
         this.props.adminStore.getUsersInterviews()
+        this.props.adminStore.getStatisticsByFilter()
     }
     render() {
-
         return (
             <div className='Filter'>
                 <FormControl className='FormControl' >
@@ -36,7 +36,7 @@ class Filter extends Component {
                 </FormControl>
                 <FormControl className='FormControl' >
                     <InputLabel className='InputLabel'>Cohort</InputLabel>
-                    <Select className='Select'  onChange={this.CohortChange}>
+                    <Select className='Select' onChange={this.CohortChange}>
                         <MenuItem value={'all'}>all</MenuItem>
                         <MenuItem value={'Atidna 1'}>Atidna 1</MenuItem>
                         <MenuItem value={'Atidna 2'}>Atidna 2</MenuItem>

@@ -111,9 +111,115 @@ INSERT INTO Candidate VALUES(2,'Student',false,'Atidna 4',NULL);
 
 
 USE jobManagerDB;
-INSERT INTO userproporties VALUES(Null,NULL,"fady","fady","fady@gmail.com","050-2487588","1234" , 0);
+INSERT INTO userproporties VALUES(Null,NULL,"yosef","halaby","yosef@gmail.com","050-24156","1234" , 0);
 USE jobManagerDB;
-INSERT INTO Candidate VALUES(4,'Student',false,'Atidna 4',NULL);
+INSERT INTO Candidate VALUES(5,'Student',false,'Atidna 1',NULL);
+USE jobManagerDB;
+select * 
+from userproporties
+select *  
+from Candidate inner join userproporties on Candidate.id = userproporties.id
 
 
-select * from Candidate c inner join userproporties u on c.id = u.id
+select *
+        from candidate As c  inner join process As p 
+            on c.id = p.UserId inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and ( p.status = 'In progress') and i.status = 'Scheduled'
+        GROUP BY p.UserId
+
+ select count(*) As NumberOfStudent
+   from  candidate
+    where candidate.id In
+        (select *
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 1 and i.status = 'Scheduled'
+        GROUP BY p.UserId)
+
+from candidate As c  inner join process As p 
+            on c.id = p.UserId inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and  p.status = 'In progress' and c.cohort = ''
+        GROUP BY p.UserId
+
+        select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where candidate.isEmployeed = 1 and i.status = 'Scheduled'
+        GROUP BY p.UserId)
+
+USE jobManagerDB;
+
+select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        where c.isEmployeed = 1 
+        GROUP BY p.UserId
+
+    USE jobManagerDB;
+     select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 1 
+        GROUP BY p.UserId
+
+    USE jobManagerDB;
+        select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 1 and i.status = '${req.query.interViewStatus}'
+        GROUP BY p.UserId
+
+                    USE jobManagerDB;
+
+        select *
+        from candidate As c  inner join process As p 
+            on c.id = p.UserId inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and  p.status = 'In progress' and i.status = 'Scheduled'
+        GROUP BY p.UserId
+            USE jobManagerDB;
+        select count(*) As NumberOfemployed
+        
+         USE jobManagerDB;
+        select count(*) As NumberOfemployed
+                USE jobManagerDB;
+        select count(*) As NumberOfemployed
+        from candidate As c
+        where c.id In (
+        select  c.id
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and i.status = 'Scheduled'
+        GROUP BY  c.id)
+
+         USE jobManagerDB;
+
+        select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and i.status = 'Scheduled'
+        GROUP BY p.UserId
+       
+     USE jobManagerDB;
+     select count(*) As NumberOfemployed
+     from candidate AS c
+     where  c.id In(
+         select  p.UserId
+        from candidate As c  inner join process As p 
+            on c.id = p.UserId inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and  c.cohort = 'Atidna 4' and i.status = 'Scheduled'
+        GROUP BY p.UserId)
+
+      where  c.cohort = 'Atidna 4' and i.status = 'Scheduled'
+      GROUP BY p.UserId) 
+
+      select *
+        from candidate As c  inner join process As p 
+            on c.id = p.UserId 
+        where c.isEmployeed = 0 and p.status = 'In progress'  and c.cohort = 'Atidna 4'
+        GROUP BY p.UserId
