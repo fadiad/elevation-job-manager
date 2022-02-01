@@ -14,7 +14,10 @@ router.post('/', async(req, res) => {
         await login.storeUserInSession(session, email)
         if (login.isLoggedIn(session)) {
             if (login.isAdmin(session)) {
-                res.send({ isAdmin: true })
+                login.getUserId(session)
+                    .then(function(data) {
+                        res.send({ isAdmin: true, id: data })
+                    })
             } else if (login.isStudent(session)) {
                 login.getUserId(session)
                     .then(function(data) {
