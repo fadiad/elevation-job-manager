@@ -68,7 +68,6 @@ export class UserStore {
             body: JSON.stringify(interview)
         })
 
-
         this.getProcesses(this.userID)
 
         // let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${processId}`)
