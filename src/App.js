@@ -26,7 +26,7 @@ import './styles/App.css';
   setUserId = (id) => {
     this.setState({userID : id},() =>{
       this.props.userStore.userID = this.state.userID
-      
+      this.props.adminStore.adminId = this.state.userID
     })
 
   } 

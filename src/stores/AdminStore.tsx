@@ -5,7 +5,7 @@ const axios = require('axios')
 import { UserInterview } from './UserInterview';
 
 export class AdminStore {
-    adminId: 3;
+    adminId: Number;
     interviewId: Number;
     adminName: String;
     statusByFilter: String;
@@ -17,7 +17,7 @@ export class AdminStore {
     constructor() {
         this.usersInterViews = [];
         this.adminName = ' ';
-        this.adminId = 3;
+        this.adminId ;
         this.interviewId = 1;
         this.statusByFilter = 'Scheduled';
         this.CohortByFilter = 'all';
