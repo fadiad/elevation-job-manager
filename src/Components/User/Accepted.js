@@ -17,10 +17,10 @@ class Accepted extends Component {
     }
     assignAsAccepted = () => {
         this.props.userStore.assignAsAccepted(this.props.id)
-        let date =new Date()
+        let date = new Date()
         // this.props.userStore.addInterView(this.props.processId, this.state.status, this.state.date._d, this.state.interviewerName)
 
-        this.props.userStore.addInterView(this.props.processId, "Contract", date,  "" , 'Passed')
+        this.props.userStore.addInterView(this.props.processId, "Contract", date, "", 'Passed')
         this.props.setProcessUnActive();
         this.handleClose();
     }
@@ -46,12 +46,6 @@ class Accepted extends Component {
                     <DialogContentText>
                         Did she sign the contract ?
                     </DialogContentText>
-                    <DialogContentText>
-                    Reminder:
-                        To Lotem and Amir
-                        What do you think to add here a field that the user can enter his salary
-                        </DialogContentText>
-
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={this.handleClose}>
@@ -61,9 +55,6 @@ class Accepted extends Component {
                         Agree
                     </Button>
                 </DialogActions>
-
-
-
             </Dialog>
         );
     }

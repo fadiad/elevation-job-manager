@@ -90,6 +90,12 @@ router.post('/interviews', async function(req, res) {
     let query = `INSERT INTO Interview(type , date ,interviewerName,status,processId)
         VALUES("${req.body.type}", "${date}" ,"${req.body.interViewerName}","${req.body.status}",${req.body.processId});`
     let result = await sequelize.query(query)
+    let interviewData= await sequelize.query(`
+    select i.id as interviewerId , p.id as processId , i.status
+    from Interview AS i inner join process As p On i.processId=p.id 
+    where i.id =  ${result[0]}
+    `)
+    sentEmail(interviewData[0][0].interviewerId , interviewData[0][0].processId , interviewData[0][0].status)
     res.send(result)
 })
 
@@ -104,70 +110,82 @@ router.post('/interViewStatus/:id', async function(req, res) {
         let processQuery = `Update Process SET status="Failed" WHERE id=${processId};`
         await sequelize.query(processQuery)
     }
-    let adminData = await sequelize.query(`select u.email , u.firstName
-        from admin As a inner join userproporties As u  on a.id = u.id 
-        where a.isNotified = 1`)
-    const adminName = adminData[0][0].firstName
-    const adminEmail = adminData[0][0].email
-    const userData = await sequelize.query(`
-            select u.firstName , u.lastName , u.email , i.type , p.companyName , i.status
-            from Interview As i inner join process As p on i.processId = p.id
-            inner join candidate As c on c.id = p.UserId 
-            inner join userproporties As u on u.id = c.id
-            where i.id =${interViewId}`)
-    const userName = userData[0][0].firstName
-    const lastName = userData[0][0].lastName
-    const userEmail = userData[0][0].email
-    const interviewType = userData[0][0].type
-    const CompanyName = userData[0][0].companyName
-    adminData[0].forEach(admin => {
-
-
-
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'elevation744',
-                pass: 'Atedna4!@#'
-            }
-        });
-        let mailOptions
-        if (status === "Passed" && interviewType === "Contract") {
-            mailOptions = {
-                from: 'elevation744@gmail.com',
-                to: admin.email,
-                subject: userName + " " + lastName + " , " + " Passed the " + interviewType + " interview",
-                text: 'Hello ' + admin.firstName + userName + " " + lastName + ' passed the interview and signed a contract with ' + CompanyName
-            };
-        } else if (status === "Failed") {
-            mailOptions = {
-                from: 'elevation744@gmail.com',
-                to: admin.email,
-                subject: userName + " " + lastName + " , " + " Failed the " + interviewType + " interview",
-                text: 'Hello ' + admin.firstName + " " + userName + " " + lastName + ' failed the interview in ' + CompanyName
-            };
-        } else if (status === "Passed") {
-            mailOptions = {
-                from: 'elevation744@gmail.com',
-                to: admin.email,
-                subject: userName + " " + lastName + " , " + " Passed the " + interviewType + " interview",
-                text: 'Hello ' + adminName + userName + " " + lastName + ' Passed the interview in ' + CompanyName
-            };
-        }
-
-        transporter.sendMail(mailOptions, function(error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        })
-
-    });
 
     res.send(result)
 })
 
+async function sentEmail(interViewId , processId , status){
+
+    let adminData = await sequelize.query(`select u.email , u.firstName
+    from admin As a inner join userproporties As u  on a.id = u.id 
+    where a.isNotified = 1`)
+const adminName = adminData[0][0].firstName
+const adminEmail = adminData[0][0].email
+const userData = await sequelize.query(`
+        select u.firstName , u.lastName , u.email , i.type , p.companyName , i.status , i.date
+        from Interview As i inner join process As p on i.processId = p.id
+        inner join candidate As c on c.id = p.UserId 
+        inner join userproporties As u on u.id = c.id
+        where i.id=${interViewId}`)
+const userName = userData[0][0].firstName
+const lastName = userData[0][0].lastName
+const userEmail = userData[0][0].email
+const interviewType = userData[0][0].type
+const CompanyName = userData[0][0].companyName
+const date = userData[0][0].date
+adminData[0].forEach(admin => {
+
+
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'elevation744',
+            pass: 'Atedna4!@#'
+        }
+    });
+    let mailOptions
+    if(status === "Scheduled"){
+        mailOptions = {
+            from: 'elevation744@gmail.com',
+            to: admin.email,
+            subject: userName + " " + lastName + " , " + " Passed the " + interviewType + " interview",
+            text: 'Hello ' + admin.firstName +" , " + userName + " " + lastName + ' has a new interview on '+ date + " at " + CompanyName
+        };
+    }
+    if (status === "Passed" && interviewType === "Contract") {
+        mailOptions = {
+            from: 'elevation744@gmail.com',
+            to: admin.email,
+            subject: userName + " " + lastName + " , " + " Passed the " + interviewType + " interview",
+            text: 'Hello ' + admin.firstName +" , "  + userName + " " + lastName + ' passed the interview and signed a contract with ' + CompanyName
+        };
+    } else if (status === "Failed") {
+        mailOptions = {
+            from: 'elevation744@gmail.com',
+            to: admin.email,
+            subject: userName + " " + lastName + " , " + " Failed the " + interviewType + " interview",
+            text: 'Hello ' + admin.firstName + " , " + userName + " " + lastName + ' failed the interview in ' + CompanyName
+        };
+    } else if (status === "Passed") {
+        mailOptions = {
+            from: 'elevation744@gmail.com',
+            to: admin.email,
+            subject: userName + " " + lastName + " , " + " Passed the " + interviewType + " interview",
+            text: 'Hello ' + adminName +" , " + userName + " " + lastName + ' Passed the interview in ' + CompanyName
+        };
+    }
+
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    })
+
+});
+}
 router.post('/processStatus', async function(req, res) {
 
     console.log(req.body)
