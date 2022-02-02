@@ -41,6 +41,17 @@ router.get('/userData/:id', function(req, res) { // id : user id
             res.send(results)
         })
 })
+router.get('/Semoletions/:id', async function(req, res) { // id : user id 
+
+    let Semoletions = await sequelize.query(`
+        select  i.type , p.companyName ,  p.jobTitle , i.date , i.simulationDate
+            from userproporties As u inner join Candidate As c   On u.id=c.id
+                                     inner join Process As  p On p.UserId=c.id 
+                                     inner join Interview As i On i.processId = p.id 
+            where u.id ='${req.params.id}'
+            `)
+    res.send(Semoletions[0])
+    })
 
 
 
@@ -194,6 +205,16 @@ router.post('/processStatus', async function(req, res) {
     let userQuery = `Update Candidate SET isEmployeed="1" WHERE id=${req.body.userID};`
     let userResult = await sequelize.query(userQuery)
     res.send("result")
+})
+
+
+router.post('/question', async function(req, res) {
+   const interviewId = req.body.interviewId
+   
+    let query = `INSERT INTO Questions(id , question , solution , InterviewId  )
+        VALUES(NULL, "${req.body.question}" , NULL , "${interviewId}");`
+    let result = await sequelize.query(query)
+    res(result)
 })
 
 // -------------------------------------
