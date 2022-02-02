@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import DoneSharpIcon from '@mui/icons-material/DoneSharp';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
-import {ThemeProvider} from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 
 import Fail from './Fail'
@@ -50,7 +50,7 @@ class Interview extends Component {
         this.setState({
             fail: true
         })
-        }
+    }
     render() {
         let interview = this.props.interview
         console.log(this.props.interview);
@@ -60,19 +60,23 @@ class Interview extends Component {
                 <div>{interview.interViewerName}</div>
                 <div>{interview.date}</div>
                 <div><Button disabled={interview.simulationDate === undefined}>Simulation</Button></div>
-                <div>{interview.status === "Scheduled" ?
-                    <div>
-                        <Stack spacing={2} direction="row">
-                            <ThemeProvider theme={theme}>
-                                <Button color="success" variant="outlined" startIcon={<DoneSharpIcon />} onClick={this.setOpenPassDialog}>Pass</Button>
-                                <Button color="error" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenFailDialog}>Fail</Button>
-                            </ThemeProvider>
-                        </Stack>
-                    </div> : this.props.interview.status === "Passed" ?
-                    <h4 style={{ color: "green" }}>Passed</h4> : this.props.interview.status === "Failed" ?
-                    <h4 style={{ color: "red" }}>failed</h4> : null
-                }
+                <div>
+                    {interview.status === "Scheduled" || interview.status === "Pending" ?
+                        <div>
+                            <Stack spacing={2} direction="row">
+                                <ThemeProvider theme={theme}>
+                                    <Button color="success" variant="outlined" startIcon={<DoneSharpIcon />} onClick={this.setOpenPassDialog}>Pass</Button>
+                                    <Button color="error" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenFailDialog}>Fail</Button>
+                                </ThemeProvider>
+                            </Stack>
+                        </div> :
+                        this.props.interview.status === "Passed" ? <spane style={{ color: "green" }}>Passed</spane> :
+                            this.props.interview.status === "Failed" ? <spane style={{ color: "red" }}>failed</spane> :
+                                this.props.interview.status === "No Reply" ? <spane style={{ color: "red" }}>No Reply</spane> :
+                                    null
+                    }
                 </div>
+
 
                 <Fail
                     setFail={this.setFail}

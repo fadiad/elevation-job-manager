@@ -60,7 +60,7 @@ export class AdminStore {
         this.adminName = user.data
     }
 
-    addSimulationDate = (primaryDate, secondaryDate1, secondaryDate2) => {
+    addSimulationDate = async (primaryDate, secondaryDate1, secondaryDate2) => {
 
         let body = {
             interviewId: this.interviewId,
@@ -70,18 +70,27 @@ export class AdminStore {
             secondaryDate2: secondaryDate2
         }
 
-        fetch('http://localhost:8888/adminPage/simulation', {
+        // fetch('http://localhost:8888/adminPage/simulation', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(body),
+        // })
+        //     .then(data => {
+        //         console.log(data);
+
+        //         // this.getUserData(this.userID)
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
+
+        let data = await fetch(`http://localhost:8888/adminPage/simulation`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
+            body: JSON.stringify(body)
         })
-            .then(data => {
-                console.log(data);
-
-                // this.getUserData(this.userID)
-            }).catch(err => {
-                console.log(err)
-            })
+        // this.addImulationStatusCode = data.status
+        // console.log(data.status);
+        return data.status
     }
 
     async getStatistics() {

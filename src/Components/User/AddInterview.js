@@ -13,9 +13,11 @@ import {
 import TextField from '@mui/material/TextField';
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
 
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 import '../../styles/AddInterview.css'
-import { invalid } from 'moment';
+// import { invalid } from 'moment';
 
 class AddInterview extends Component {
 
@@ -26,8 +28,15 @@ class AddInterview extends Component {
             type: 'Phone',
             interviewerName: ' ',
             date: new Date(),
-            dateError: false
+            dateError: false,
+            openSuccess: false
         }
+    }
+
+    handleSuccess = () => {
+        this.setState({
+            openSuccess: true
+        })
     }
 
     // setDate = (event) => {
@@ -63,9 +72,10 @@ class AddInterview extends Component {
 
     addInterView = () => {
         if (this.isValid(this.state.date._d)) {
+            this.handleSuccess()
             console.log("add interview ");
             this.props.userStore.addInterView(this.props.processId, this.state.type, this.state.date._d, this.state.interviewerName)
-            this.handleClose();
+            // this.handleClose();
         } else {
             console.log("did not add interview ");
             this.setState({
@@ -84,6 +94,15 @@ class AddInterview extends Component {
     handleClose = () => {
         this.props.setCloseDialog()
     }
+
+    handleCloseMessage = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.setState({
+            openSuccess: false
+        })
+    };
 
 
     render() {
@@ -142,6 +161,10 @@ class AddInterview extends Component {
                     </div>
 
                 </div>
+
+                <Snackbar open={this.state.openSuccess} autoHideDuration={5000} onClose={this.handleCloseMessage}>
+                    <Alert severity="success">Dates Added Successfully!</Alert>
+                </Snackbar>
 
 
                 <div className='Buttons'>

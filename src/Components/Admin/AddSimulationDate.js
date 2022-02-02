@@ -6,6 +6,10 @@ import DateMomentUtils from '@date-io/moment'
 import TextField from '@mui/material/TextField';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
+
 import '../../styles/Filter.css'
 
 
@@ -14,16 +18,45 @@ class AddSimulationDate extends Component {
     constructor() {
         super()
         this.state = {
-            primaryDate: new Date(),
+            primaryDate: '',
             secondaryDate1: '',
-            secondaryDate2: ''
+            secondaryDate2: '',
+            primaryDateError: false,
+            openSuccess: false,
+            openFail: false
         }
     }
+
+    handleSuccess = () => {
+        this.setState({
+            openSuccess: true
+        })
+    }
+    handleFail = () => {
+        this.setState({
+            openFail: true
+        })
+    }
+
+
+    handleCloseMessage = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.setState({
+            openSuccess: false,
+            openFail: false
+        })
+    };
 
 
     handlePrimaryDateChange = (e) => {
         this.setState({
-            primaryDate: e.target.value
+            primaryDateError: false
+        }, function () {
+            this.setState({
+                primaryDate: e.target.value
+            })
         })
     }
 
@@ -42,16 +75,41 @@ class AddSimulationDate extends Component {
 
     handleClose = () => {
         this.props.setCloseDialog()
+        this.setState({
+            primaryDate: '',
+            secondaryDate1: '',
+            secondaryDate2: '',
+            primaryDateError: false
+        })
     }
 
 
-    addSimulationDate = () => {
-        this.props.adminStore.addSimulationDate(this.state.primaryDate, this.state.secondaryDate1, this.state.secondaryDate2)
-        this.handleClose();
+    addSimulationDate = async () => {
+
+        if (this.isValid()) {
+            let status = await this.props.adminStore.addSimulationDate(this.state.primaryDate, this.state.secondaryDate1, this.state.secondaryDate2)
+
+            if (status == 200) {
+                this.handleSuccess()
+                setTimeout(() => {
+                    this.handleClose();
+                    this.setState({
+                        openSuccess: false
+                    })
+                }, 3000);
+            } else {
+                this.handleFail()
+            }
+
+        } else {
+            this.setState({
+                primaryDateError: true
+            })
+        }
     }
 
-    isValid = (date) => {
-        if (!date) {
+    isValid = () => {
+        if (this.state.primaryDate == '') {
             return false
         }
         return true
@@ -82,11 +140,12 @@ class AddSimulationDate extends Component {
                         <MuiPickersUtilsProvider utils={DateMomentUtils}>
                             <div className='inpt' >
                                 <TextField
+                                    error={this.state.primaryDateError}
                                     required
                                     id="datetime-local"
                                     label="Primary Simulation Date"
                                     type="datetime-local"
-                                    defaultValue="2022-05-24T10:30"
+                                    // defaultValue="`${this.state.primaryDate}`"
                                     sx={{ width: 250 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -99,7 +158,7 @@ class AddSimulationDate extends Component {
                                     id="datetime-local"
                                     label="Optional Simulation Date"
                                     type="datetime-local"
-                                    defaultValue="2022-05-24T10:30"
+                                    defaultValue=" "
                                     sx={{ width: 250 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -112,7 +171,7 @@ class AddSimulationDate extends Component {
                                     id="datetime-local"
                                     label="Optional Simulation Date"
                                     type="datetime-local"
-                                    defaultValue="2022-05-24T10:30"
+                                    defaultValue=" "
                                     sx={{ width: 250 }}
                                     InputLabelProps={{
                                         shrink: true,
@@ -121,6 +180,14 @@ class AddSimulationDate extends Component {
                                 />
                             </div>
                         </MuiPickersUtilsProvider>
+
+                        <Snackbar open={this.state.openSuccess} autoHideDuration={5000} onClose={this.handleCloseMessage}>
+                            <Alert severity="success">Dates Added Successfully!</Alert>
+                        </Snackbar>
+
+                        <Snackbar open={this.state.openFail} autoHideDuration={5000} onClose={this.handleCloseMessage}>
+                            <Alert severity="error">Make sure that you entered your data in a right way !</Alert>
+                        </Snackbar>
 
                         <div className='Buttons'>
                             <Button style={{ margin: "10px" }} size="medium" variant="contained" onClick={this.addSimulationDate}>Add</Button>

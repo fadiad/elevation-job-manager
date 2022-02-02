@@ -25,15 +25,22 @@ class AddProcess extends Component {
             companyNameError: false,
             jobTitleError: false,
             locationError: false,
-            open: false
+            // open: false,
+            openSuccess: false,
+            openFail: false
         }
     }
 
-    handleClick = () => {
+    handleSuccess = () => {
         this.setState({
-            open: true
+            openSuccess: true
         })
-    };
+    }
+    handleFail = () => {
+        this.setState({
+            openFail: true
+        })
+    }
 
     setLink = (event) => {
         let link = event.target.value
@@ -104,7 +111,7 @@ class AddProcess extends Component {
         })
     }
 
-    addProcess = () => {
+    addProcess = async () => {
         let company = false
         let jobTitle = false
         let location = false
@@ -129,14 +136,24 @@ class AddProcess extends Component {
         }
 
 
-        // if (!this.state.companyNameError && !this.state.jobTitleError && !this.state.locationError) {
         if (!company && !jobTitle && !location) {
             console.log("i added process");
-            this.props.userStore.addProcess(this.state.companyName, this.state.jobTitle, this.state.location, this.state.foundBy, this.state.link)
-            this.handleClose();
+            let status = await this.props.userStore.addProcess(this.state.companyName, this.state.jobTitle, this.state.location, this.state.foundBy, this.state.link)
+            if (status == 200) {
+                this.handleSuccess()
+                setTimeout(() => {
+                    this.handleClose();
+                    this.setState({
+                        openSuccess: false
+                    })
+                }, 3000);
+            }else{
+                this.handleFail()
+            }
+
         } else {
             console.log("i did not add the process");
-            this.handleClick()
+            this.handleFail()
         }
     }
 
@@ -145,14 +162,25 @@ class AddProcess extends Component {
     }
 
 
-    handleCloseError = (event, reason) => {
+    // handleCloseError = (event, reason) => {
+    //     if (reason === 'clickaway') {
+    //         return;
+    //     }
+    //     this.setState({
+    //         open: false
+    //     })
+    // };
+
+    handleCloseMessage = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
         this.setState({
-            open: false
+            openSuccess: false,
+            openFail: false
         })
     };
+
 
     render() {
         return (
@@ -221,8 +249,8 @@ class AddProcess extends Component {
                         />
                         {/* </div> */}
 
-                      
-                        
+
+
                         <div className='inpt'>
                             <FormControl className='FormControl' >
                                 <InputLabel className='InputLabel'>foundBy</InputLabel>
@@ -235,7 +263,11 @@ class AddProcess extends Component {
                             </FormControl>
                         </div>
 
-                        <Snackbar open={this.state.open} autoHideDuration={5000} onClose={this.handleCloseError}>
+                        <Snackbar open={this.state.openSuccess} autoHideDuration={5000} onClose={this.handleCloseMessage}>
+                            <Alert severity="success">Dates Added Successfully!</Alert>
+                        </Snackbar>
+
+                        <Snackbar open={this.state.openFail} autoHideDuration={5000} onClose={this.handleCloseMessage}>
                             <Alert severity="error">Make sure that you entered your data in a right way !</Alert>
                         </Snackbar>
 

@@ -20,13 +20,18 @@ router.get('/AdminData', function (req, res) {
 
 
 router.post('/simulation', async function (req, res) {
-    let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
-
     let secondaryDate1 = null
     let secondaryDate2 = null
+    let primaryDate = null
 
-    if (primaryDate.length < 17) {
-        primaryDate = primaryDate + ':00'
+    let interviewId = req.body.interviewId
+    let adminId = req.body.adminId
+
+    if (req.body.primaryDate != '') {
+        primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19) + ':00'
+    } else {
+        res.status(422).send({ error: "error:primary simulation should not be empty" });
+        return
     }
 
     if (req.body.secondaryDate1 != '') {
@@ -35,11 +40,6 @@ router.post('/simulation', async function (req, res) {
     if (req.body.secondaryDate2 != '') {
         secondaryDate2 = req.body.secondaryDate2.toString().slice(0, 10) + ' ' + req.body.secondaryDate2.toString().slice(11, 19) + ':00'
     }
-
-    let interviewId = req.body.interviewId
-    let adminId = req.body.adminId
-
-    
 
     if (secondaryDate1 === null && secondaryDate2 != null) {
         let query = `INSERT INTO simulation(id,date1,date2,date3,InterviewId,adminId)
@@ -59,7 +59,7 @@ router.post('/simulation', async function (req, res) {
         let result = await sequelize.query(query)
     }
 
-    res.send("result")
+    res.send("succeed")
 })
 
 router.get('/interviews', async function (req, res) {

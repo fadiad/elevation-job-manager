@@ -44,10 +44,10 @@ class User extends Component {
                     setCloseDialog={this.setCloseDialog}
                 />
                 
-                <br />
+                {/* <br /> */}
                 {
                     this.props.userStore.userData.isEmployeed === 1 ?
-                        <div className='Start-Working'> Start working </div>
+                        <div className='Start-Working'> employed </div>
                         : null
                 }
                 <br />

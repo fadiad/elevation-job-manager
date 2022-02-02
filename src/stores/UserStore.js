@@ -107,7 +107,7 @@ export class UserStore {
     }
 
     //async
-    addProcess = (companyName, jobTitle, location, foundBy, link) => {
+    addProcess = async (companyName, jobTitle, location, foundBy, link) => {
 
         let processe = {
             companyName: companyName,
@@ -118,21 +118,13 @@ export class UserStore {
         }
 
         if (this.isValid(companyName, jobTitle, location, foundBy, link)) {
-            fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
+            let data = await fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(processe)
             })
-                .then(res => res.json())
-                .then(data => {
-                    // this.processes = []
-
-                    // data.forEach(async e => {
-                    //     let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
-                    //     this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
-                    // });
-                    this.getProcesses(this.userID)
-                })
+            this.getProcesses(this.userID)
+            return data.status;
         }
     }
 
@@ -197,3 +189,33 @@ export class UserStore {
         })
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// this.processes = []
+// data.forEach(async e => {
+//     let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
+//     this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
+// });
+
+
+ // fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(processe)
+            // })
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         this.getProcesses(this.userID)
+            //     })
