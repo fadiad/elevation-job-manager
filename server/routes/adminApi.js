@@ -17,7 +17,17 @@ sequelize
 router.get('/AdminData', function (req, res) {
     res.send("lotem")
 })
+router.get('/qustions' ,async function (req, res) {
 
+    console.log("amir");
+    const qustions = await sequelize.query(`    
+        SELECT q.id ,q.InterviewId, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date
+        FROM Questions As q inner join Interview As i On q.InterviewId = i.id
+        inner join Process As p On i.processId = p.id
+    `)
+
+    res.send(qustions[0])
+})
 
 router.post('/simulation', async function (req, res) {
     let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)

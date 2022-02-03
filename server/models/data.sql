@@ -52,11 +52,7 @@ INSERT INTO simulation VALUES(NULL,"2022-02-10 10:00:00",NULL,NULL,1000,4000)
 INSERT INTO simulation VALUES(NULL,"2022-02-15 10:00:00",NULL,NULL,1000,5000)
 
 
-USE jobManagerDB;
-
-select  i.type , p.companyName ,  p.jobTitle , i.date , i.simulationDate
-from userproporties As u inner join Candidate As c   On u.id=c.id
-                         inner join Process As  p On p.UserId=c.id 
-                         inner join Interview As i On i.processId = p.id 
-where u.id = 2
+SELECT q.id ,q.InterviewId, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date
+FROM Questions As q inner join Interview As i On q.InterviewId = i.id
+                    inner join Process As p On i.processId = p.id
 

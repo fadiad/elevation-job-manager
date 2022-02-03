@@ -213,8 +213,8 @@ router.post('/question', async function(req, res) {
    
     let query = `INSERT INTO Questions(id , question , solution , InterviewId  )
         VALUES(NULL, "${req.body.question}" , NULL , "${interviewId}");`
-    let result = await sequelize.query(query)
-    res(result)
+    await sequelize.query(query)
+    // res(result)
 })
 
 // -------------------------------------

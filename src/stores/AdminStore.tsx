@@ -3,6 +3,7 @@ import { lastIndexOf } from 'core-js/core/array';
 import { observable, action, makeAutoObservable } from 'mobx'
 const axios = require('axios')
 import { UserInterview } from './UserInterview';
+import {qustion} from './qustion';
 
 export class AdminStore {
     adminId: 3;
@@ -13,7 +14,7 @@ export class AdminStore {
     usersInterViews: Array<UserInterview>;
     generalStatistics: Object;
     statisticsByFilter: Object;
-
+    qustions :  Array<qustion>;
     constructor() {
         this.usersInterViews = [];
         this.adminName = ' ';
@@ -21,7 +22,7 @@ export class AdminStore {
         this.interviewId = 1;
         this.statusByFilter = 'Scheduled';
         this.CohortByFilter = 'all';
-
+        this.qustions = [];
         this.generalStatistics = {
             InProcess: '',
             employed: '',
@@ -42,11 +43,13 @@ export class AdminStore {
             usersInterViews: observable,
             adminName: observable,
             generalStatistics: observable,
+            qustions : observable ,
             getUsersInterviews: action,
             getAdminData: action,
             setCohort: action,
             setStatus: action,
-            getStatisticsByFilter: action
+            getStatisticsByFilter: action,
+            getQustions : action
         })
     }
     setStatus(status: String) {
@@ -58,6 +61,12 @@ export class AdminStore {
     async getAdminData() {
         let user = await axios.get("http://localhost:8888/adminPage/AdminData")
         this.adminName = user.data
+    }
+    async getQustions() {
+        let qustionsFromServer = await axios.get("http://localhost:8888/adminPage/qustions")
+        qustionsFromServer.data.forEach(e => {
+        this.qustions.push(new qustion(e.id, e.interviewId, e.jobTitle, e.question, e.solution, e.interviewType, e.interviewDate))
+        })
     }
 
     addSimulationDate = (primaryDate, secondaryDate1, secondaryDate2) => {

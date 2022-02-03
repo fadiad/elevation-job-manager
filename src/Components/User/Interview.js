@@ -88,7 +88,7 @@ class Interview extends Component {
                             <ThemeProvider theme={theme}>
                                 <Button color="success" variant="outlined" startIcon={<DoneSharpIcon />} onClick={this.setOpenPassDialog}>Pass</Button>
                                 <Button color="error" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenFailDialog}>Fail</Button>
-                                <Button color="success" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenQuestionDialog}>Add Question</Button>
+                                <Button  variant="outlined"  startIcon={<ClearSharpIcon />} onClick={this.setOpenQuestionDialog}>Add Question</Button>
                                
                             </ThemeProvider>
                         </Stack>
