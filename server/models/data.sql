@@ -252,3 +252,8 @@ select count(*) As NumberOfemployed
         GROUP BY p.UserId
 
 INSERT INTO simulation VALUES(NULL,"2022-10-10 10:00:00",NULL,NULL,1,2)
+
+
+USE jobManagerDB;
+
+Delete from admin ;

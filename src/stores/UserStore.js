@@ -50,7 +50,7 @@ export class UserStore {
 
     async getUserData(userID) {
         let userData = await axios.get(`http://localhost:8888/studentPage/userData/${userID}`)
-        console.log(userData.data[0]);
+        // console.log(userData.data[0]);
         this.userData = userData.data[0]
     }
 
@@ -136,8 +136,8 @@ export class UserStore {
             type: type
         }
 
-        console.log("entered client change status")
-        console.log(bodyParams)
+        // console.log("entered client change status")
+        // console.log(bodyParams)
         let self = this;
         //         console.log("Status Before:" + this.getInterViewById(interviewId, processId))
         fetch(`http://localhost:8888/studentPage/interViewStatus/${this.userID}`, {

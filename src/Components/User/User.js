@@ -47,7 +47,7 @@ class User extends Component {
                 {/* <br /> */}
                 {
                     this.props.userStore.userData.isEmployeed === 1 ?
-                        <div className='Start-Working'> employed </div>
+                        <div className='Start-Working'> Employed </div>
                         : null
                 }
                 <br />

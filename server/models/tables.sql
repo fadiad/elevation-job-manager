@@ -1,10 +1,23 @@
 -- Create DATABASE jobManagerDB;
 USE jobManagerDB;
+
+
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS UserProporties;
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS Candidate;
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS Admin;
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS Interview;
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS Process;
+
 
 USE jobManagerDB;
 CREATE TABLE UserProporties(
@@ -30,7 +43,7 @@ CREATE TABLE Candidate(
 USE jobManagerDB;
 CREATE TABLE Admin(
     id MEDIUMINT NOT NULL PRIMARY KEY,
-    isNotified Boolean,
+    type ENUM('HR','Technical','Manager') DEFAULT 'Manager',
     FOREIGN KEY (id) REFERENCES UserProporties(id)
 );
 
@@ -62,6 +75,14 @@ CREATE TABLE Interview(
 
 Use jobmanagerdb;
 
+ALTER TABLE Admin 
+    ADD  type ENUM('HR','Technical','Manager') DEFAULT 'Manager'
+    AFTER id
+
+Use jobmanagerdb;
+ALTER TABLE Admin 
+    Drop isNotified
+
 ALTER TABLE UserProporties
   ADD isAdmin boolean DEFAULT false
     AFTER password;
@@ -80,4 +101,24 @@ Create TABLE simulation(
     adminId MEDIUMINT,
     FOREIGN Key(InterviewId) REFERENCES Interview(id),
     FOREIGN Key(adminId) REFERENCES Admin(id)
+);
+
+
+
+Use jobManagerDB;
+Create TABLE NotificationForAdmin(
+    adminId MEDIUMINT,
+    notificationId MEDIUMINT,
+    isNotified BOOLEAN,
+
+    FOREIGN Key(adminId) REFERENCES Admin(id),
+    FOREIGN Key(notificationId) REFERENCES NotificationType(id)
+);
+
+
+Use jobManagerDB;
+Create TABLE NotificationType(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    type1 varchar(15) ,
+    type2 varchar(15)
 );

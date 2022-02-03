@@ -20,6 +20,7 @@
         "@material/data-table": "^13.0.0",
         "@material/ripple": "^13.0.0",
         "@material/snackbar": "^13.0.0",
+        "@material/typography": "^13.0.0",
         "@mui/icons-material": "^5.3.1",
         "@mui/lab": "^5.0.0-alpha.66",
         "@mui/material": "^5.4.0",

@@ -19,7 +19,43 @@ router.get('/AdminData', function (req, res) {
 })
 
 
+router.post('/setNotificationsType', async function (req, res) {
+
+    let notificatiosWanted = req.body.wantedNotifications
+    let adminId = req.body.adminId
+    console.log(req.body);
+
+    for (let notification of notificatiosWanted) {
+        let query1 = `INSERT INTO NotificationType(id,type1,type2)
+        VALUES(NULL,"${notification.type1}","${notification.type2}");`
+        let result1 = await sequelize.query(query1)
+        let notificationTypeId = result1[0]
+
+        let query2 = `INSERT INTO NotificationForAdmin(adminId,notificationId,isNotified)
+        VALUES(${adminId},${notificationTypeId},1);`
+        let result2 = await sequelize.query(query2)
+    }
+
+    res.send("succeed")
+})
+
+router.get('/notificationsType/:adminId', async function (req, res) {
+
+    sequelize
+        .query(`SELECT *
+             FROM Admin AS a  , NotificationType AS NT , NotificationForAdmin AS NFA
+            WHERE a.id = '${req.params.adminId}' AND a.id = NFA.adminId AND NT.id = NFA.notificationId`)
+        .then(function ([results, metadata]) {
+            res.send(results)
+        })
+
+    // res.send("succeed")
+})
+
+
 router.post('/simulation', async function (req, res) {
+
+    console.log(req.body);
     let secondaryDate1 = null
     let secondaryDate2 = null
     let primaryDate = null
@@ -40,6 +76,8 @@ router.post('/simulation', async function (req, res) {
     if (req.body.secondaryDate2 != '') {
         secondaryDate2 = req.body.secondaryDate2.toString().slice(0, 10) + ' ' + req.body.secondaryDate2.toString().slice(11, 19) + ':00'
     }
+
+    console.log(primaryDate, secondaryDate1, secondaryDate2);
 
     if (secondaryDate1 === null && secondaryDate2 != null) {
         let query = `INSERT INTO simulation(id,date1,date2,date3,InterviewId,adminId)

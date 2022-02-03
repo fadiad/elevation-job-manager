@@ -5,6 +5,7 @@ import Admin from './Components/Admin/Admin';
 import User from './Components/User/User';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
+import Profile from './Components/Admin/Profile';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
 import './styles/App.css';
@@ -41,6 +42,10 @@ import './styles/App.css';
             <Route path="/studentPage" exact render={() => <User />} />
             <Route path="/adminPage" exact render={() => <Admin />} />
             <Route path="/signup" exact render={() => <Signup />} />
+
+            <Route path="/Profile" exact render={() => <Profile />} />
+
+            
             {
               role === "admin" ? <Redirect to='/adminPage' /> :
                 role === "student" ? <Redirect to='/studentPage' /> : null

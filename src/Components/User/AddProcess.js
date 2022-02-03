@@ -264,7 +264,7 @@ class AddProcess extends Component {
                         </div>
 
                         <Snackbar open={this.state.openSuccess} autoHideDuration={5000} onClose={this.handleCloseMessage}>
-                            <Alert severity="success">Dates Added Successfully!</Alert>
+                            <Alert severity="success">Proccess Added Successfully!</Alert>
                         </Snackbar>
 
                         <Snackbar open={this.state.openFail} autoHideDuration={5000} onClose={this.handleCloseMessage}>

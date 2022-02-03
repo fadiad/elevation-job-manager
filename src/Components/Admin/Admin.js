@@ -3,6 +3,14 @@ import { observer, inject } from 'mobx-react';
 import UsersInterviews from './UsersInterviews';
 import GeneralStatistics from './GeneralStatistics'
 import StatisticsByFilter from './StatisticsByFilter'
+
+import Profile from './Profile'
+
+
+
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import { Redirect } from "react-router-dom";
+
 // import AddSimulationDate from './AddSimulationDate'
 
 import Filter from './Filter'
@@ -11,34 +19,37 @@ import '../../styles/Admin.css'
 import '../theme';
 
 class Admin extends Component {
-    
+
     componentDidMount() {
         this.props.adminStore.getAdminData()
     }
 
-   
+
 
     render() {
         return (
             <div>
+
+                {/* <Router>
+                    <div>
+                        <Route path="/" exact render={() => <Admin />} />
+                        <Route path="/Profile" exact render={() => <Profile />} />
+                    </div>
+                </Router> */}
+
                 <NavBar />
 
-                {/* <AddSimulationDate
-                    openDialog={this.state.openDialog}
-                    setOpenDialog={this.setOpenDialog}
-                    setCloseDialog={this.setCloseDialog}
-                /> */}
 
                 <Filter />
                 adminName : {this.props.adminStore.adminName}
                 <div className='all-statistics'>
-                    <GeneralStatistics/>
-                    <StatisticsByFilter/>
+                    <GeneralStatistics />
+                    <StatisticsByFilter />
                 </div>
-                
+
                 {/* <PieChartByFilter/> */}
 
-                <UsersInterviews setOpenDialog = {this.setOpenDialog} />
+                <UsersInterviews setOpenDialog={this.setOpenDialog} />
 
             </div>
         );
