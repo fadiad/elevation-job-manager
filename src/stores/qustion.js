@@ -1,24 +1,19 @@
 /* eslint-disable */
 import { observable, action, makeAutoObservable } from 'mobx'
-export class qustion {
-    constructor(id, interviewId, jobTitle, question, solution, interviewType, interviewDate) {
+export class Qustion {
+    constructor(idQustion, title , qustion , solution  ) {
 
-            this.id = id,
-            this.interviewId = interviewId,
-            this.jobTitle = jobTitle,
-            this.question = question,
+            this.idQustion = idQustion,
+            this.title = title,
+            this.qustion = qustion,
             this.solution = solution,
-            this.interviewType = interviewType,
-            this.interviewDate = interviewDate ,
+            
 
             makeAutoObservable(this, {
-            id: observable,
-            interviewId: observable,
-            jobTitle: observable,
-            question: observable,
-            solution: observable,
-            interviewType: observable,
-            interviewDate: observable
+            idQustion: observable,
+            title: observable,
+            qustion: observable,
+            solution: observable
         })
     }
   

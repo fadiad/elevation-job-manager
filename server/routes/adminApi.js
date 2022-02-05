@@ -19,16 +19,30 @@ router.get('/AdminData', function (req, res) {
 })
 router.get('/qustions' ,async function (req, res) {
 
-    console.log("amir");
     const qustions = await sequelize.query(`    
-        SELECT q.id ,q.InterviewId, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date
-        FROM Questions As q inner join Interview As i On q.InterviewId = i.id
-        inner join Process As p On i.processId = p.id
+    SELECT q.id As questionId ,q.InterviewId ,q.title, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date ,u.firstName , u.lastName 
+    FROM Questions As q inner join Interview As i On q.InterviewId = i.id
+                        inner join Process As p On i.processId = p.id 
+                        inner join Candidate As c On c.id = p.UserId 
+                        inner join userproporties As u On c.id = u.id 
+                        ORDER BY i.id
     `)
 
     res.send(qustions[0])
 })
 
+router.put('/sulotion', async function (req, res) {
+ 
+    const sulotion = await sequelize.query(`
+    UPDATE questions 
+    SET 
+        solution = "${req.body.sulotion}"
+    WHERE
+        id = "${req.body.questionId}"
+        `)
+        res.send(sulotion[0])
+
+})
 router.post('/simulation', async function (req, res) {
     let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
 

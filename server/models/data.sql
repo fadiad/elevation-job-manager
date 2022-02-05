@@ -51,8 +51,37 @@ VALUES('Technical',"yosi","Scheduled",3000);
 INSERT INTO simulation VALUES(NULL,"2022-02-10 10:00:00",NULL,NULL,1000,4000);
 INSERT INTO simulation VALUES(NULL,"2022-02-15 10:00:00",NULL,NULL,1000,5000);
 
+            -- this.interviewId = interviewId ,
+            -- this.jobTitle = jobTitle ,
+            -- this.companyName = companyName ,
+            -- this.interviewType = interviewType ,
+            -- this.interviewDate = interviewDate ,
+            -- this.firstName = firstName ,
+            -- this.lastName = lastName ,
+            -- this.idQustion = idQustion,
+            -- this.title = title,
+            -- this.qustion = qustio,
+            -- this.solution = solution,
+USE jobManagerDB;
+    SELECT q.id As questionId ,q.InterviewId ,q.title, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date ,u.firstName , u.lastName 
+    FROM Questions As q inner join Interview As i On q.InterviewId = i.id
+                        inner join Process As p On i.processId = p.id 
+                        inner join Candidate As c On c.id = p.UserId 
+                        inner join userproporties As u On c.id = u.id 
+                        ORDER BY i.id
+SELECT q.id As questionId ,q.InterviewId ,q.title, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date ,u.firstName , u.lastName 
+        FROM Questions As q inner join Interview As i On q.InterviewId = i.id
+                            inner join Process As p On i.processId = p.id 
+                            inner join Candidate As c On c.id = p.UserId 
+                            inner join userproporties As u On c.id = u.id 
+                            group by i.id
 
 SELECT q.id ,q.InterviewId, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date
 FROM Questions As q inner join Interview As i On q.InterviewId = i.id
                     inner join Process As p On i.processId = p.id
-
+USE jobManagerDB;
+UPDATE questions 
+    SET 
+        solution = 
+    WHERE
+        id = 5 ${req.body.questionId}

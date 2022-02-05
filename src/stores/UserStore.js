@@ -32,14 +32,14 @@ export class UserStore {
     }
 
     async getSemoletions() {
-
         let Semoletions = await axios.get(`http://localhost:8888/studentPage/Semoletions/${this.userID}`)
         this.Semoletions = Semoletions.data
     }
-    async setNewQuestionFromInterview(id, question) {
+    async setNewQuestionFromInterview(id, question, title) {
         const obj = {
             interviewId: id,
-            question: question
+            question: question,
+            title: title
         }
         await fetch(`http://localhost:8888/studentPage/question`, {
             method: 'POST',

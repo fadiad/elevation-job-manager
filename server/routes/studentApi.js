@@ -211,8 +211,8 @@ router.post('/processStatus', async function(req, res) {
 router.post('/question', async function(req, res) {
     const interviewId = req.body.interviewId
 
-    let query = `INSERT INTO Questions(id , question , solution , InterviewId  )
-        VALUES(NULL, "${req.body.question}" , NULL , "${interviewId}");`
+    let query = `INSERT INTO Questions(id ,title , question , solution , InterviewId  )
+        VALUES(NULL, "${req.body.title}","${req.body.question}" , NULL , "${interviewId}");`
     await sequelize.query(query)
         // res(result)
 })

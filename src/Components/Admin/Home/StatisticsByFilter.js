@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import PieChartByFilter from './PieChartByFilter'
-import '../../styles/Admin.css'
+import '../../../styles/Admin.css'
 class StatisticsByFilter extends Component {
     componentDidMount() {
         this.props.adminStore.getStatisticsByFilter()

@@ -1,14 +1,15 @@
 
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import Admin from './Components/Admin/Admin';
+import Admin from './Components/Admin/Home/Admin';
 import User from './Components/User/User';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
 import './styles/App.css';
-
+import Questions from './Components/Admin/Question/Questions';
+import DisplayJobs from './Components/Admin/Jobs/DisplayJobs'
  class App extends Component {
 
   constructor() {
@@ -38,8 +39,12 @@ import './styles/App.css';
         <Router>
           <div>
             <Route path="/" exact render={() => <Login setRole={this.setRole} setUserId={this.setUserId} />} />
+
             <Route path="/studentPage" exact render={() => <User />} />
             <Route path="/adminPage" exact render={() => <Admin />} />
+            <Route path="/adminPage/qustion" exact render={() => <Questions />} />
+            <Route path="/adminPage/displayJobs" exact render={() => <DisplayJobs />} />
+
             <Route path="/signup" exact render={() => <Signup />} />
             {
               role === "admin" ? <Redirect to='/adminPage' /> :

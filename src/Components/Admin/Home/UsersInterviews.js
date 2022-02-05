@@ -1,11 +1,11 @@
 
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import '../../styles/UsersInterview.css'
+import '../../../styles/UsersInterview.css'
 import { Button } from '@mui/material';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import { ThemeProvider } from '@material-ui/core';
-import theme from '../theme';
+import theme from '../../theme';
 import AddSimulationDate from './AddSimulationDate'
 
 import {
