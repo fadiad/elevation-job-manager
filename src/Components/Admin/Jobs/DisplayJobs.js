@@ -6,9 +6,6 @@ import '../../../styles/Admin.css'
 import '../../theme';
 class DisplayJobs extends Component {
 
-
-
-    
     render() {
         return (
             <div className='Filter'>

@@ -14,8 +14,7 @@ class DeleteQuestion extends Component {
     }
 
     deleteQuestion = () => {
-        console.log("deleteQuestion");
-        // this.props.adminStore.addSulotion(this.props.questionId,  this.state.sulotion)
+        this.props.adminStore.deleteQuestion(this.props.questionId)
         this.handleClose();
     }
 

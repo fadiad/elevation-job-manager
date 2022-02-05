@@ -31,6 +31,29 @@ router.get('/qustions' ,async function (req, res) {
     res.send(qustions[0])
 })
 
+router.delete('/question', async function (req, res) {
+    const questionDeleted = await sequelize.query(`
+    DELETE FROM questions
+    WHERE id = "${req.body.questionId}"
+    `)
+        res.send(questionDeleted[0])
+
+})
+router.put('/question', async function (req, res) {
+    const editQuestionData = await sequelize.query(`
+  UPDATE questions 
+    SET         
+        title = "${req.body.title}",
+        question = "${req.body.question}",
+            solution ="${req.body.sulotion}"
+
+    WHERE
+        id = "${req.body.questionId}"
+   
+`)
+        res.send(editQuestionData[0])
+})
+
 router.put('/sulotion', async function (req, res) {
  
     const sulotion = await sequelize.query(`

@@ -63,6 +63,42 @@ export class AdminStore {
     setCohort(cohort: String) {
         this.CohortByFilter = cohort
     }
+    
+    editQuestion( questionId : Number, title : String, question : String,  sulotion : String){
+        let questionData = {
+            questionId: questionId,
+            title : title ,
+            question : question ,
+            sulotion : sulotion
+        }
+        fetch('http://localhost:8888/adminPage/question', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(questionData),
+        })
+            .then(data => {
+                console.log(data);
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+
+    async deleteQuestion(questionId : Number){
+        let body = {
+            questionId: questionId,
+        }
+        fetch('http://localhost:8888/adminPage/question', 
+        { 
+            method: 'DELETE' ,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+
+        })
+        .then(
+            () =>{ console.log("delete Question work");
+        });
+
+    }
     async addSulotion(questionId : Number,  sulotion : String){
         let body = {
             questionId: questionId,

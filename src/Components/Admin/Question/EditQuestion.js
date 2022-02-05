@@ -10,9 +10,8 @@ class EditQuestion extends Component {
         super()
         this.state = {
             status: ' ',
-            sulotion: ' ',
             title : ' ',
-            qustion : ' ',  
+            question : ' ',  
             solution : ' '   
         }
     }
@@ -39,9 +38,8 @@ class EditQuestion extends Component {
         this.props.setCloseDialog()
     }
 
-    addSulotion = () => {
-        console.log("addSulotion");
-        // this.props.adminStore.addSulotion(this.props.questionId,  this.state.sulotion)
+    editQuestion = () => {
+        this.props.adminStore.editQuestion(this.props.questionId, this.state.title , this.state.question ,  this.state.solution)
         this.handleClose();
     }
 
@@ -94,7 +92,7 @@ class EditQuestion extends Component {
                     <Button autoFocus onClick={this.handleClose}>
                         Disagree
                     </Button>
-                    <Button onClick={this.addSulotion} autoFocus>
+                    <Button onClick={this.editQuestion} autoFocus>
                         Submit
                     </Button>
                 </DialogActions>

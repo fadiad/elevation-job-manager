@@ -80,8 +80,21 @@ SELECT q.id ,q.InterviewId, q.question , q.solution , i.type , p.jobTitle , p.co
 FROM Questions As q inner join Interview As i On q.InterviewId = i.id
                     inner join Process As p On i.processId = p.id
 USE jobManagerDB;
-UPDATE questions 
-    SET 
-        solution = 
+SELECT *
+from questions
+USE jobManagerDB;
+  UPDATE questions 
+    SET         
+        title = "new question",
+        question = "the first question edit ",
+            solution = "dot write solution"
+
     WHERE
-        id = 5 ${req.body.questionId}
+        id = 3
+ 
+USE jobManagerDB;
+
+SELECT * 
+from questions
+    DELETE FROM questions
+    WHERE id =3
