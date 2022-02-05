@@ -21,64 +21,13 @@ class Interview extends Component {
             openDialog : false
         }
     }
-<<<<<<< HEAD
-    setOpenFailDialog = () => {
-        this.setState({
-            openFailDialog: true
-        })
-    }
-    setCloseFailDialog = () => {
-        this.setState({
-            openFailDialog: false
-        })
-    }
-    setOpenPassDialog = () => {
-        this.setState({
-            openPassDialog: true
-        })
-    }
-    setClosePassDialog = () => {
-        this.setState({
-            openPassDialog: false
-        })
-    }
-    
-    setOpenQuestionDialog = () => {
-        this.setState({
-            openDialog: true
-        })
-    }
-    setCloseQuestionDialog = () => {
-        this.setState({
-            openDialog: false
-        })
-    }
-    // setOpenQuestionDialog = () => {
-    //     this.setState({
-    //         openQuestionDialog: true
-    //     })
-    // }
-    // setCloseQuestionDialog = () => {
-    //     this.setState({
-    //         openQuestionDialog: false
-    //     })
-    // }
-    setFail = () => {
-        this.setState({
-            fail: true
-        })
-    }
-    setPass = () => {
-        this.setState({
-            fail: true
-        })
-        }
-=======
     setOpenFailDialog = () => {this.setState({openFailDialog: true})}
     setCloseFailDialog = () => {this.setState({openFailDialog: false})}
     setOpenPassDialog = () => {this.setState({openPassDialog: true})}
     setClosePassDialog = () => {this.setState({openPassDialog: false})}
->>>>>>> pickSimulation
+
+    setOpenQuestionDialog = () => {this.setState({openDialog: true})}
+    setCloseQuestionDialog = () => {this.setState({openDialog: false})}
     render() {
         let interview = this.props.interview
         return (

@@ -222,7 +222,9 @@ router.get('/simulationDates/:id', async function(req, res) {
     console.log("simulationDates")
     let userId = req.params.id
     let simualtionDataQuery = `select s.id as "SimulationId", c.id as "UserID",p.id as "ProcessID",p.companyName,p.jobTitle,i.id as "interviewId",i.type,i.date,i.simulationDate,
-    DATE_FORMAT(s.date1, "%d/%m/%Y %r") as date1,s.date2,s.date3,adminId 
+    DATE_FORMAT(s.date1, "%Y-%m-%d %T") as date1,
+    DATE_FORMAT(s.date2, "%Y-%m-%d %T") as date2,
+    DATE_FORMAT(s.date3, "%Y-%m-%d %T") as date3,adminId 
        from candidate as c inner join process as p on c.id=p.UserId 
        inner join interview as i on p.id=i.processId 
        inner join simulation as s on i.id=s.interviewId
@@ -243,10 +245,9 @@ router.post('/interviewSimlationDate/:id', async function(req, res) {
     res.send(result)
 })
 
-router.delete('/simulation/:id'), async function(req, res) {
-        let userId = req.params.id
-        let sId = req.body.simualtionId
-        let deleteQuery = `Delete from Simulation where simulationId=${sId}`
+router.delete('/Simulation'), async function(req, res) {
+        let sId = req.body.simulationId
+        let deleteQuery = `Delete from Simulation where id=${sId}`
         let result = await sequelize.query(deleteQuery)
         res.send(result)
     }

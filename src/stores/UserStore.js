@@ -23,7 +23,8 @@ export class UserStore {
             addProcess: action,
             addInterView: action,
             changeStatus: action,
-            getSimulationsOfInterView: action
+            getSimulationsOfInterView: action,
+            SelectSimulationDate: action
         })
     }
     setuserID = (id) => {
@@ -202,23 +203,17 @@ export class UserStore {
         }
         let self = this;
         await fetch(`http://localhost:8888/studentPage/interviewSimlationDate/${this.userID}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(bodyParams),
-            })
-            .then(data => {
-                fetch(`http://localhost:8888/studentPage/interviewSimlationDate/${this.userID}`, {
-                    method: 'DELETE',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(simulationId),
-                }).then(data2 => {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bodyParams),
+        })
+        await axios.delete(`http://localhost:8888/studentPage/Simulation/${this.userID}`, {
+            data: JSON.stringify({ simulationId: simulationId })
+        }).then(data => {
+            console.log("delete success")
+        }).catch(err => {
 
-                }).catch(err => {
-
-                })
-            }).catch(err => {
-                console.log(err)
-            })
+        })
 
 
     }

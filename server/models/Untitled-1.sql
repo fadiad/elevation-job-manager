@@ -52,3 +52,5 @@ select u.firstName , u.lastName , c.cohort , p.companyName , i.type , i.date , i
        where c.cohort = 'Atidna 1' and i.status = 'Passed'
 
 
+select interviewId from simulation
+
