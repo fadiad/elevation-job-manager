@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import NavBar from '../../NavBar';
+import NavBar from '../../AdminNavBar';
 import '../../../styles/Admin.css'
 import '../../theme';
 import DisplayQuestion from './DisplayQuestion';
@@ -35,23 +35,23 @@ class Questions extends Component {
     render() {
         this.props.adminStore.qustions
         return (
-            <div className='querstion'>
+            <div className='questions'>
                 <NavBar />
                 <br></br>
                 <br></br>
              
-                <FormGroup>
+                <FormGroup row={true}>
                     <FormControlLabel control={<Checkbox defaultChecked />} label="HR" />
                     <FormControlLabel control={<Checkbox />} label="Technical" />
-
+                    <TextField id="outlined-basic" label="Company" variant="outlined" />
+                    <TextField id="outlined-basic" label="Job" variant="outlined" />
+              
                 </FormGroup>
-                <TextField id="outlined-basic" label="Company" variant="outlined" />
-                <TextField id="outlined-basic" label="Job" variant="outlined" />
-                <br></br>
+                 <br></br>
 
                     <AccordionSummary
                         aria-controls="panel1bh-content"
-                        id="panel1bh-header"
+                        id="main-header"
                     >
                         <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>company </Typography>
                         <Typography sx={{ width: '20%', flexShrink: 0, color: '#ff96aa' }}>Date</Typography>

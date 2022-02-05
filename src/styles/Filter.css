@@ -5,6 +5,8 @@
 .Filter {
     display: grid;
     grid-template-columns: auto auto auto;
+    margin: auto;
+    width: 40%;
 }
 
 .Select {

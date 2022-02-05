@@ -7,7 +7,7 @@ import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import Processes from './Processes';
-import NavBar from '../NavBar';
+import NavBar from '../UserNavBar';
 import AddProcess from './AddProcess';
 import '../../styles/User.css'
 import ShowSemoletion from './ShowSemoletion';

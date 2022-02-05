@@ -46,7 +46,7 @@ class Filter extends Component {
                     </Select>
                 </FormControl>
                 <ThemeProvider theme={theme}>
-                        <Button color="primary" variant="outlined" startIcon={<SearchIcon />} onClick={this.filterBy}>Search</Button>
+                        <Button color='primary' variant="text" startIcon={<SearchIcon />} onClick={this.filterBy}>Search</Button>
                     </ThemeProvider>
             </div>
         );

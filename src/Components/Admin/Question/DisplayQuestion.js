@@ -81,7 +81,7 @@ class DisplayQuestion extends Component {
     render() {
         this.props.adminStore.qustions
         return (
-            <div className='querstion'>
+            <div className='interview-question'>
 
                 <br />
                 <Accordion expanded={this.state.expanded === `panel1`} onChange={this.handleChange('panel1')}>
@@ -89,7 +89,7 @@ class DisplayQuestion extends Component {
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1bh-content"
-                        id="panel1bh-header"
+                        id="sub-header"
                     >
 
                         <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>
@@ -103,7 +103,7 @@ class DisplayQuestion extends Component {
                     </AccordionSummary>
                     {this.props.row.qustion.map((q, index) => {
                         return (
-
+                            <div className='question'>
                             <AccordionDetails >
                                 <h2>{index + 1} :</h2>
                                 <Typography >
@@ -156,7 +156,7 @@ class DisplayQuestion extends Component {
 
 
                             </AccordionDetails>
-
+                                    </div>
                         )
                     })
                     }

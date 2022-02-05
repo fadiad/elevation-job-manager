@@ -84,7 +84,7 @@ Create TABLE simulation(
 
 
 Use jobManagerDB;
-Drop TABLE IF EXISTS Questions
+Drop TABLE IF EXISTS Questions;
 
 Use jobManagerDB;
 Create TABLE Questions(
