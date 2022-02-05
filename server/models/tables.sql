@@ -85,12 +85,16 @@ Create TABLE simulation(
 
 Use jobManagerDB;
 Drop TABLE IF EXISTS Questions
-Use jobManagerDB;
 
+Use jobManagerDB;
 Create TABLE Questions(
     id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    question TEXT NOT NULL,
-    solution TEXT,
+    title VARCHAR(300) NOT NULL ,
+    question VARCHAR(5000) NOT NULL,
+    solution VARCHAR(5000),
     InterviewId MEDIUMINT,
     FOREIGN Key(InterviewId) REFERENCES Interview(id)
-)COLLATION = utf8_unicode_ci & CHARACTER SET = utf8
+)
+
+
+COLLATION = utf8_unicode_ci & CHARACTER SET = utf8

@@ -5,9 +5,7 @@ import { Dialog, DialogTitle } from '@material-ui/core'
 import DateMomentUtils from '@date-io/moment'
 import TextField from '@mui/material/TextField';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
-
-import '../../styles/Filter.css'
-
+import '../../../styles/Filter.css'
 
 class AddSimulationDate extends Component {
 

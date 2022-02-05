@@ -1,28 +1,25 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import UsersInterviews from './UsersInterviews';
-import GeneralStatistics from './GeneralStatistics'
+import GeneralStatistics from '../Home/GeneralStatistics'
 import StatisticsByFilter from './StatisticsByFilter'
-import DisplayQuestion from '../DisplayQuestion'
+
 import Filter from './Filter'
-import NavBar from '../NavBar';
-import '../../styles/Admin.css'
-import '../theme';
+import NavBar from '../../NavBar';
+import '../../../styles/Admin.css';
+import '../../theme';
+import {  Link } from 'react-router-dom'
 
 class Admin extends Component {
 
     componentDidMount() {
         this.props.adminStore.getAdminData()
     }
-
-
-
     render() {
         return (
             <div>
+
                 <NavBar />
-
-
                 <Filter />
                 adminName : {this.props.adminStore.adminName}
                 <div className='all-statistics'>
@@ -30,7 +27,7 @@ class Admin extends Component {
                     <StatisticsByFilter />
                 </div>
                 <UsersInterviews setOpenDialog={this.setOpenDialog} />
-                <DisplayQuestion/>
+                
             </div>
         );
     }

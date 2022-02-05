@@ -1,8 +1,8 @@
 
-import "../../styles/PieChartByFilter.css";
+import "../../../styles/PieChartByFilter.css";
 import React from "react";
 import { PieChart, Pie, Cell,Legend } from "recharts";
-import '../../styles/Admin.css';
+import '../../../styles/Admin.css';
 const COLORS = ["#426696", "#ff96aa"];
 
 const RADIAN = Math.PI / 180;

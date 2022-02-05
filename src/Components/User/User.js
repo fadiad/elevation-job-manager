@@ -43,7 +43,7 @@ class User extends Component {
                 <Stack padding={"15px"} width={"30%"}>
                     <ThemeProvider theme={theme}>
                         <Button variant="contained" startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>Add Process</Button>
-                        <Button variant="contained" startIcon={<AddSharpIcon />} onClick={this.setOpenSemoletionDialog}>Show Semoletion</Button>
+                        <Button variant="contained" startIcon={<AddSharpIcon />} onClick={this.setOpenSemoletionDialog}>Show Simulation</Button>
                     </ThemeProvider>
                 </Stack>
 

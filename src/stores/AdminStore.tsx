@@ -3,8 +3,9 @@ import { lastIndexOf } from 'core-js/core/array';
 import { observable, action, makeAutoObservable } from 'mobx'
 const axios = require('axios')
 import { UserInterview } from './UserInterview';
-import {qustion} from './qustion';
-
+// import {Qustion} from './Qustion';
+import { Qustions } from './Qustions';
+import { Qustion } from './Qustion';
 export class AdminStore {
     adminId: 3;
     interviewId: Number;
@@ -14,7 +15,8 @@ export class AdminStore {
     usersInterViews: Array<UserInterview>;
     generalStatistics: Object;
     statisticsByFilter: Object;
-    qustions :  Array<qustion>;
+    qustions: Array<Qustions>;
+    qustion: Qustion
     constructor() {
         this.usersInterViews = [];
         this.adminName = ' ';
@@ -23,6 +25,7 @@ export class AdminStore {
         this.statusByFilter = 'Scheduled';
         this.CohortByFilter = 'all';
         this.qustions = [];
+        this.qustion;
         this.generalStatistics = {
             InProcess: '',
             employed: '',
@@ -43,13 +46,15 @@ export class AdminStore {
             usersInterViews: observable,
             adminName: observable,
             generalStatistics: observable,
-            qustions : observable ,
+            qustions: observable,
+            qustion: observable,
             getUsersInterviews: action,
             getAdminData: action,
             setCohort: action,
             setStatus: action,
             getStatisticsByFilter: action,
-            getQustions : action
+            getQustions: action,
+            addSulotion : action
         })
     }
     setStatus(status: String) {
@@ -58,15 +63,80 @@ export class AdminStore {
     setCohort(cohort: String) {
         this.CohortByFilter = cohort
     }
+    async addSulotion(questionId : Number,  sulotion : String){
+        let body = {
+            questionId: questionId,
+            sulotion: sulotion
+        }
+        fetch('http://localhost:8888/adminPage/Sulotion', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        })
+            .then(data => {
+                console.log(data);
+
+                // this.getUserData(this.userID)
+            }).catch(err => {
+                console.log(err)
+            })
+    }
     async getAdminData() {
         let user = await axios.get("http://localhost:8888/adminPage/AdminData")
         this.adminName = user.data
     }
     async getQustions() {
         let qustionsFromServer = await axios.get("http://localhost:8888/adminPage/qustions")
-        qustionsFromServer.data.forEach(e => {
-        this.qustions.push(new qustion(e.id, e.interviewId, e.jobTitle, e.question, e.solution, e.interviewType, e.interviewDate))
-        })
+        let id = qustionsFromServer.data[0].InterviewId
+        this.qustions = []
+        if (qustionsFromServer !== undefined) {
+            this.qustions.push(new Qustions(
+                qustionsFromServer.data[0].InterviewId,
+                qustionsFromServer.data[0].type,
+                qustionsFromServer.data[0].companyName,
+                qustionsFromServer.data[0].jobTitle,
+                qustionsFromServer.data[0].firstName,
+                qustionsFromServer.data[0].lastName,
+                qustionsFromServer.data[0].date
+
+            ))
+            this.qustion = new Qustion(
+                qustionsFromServer.data[0].questionId,
+                qustionsFromServer.data[0].title,
+                qustionsFromServer.data[0].question,
+                qustionsFromServer.data[0].solution
+            )
+            this.qustions[0].qustion.push(this.qustion)
+        }
+        for (let i = 1; i < qustionsFromServer.data.length; i++) {
+            if (qustionsFromServer.data[i].InterviewId == id) {
+                this.qustion = new Qustion(
+                    qustionsFromServer.data[i].questionId,
+                    qustionsFromServer.data[i].title,
+                    qustionsFromServer.data[i].question,
+                    qustionsFromServer.data[i].solution
+                )
+                this.qustions[this.qustions.length-1].qustion.push(this.qustion)
+            } else {
+                this.qustions.push(new Qustions(
+                    qustionsFromServer.data[i].InterviewId,
+                    qustionsFromServer.data[i].type,
+                    qustionsFromServer.data[i].companyName,
+                    qustionsFromServer.data[i].jobTitle,
+                    qustionsFromServer.data[i].firstName,
+                    qustionsFromServer.data[i].lastName,
+                    qustionsFromServer.data[i].date,
+                ))
+                this.qustion = new Qustion(
+                    qustionsFromServer.data[i].questionId,
+                    qustionsFromServer.data[i].title,
+                    qustionsFromServer.data[i].question,
+                    qustionsFromServer.data[i].solution
+                )
+                this.qustions[this.qustions.length-1].qustion.push(this.qustion)
+                id = qustionsFromServer.data[i].InterviewId  
+            }
+        }
     }
 
     addSimulationDate = (primaryDate, secondaryDate1, secondaryDate2) => {

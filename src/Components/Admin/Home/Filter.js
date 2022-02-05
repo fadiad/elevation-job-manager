@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import '../../styles/Filter.css'
+import '../../../styles/Filter.css'
 import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { ThemeProvider } from '@material-ui/core';
-import theme from '../theme';
+import theme from '../../theme';
 
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
 
