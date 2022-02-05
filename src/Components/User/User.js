@@ -8,6 +8,7 @@ import theme from '../theme';
 import Processes from './Processes';
 import NavBar from '../NavBar';
 import AddProcess from './AddProcess';
+import PickSimualtionDate from './PickSimualtionDate';
 
 import '../../styles/User.css'
 
@@ -21,13 +22,14 @@ class User extends Component {
     }
 
     componentDidMount = () => {
-        this.props.userStore.getProcesses(this.props.userStore.userID)
-        this.props.userStore.getUserData(this.props.userStore.userID)
+         this.props.userStore.getUserData(this.props.userStore.userID)
+         this.props.userStore.getProcesses(this.props.userStore.userID)
+         this.props.userStore.getSimulationsOfInterView()
     }
 
     setOpenDialog = () => {this.setState({openDialog: true})}
     setCloseDialog = () => {this.setState({openDialog: false})}
-
+  
     render() {
         return (
             <div>
@@ -43,7 +45,7 @@ class User extends Component {
                     setOpenDialog={this.setOpenDialog}
                     setCloseDialog={this.setCloseDialog}
                 />
-                
+                <PickSimualtionDate />
                 <br />
                 {
                     this.props.userStore.userData.isEmployeed === 1 ?

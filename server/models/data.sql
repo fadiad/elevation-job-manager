@@ -9,8 +9,8 @@ INSERT INTO userproporties VALUES( 5000 ,Null,"amir","jamal","amirhalaby007@gmai
 INSERT INTO Candidate VALUES( 1000 , 'Student' ,false , 'Atidna 4' , NULL);
 INSERT INTO Candidate VALUES( 2000, 'Student' ,false , 'Atidna 4' , NULL);
 INSERT INTO Candidate VALUES( 3000 , 'Student' ,false , 'Atidna 4' , NULL);
-INSERT INTO admin VALUES (4000 , true)
-INSERT INTO admin VALUES (5000, true)
+INSERT INTO admin VALUES (4000 , true);
+INSERT INTO admin VALUES (5000, true);
 
 INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
 VALUES(NULL,"Amdocs","react Developer","Nazareth",'friend',"h://..",1000);
@@ -48,8 +48,8 @@ VALUES('Phone',"maya","Scheduled",3000);
 INSERT INTO Interview(type,interviewerName,status,processId)
 VALUES('Technical',"yosi","Scheduled",3000);
 
-INSERT INTO simulation VALUES(NULL,"2022-02-10 10:00:00",NULL,NULL,1000,4000)
-INSERT INTO simulation VALUES(NULL,"2022-02-15 10:00:00",NULL,NULL,1000,5000)
+INSERT INTO simulation VALUES(NULL,"2022-02-10 10:00:00",NULL,NULL,1000,4000);
+INSERT INTO simulation VALUES(NULL,"2022-02-15 10:00:00",NULL,NULL,1000,5000);
 
 
 

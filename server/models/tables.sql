@@ -81,3 +81,7 @@ Create TABLE simulation(
     FOREIGN Key(InterviewId) REFERENCES Interview(id),
     FOREIGN Key(adminId) REFERENCES Admin(id)
 );
+
+ALTER TABLE Interview MODIFY simulationDate datetime;
+
+ALTER TABLE simulation MODIFY date1 datetime;

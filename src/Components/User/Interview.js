@@ -10,56 +10,28 @@ import theme from '../theme';
 
 import Fail from './Fail'
 import Pass from './Pass'
+import PickSimualtionDate from './PickSimualtionDate';
 
 class Interview extends Component {
     constructor() {
         super()
         this.state = {
-            pass: false,
-            fail: false,
             openFailDialog: false,
             openPassDialog: false
         }
     }
-    setOpenFailDialog = () => {
-        this.setState({
-            openFailDialog: true
-        })
-    }
-    setCloseFailDialog = () => {
-        this.setState({
-            openFailDialog: false
-        })
-    }
-    setOpenPassDialog = () => {
-        this.setState({
-            openPassDialog: true
-        })
-    }
-    setClosePassDialog = () => {
-        this.setState({
-            openPassDialog: false
-        })
-    }
-    setFail = () => {
-        this.setState({
-            fail: true
-        })
-    }
-    setPass = () => {
-        this.setState({
-            fail: true
-        })
-        }
+    setOpenFailDialog = () => {this.setState({openFailDialog: true})}
+    setCloseFailDialog = () => {this.setState({openFailDialog: false})}
+    setOpenPassDialog = () => {this.setState({openPassDialog: true})}
+    setClosePassDialog = () => {this.setState({openPassDialog: false})}
     render() {
         let interview = this.props.interview
-        console.log(this.props.interview);
         return (
             <div className='interview'>
                 <div>{interview.type}</div>
                 <div>{interview.interViewerName}</div>
                 <div>{interview.date}</div>
-                <div><Button disabled={interview.simulationDate === undefined}>Simulation</Button></div>
+                <div>{interview.simulationDate}</div>
                 <div>{interview.status === "Scheduled" ?
                     <div>
                         <Stack spacing={2} direction="row">
@@ -75,7 +47,6 @@ class Interview extends Component {
                 </div>
 
                 <Fail
-                    setFail={this.setFail}
                     id={this.props.interview.id}
                     processId={this.props.interview.processId}
                     type={this.props.interview.type}
@@ -84,7 +55,6 @@ class Interview extends Component {
                     setCloseDialog={this.setCloseFailDialog}
                 ></Fail>
                 <Pass
-                    setPass={this.setPass}
                     id={this.props.interview.id}
                     processId={this.props.interview.processId}
                     type={this.props.interview.type}
