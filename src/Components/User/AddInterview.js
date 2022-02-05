@@ -63,7 +63,6 @@ class AddInterview extends Component {
 
     addInterView = () => {
         if (this.isValid(this.state.date._d)) {
-            console.log("add interview ");
             this.props.userStore.addInterView(this.props.processId, this.state.type, this.state.date._d, this.state.interviewerName)
             this.handleClose();
         } else {

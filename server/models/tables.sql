@@ -82,6 +82,7 @@ Create TABLE simulation(
     FOREIGN Key(adminId) REFERENCES Admin(id)
 );
 
+<<<<<<< HEAD
 
 Use jobManagerDB;
 Drop TABLE IF EXISTS Questions
@@ -94,3 +95,8 @@ Create TABLE Questions(
     InterviewId MEDIUMINT,
     FOREIGN Key(InterviewId) REFERENCES Interview(id)
 )COLLATION = utf8_unicode_ci & CHARACTER SET = utf8
+=======
+ALTER TABLE Interview MODIFY simulationDate datetime;
+
+ALTER TABLE simulation MODIFY date1 datetime;
+>>>>>>> pickSimulation

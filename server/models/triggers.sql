@@ -11,4 +11,6 @@ BEGIN
     END IF; 
 END;
 
+select @@sql_mode;
+
 

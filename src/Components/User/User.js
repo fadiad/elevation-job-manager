@@ -8,6 +8,11 @@ import theme from '../theme';
 import Processes from './Processes';
 import NavBar from '../NavBar';
 import AddProcess from './AddProcess';
+<<<<<<< HEAD
+=======
+import PickSimualtionDate from './PickSimualtionDate';
+
+>>>>>>> pickSimulation
 import '../../styles/User.css'
 import ShowSemoletion from './ShowSemoletion';
 
@@ -22,12 +27,14 @@ class User extends Component {
     }
 
     componentDidMount = () => {
-        this.props.userStore.getProcesses(this.props.userStore.userID)
-        this.props.userStore.getUserData(this.props.userStore.userID)
+         this.props.userStore.getUserData(this.props.userStore.userID)
+         this.props.userStore.getProcesses(this.props.userStore.userID)
+         this.props.userStore.getSimulationsOfInterView()
     }
 
     setOpenDialog = () => {this.setState({openDialog: true})}
     setCloseDialog = () => {this.setState({openDialog: false})}
+<<<<<<< HEAD
     setOpenSemoletionDialog = () => {
         this.setState({openSemoletionDialog: true})
     }
@@ -36,6 +43,9 @@ class User extends Component {
         }
     )}
 
+=======
+  
+>>>>>>> pickSimulation
     render() {
         return (
             <div>
@@ -52,11 +62,15 @@ class User extends Component {
                     setOpenDialog={this.setOpenDialog}
                     setCloseDialog={this.setCloseDialog}
                 />
+<<<<<<< HEAD
                 <ShowSemoletion
                     openDialog={this.state.openSemoletionDialog}
                     setOpenDialog={this.setOpenSemoletionDialog}
                     setCloseDialog={this.setCloseSemoletionDialog}
                 />
+=======
+                <PickSimualtionDate />
+>>>>>>> pickSimulation
                 <br />
                 {
                     this.props.userStore.userData.isEmployeed === 1 ?

@@ -5,20 +5,9 @@ import { Button } from '@mui/material';
 
 class Pass extends Component {
 
-    constructor() {
-        super()
-        this.state = {
-            status: ' ',
-
-        }
-    }
-
-    handleClose = () => {
-        this.props.setCloseDialog()
-    }
+    handleClose = () => {this.props.setCloseDialog()}
     pass = () => {
         this.props.userStore.changeStatus(this.props.id, this.props.processId, "Passed" , this.props.type)
-        this.props.setPass()
         this.handleClose();
     }
     render() {
@@ -52,8 +41,6 @@ class Pass extends Component {
                         Agree
                     </Button>
                 </DialogActions>
-
-
 
             </Dialog>
 

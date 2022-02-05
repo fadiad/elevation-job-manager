@@ -25,6 +25,14 @@ GROUP BY i.processId
 GROUP BY p.UserId
 
 
+select c.id as "UserID",p.id as "ProcessID",p.companyName,p.jobTitle,i.id as "interviewId",i.type,i.date,i.simulationDate,s.date1,s.date2,s.date3,adminId 
+from candidate as c inner join process as p on c.id=p.UserId 
+inner join interview as i on p.id=i.processId 
+inner join simulation as s on i.id=s.interviewId
+where c.id=1;
+
+
+
 
 
 USE jobManagerDB;

@@ -71,7 +71,6 @@ class Process extends Component {
 
     }
     render() {
-        console.log(this.props.userStore.processes);
         return (
             <div className='Process'>
                 <div class="mdc-card">
