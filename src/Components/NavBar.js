@@ -30,7 +30,7 @@ class NavBar extends Component {
                     <Link to="/adminPage/qustion">Qustions</Link>
                     <Link to="/adminPage/displayJobs">JOBS</Link>
                         <Button color="primary" variant="outlined" startIcon={<AccountCircleSharpIcon />}>Profile</Button>
-                        <Button variant="outlined" startIcon={<ExitToAppSharpIcon />} onClick={this.logout}>Logout</Button>
+                        <Link to="/"><Button variant="outlined" startIcon={<ExitToAppSharpIcon />} onClick={this.logout}>Logout</Button></Link>
                     </ThemeProvider>
                 </Stack>
             </div>
