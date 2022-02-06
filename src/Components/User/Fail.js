@@ -5,20 +5,10 @@ import { Button } from '@mui/material';
 
 class Fail extends Component {
 
-
-    constructor() {
-        super()
-        this.state = {
-            status: ' ',
-
-        }
-    }
-    handleClose = () => {
-        this.props.setCloseDialog()
-    }
+    handleClose = () => {this.props.setCloseDialog()}
+    
     fail = () => {
         this.props.userStore.changeStatus(this.props.id, this.props.processId, "Failed" ,this.props.type)
-        this.props.setFail()
         this.handleClose();
     }
 

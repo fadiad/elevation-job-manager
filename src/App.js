@@ -27,7 +27,7 @@ import DisplayJobs from './Components/Admin/Jobs/DisplayJobs'
   setUserId = (id) => {
     this.setState({userID : id},() =>{
       this.props.userStore.userID = this.state.userID
-      
+      this.props.adminStore.adminId = this.state.userID
     })
 
   } 
@@ -44,13 +44,11 @@ import DisplayJobs from './Components/Admin/Jobs/DisplayJobs'
             <Route path="/adminPage" exact render={() => <Admin />} />
             <Route path="/adminPage/qustion" exact render={() => <Questions />} />
             <Route path="/adminPage/displayJobs" exact render={() => <DisplayJobs />} />
-
             <Route path="/signup" exact render={() => <Signup />} />
             {
               role === "admin" ? <Redirect to='/adminPage' /> :
                 role === "student" ? <Redirect to='/studentPage' /> : null
             }
-           
           </div>
         </Router>
       </div>

@@ -2,24 +2,16 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core'
 import { Button } from '@mui/material';
-import Pass from './Pass';
 
 class Accepted extends Component {
 
-    constructor() {
-        super()
-        this.state = {
-            status: ' ',
-        }
-    }
+
     handleClose = () => {
         this.props.setCloseDialog()
     }
     assignAsAccepted = () => {
         this.props.userStore.assignAsAccepted(this.props.id)
         let date = new Date()
-        // this.props.userStore.addInterView(this.props.processId, this.state.status, this.state.date._d, this.state.interviewerName)
-
         this.props.userStore.addInterView(this.props.processId, "Contract", date, "", 'Passed')
         this.props.setProcessUnActive();
         this.handleClose();

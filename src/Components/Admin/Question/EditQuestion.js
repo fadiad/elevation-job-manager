@@ -32,7 +32,6 @@ class EditQuestion extends Component {
         this.setState({
             solution: event.target.value
         })
-        console.log(this.state.title);
     }
     handleClose = () => {
         this.props.setCloseDialog()
@@ -42,7 +41,7 @@ class EditQuestion extends Component {
         this.props.adminStore.editQuestion(this.props.questionId, this.state.title , this.state.question ,  this.state.solution)
         this.handleClose();
     }
-
+    
     render() {
         return (
             <Dialog
@@ -56,6 +55,7 @@ class EditQuestion extends Component {
                     }
                 }}
             >
+               
                 <DialogTitle>
                     <div>
                         Edit Question
@@ -66,7 +66,7 @@ class EditQuestion extends Component {
                     label="Title" 
                     variant="outlined" 
                     onChange={this.handleChangeTitle}
-                    defaultValue={this.props.title}
+                    defaultValue={this.props.title  }
 
                 />
                 <br/>
@@ -77,7 +77,7 @@ class EditQuestion extends Component {
                     // value={this.}
                     onChange={this.handleChangeQuestion}
                     rows={4}
-                    defaultValue={this.props.question}
+                    defaultValue={this.props.question }
                 />
                 <TextField
                     id="outlined-multiline-static"
@@ -86,7 +86,7 @@ class EditQuestion extends Component {
                     // value={this.}
                     onChange={this.handleChangeSulotion}
                     rows={4}
-                    defaultValue={this.props.solution}
+                    defaultValue={this.props.solution }
                 />
                 <DialogActions>
                     <Button autoFocus onClick={this.handleClose}>

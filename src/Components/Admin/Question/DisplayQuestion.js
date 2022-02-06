@@ -1,7 +1,3 @@
-
-
-
-
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
@@ -12,8 +8,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-// import { Qustion } from '../../../stores/Qustion';
-
 import { Button } from '@mui/material';
 import AddSulotion from './AddSulotion';
 import  DeleteQuestion from './DeleteQuestion'
@@ -32,7 +26,6 @@ class DisplayQuestion extends Component {
             solution : ""
         }
     }
-
     setOpenSulotionDialog = () => {
         this.setState({
             openSulotionDialog: true,
@@ -65,7 +58,6 @@ class DisplayQuestion extends Component {
     }
     setQustionId = (id) => {
         this.setState({ idQustion: id })
-
     }
     handleChange = (panel) => (event, isExpanded) => {
         let isExp
@@ -75,13 +67,12 @@ class DisplayQuestion extends Component {
             isExp = false
         }
         this.setState({ expanded: isExp })
-
     };
 
     render() {
         this.props.adminStore.qustions
         return (
-            <div className='querstion'>
+            <div className='interview-question'>
 
                 <br />
                 <Accordion expanded={this.state.expanded === `panel1`} onChange={this.handleChange('panel1')}>
@@ -89,21 +80,19 @@ class DisplayQuestion extends Component {
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1bh-content"
-                        id="panel1bh-header"
+                        id="sub-header"
                     >
 
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>
-                            {this.props.row.companyName}
-                        </Typography>
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#ff96aa' }}>{this.props.row.interviewDate}</Typography>
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}> {this.props.row.jobTitle}</Typography>
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: 'text.secondary' }}> {this.props.row.firstName + " " + this.props.row.lastName}</Typography>
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>{this.props.row.companyName}</Typography>
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#ff96aa' }}> {this.props.row.jobTitle}</Typography>
                         <Typography sx={{ width: '20%', flexShrink: 0, color: 'text.secondary' }}> {this.props.row.interviewType}</Typography>
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: 'text.secondary' }}>{this.props.row.interviewDate}</Typography>
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: 'text.secondary' }}> {this.props.row.firstName + " " + this.props.row.lastName}</Typography>
 
                     </AccordionSummary>
                     {this.props.row.qustion.map((q, index) => {
                         return (
-
+                            <div className='question'>
                             <AccordionDetails >
                                 <h2>{index + 1} :</h2>
                                 <Typography >
@@ -111,7 +100,6 @@ class DisplayQuestion extends Component {
                                     {q.title}
                                 </Typography>
                                 <br></br>
-
                                 <Typography>
                                     <span style={{ color: '#426696' }}>QUESTION :</span>
                                     {q.qustion} 
@@ -121,11 +109,8 @@ class DisplayQuestion extends Component {
                                     <span style={{ color: '#426696' }}>SOLUTION :</span>
                                     {q.solution}
                                 </Typography>
-
                                 <br></br>
-                                {/* q.idQustion */}
                                 <Button onClick={() => { this.setState({ idQustion: q.idQustion, openSulotionDialog: true }) }} >Add Sulotion</Button>
-                                {/* <Button onClick={this.AddSulotion(q.idQustion)}>Add Sulotion </Button> */}
                                 <Button
                                     onClick={
                                         () => {
@@ -156,7 +141,7 @@ class DisplayQuestion extends Component {
 
 
                             </AccordionDetails>
-
+                                    </div>
                         )
                     })
                     }

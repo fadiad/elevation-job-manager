@@ -1,24 +1,47 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import NavBar from '../../NavBar';
+import NavBar from '../../AdminNavBar';
 import '../../../styles/Admin.css'
 import '../../theme';
 import DisplayQuestion from './DisplayQuestion';
 import { TextField, Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Accordion from '@mui/material/Accordion';
 
 class Questions extends Component {
     constructor() {
         super();
         this.state = {
-            expanded: false
+            expanded: false,
+            changeCompany: "",
+            inputValue: "",
+            jobTitle: "",
+            HR : true ,
+            technical : true
         }
     }
-
+    onChangeHR = () => {
+            this.setState({
+                HR: this.state.HR  ? false : true
+            })
+    }
+    onChangeTechnical = () => {
+        this.setState({
+            technical: this.state.technical ? false : true
+        })
+    }
+    onChangeCompany = (e) => {
+        this.setState({
+            changeCompany: e.target.value,
+        })
+    }
+    onChangeJob = (e) => {
+        this.setState({
+            jobTitle: e.target.value,
+        })
+        console.log(this.state.jobTitle);
+    }
     handleChange = (panel) => (event, isExpanded) => {
         let isExp
         if (isExpanded) {
@@ -35,32 +58,37 @@ class Questions extends Component {
     render() {
         this.props.adminStore.qustions
         return (
-            <div className='querstion'>
+            <div className='questions'>
                 <NavBar />
                 <br></br>
                 <br></br>
-             
-                <FormGroup>
-                    <FormControlLabel control={<Checkbox defaultChecked />} label="HR" />
-                    <FormControlLabel control={<Checkbox />} label="Technical" />
+
+                <FormGroup row={true}>
+                    <FormControlLabel onChange={this.onChangeHR} control={<Checkbox defaultChecked />} label="Technical" />
+                    <FormControlLabel onChange={this.onChangeTechnical} control={<Checkbox defaultChecked/>} label="HR" />
+                    <TextField id="outlined-basic" onChange={this.onChangeCompany} label="Company" variant="outlined" />
+                    <TextField id="outlined-basic" onChange={this.onChangeJob} label="Job" variant="outlined" />
 
                 </FormGroup>
-                <TextField id="outlined-basic" label="Company" variant="outlined" />
-                <TextField id="outlined-basic" label="Job" variant="outlined" />
                 <br></br>
 
-                    <AccordionSummary
-                        aria-controls="panel1bh-content"
-                        id="panel1bh-header"
-                    >
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>company </Typography>
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#ff96aa' }}>Date</Typography>
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Job </Typography>
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interviewed </Typography>
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interview Type </Typography>
-                    </AccordionSummary>
+                <AccordionSummary
+                    aria-controls="panel1bh-content"
+                    id="main-header"
+                >
+                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>company </Typography>
+                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#ff96aa' }}>Job </Typography>
+                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interview Type </Typography>
+                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Date</Typography>
+                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interviewed </Typography>
 
-                {this.props.adminStore.qustions.map((row, index) => {
+                </AccordionSummary>
+                {/* {this.props.catalog.filter(cat => cat.isRented == true && cat.title.toLowerCase().includes(this.inputValue.toLowerCase())). */}
+                {this.props.adminStore.qustions.filter(q => 
+                q.interviewType.includes(this.state.HR === true ?"" : "HR" ) &&
+                q.interviewType.includes(this.state.technical === true ? "" : "Technical" ) && 
+                q.jobTitle.toLowerCase().includes(this.state.jobTitle.toLowerCase()) &&
+                q.companyName.toLowerCase().includes(this.state.changeCompany.toLowerCase())).map((row, index) => {
                     return (
                         <DisplayQuestion row={row} index={index} />
 

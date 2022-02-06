@@ -84,7 +84,7 @@ Create TABLE simulation(
 
 
 Use jobManagerDB;
-Drop TABLE IF EXISTS Questions
+Drop TABLE IF EXISTS Questions;
 
 Use jobManagerDB;
 Create TABLE Questions(
@@ -94,7 +94,12 @@ Create TABLE Questions(
     solution VARCHAR(5000),
     InterviewId MEDIUMINT,
     FOREIGN Key(InterviewId) REFERENCES Interview(id)
-)
+)COLLATION = utf8_unicode_ci & CHARACTER SET = utf8
+
+ALTER TABLE Interview MODIFY simulationDate datetime;
+
+ALTER TABLE simulation MODIFY date1 datetime;
+ALTER TABLE simulation MODIFY date2 datetime;
+ALTER TABLE simulation MODIFY date3 datetime;
 
 
-COLLATION = utf8_unicode_ci & CHARACTER SET = utf8

@@ -8,8 +8,6 @@ class StatisticsByFilter extends Component {
         this.props.adminStore.getStatisticsByFilter()
     }
     render() {
-        // console.log(this.props.adminStore.Statistics);
-        console.log(this.props.adminStore.statisticsByFilter.student); 
 
         return (
             <div className='statistics'>

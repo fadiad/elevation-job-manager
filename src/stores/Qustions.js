@@ -20,7 +20,8 @@ export class Qustions {
             interviewType: observable,
             firstName : observable,
             lastName : observable,
-            qustion : observable
+            qustion : observable ,
+            interviewDate : observable
         })
     }
   

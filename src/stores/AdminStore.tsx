@@ -7,7 +7,7 @@ import { UserInterview } from './UserInterview';
 import { Qustions } from './Qustions';
 import { Qustion } from './Qustion';
 export class AdminStore {
-    adminId: 3;
+    adminId: Number;
     interviewId: Number;
     adminName: String;
     statusByFilter: String;
@@ -20,7 +20,7 @@ export class AdminStore {
     constructor() {
         this.usersInterViews = [];
         this.adminName = ' ';
-        this.adminId = 3;
+        this.adminId ;
         this.interviewId = 1;
         this.statusByFilter = 'Scheduled';
         this.CohortByFilter = 'all';
@@ -54,7 +54,11 @@ export class AdminStore {
             setStatus: action,
             getStatisticsByFilter: action,
             getQustions: action,
-            addSulotion : action
+            addSulotion : action,
+            editQuestion : action ,
+            deleteQuestion : action ,
+            addSimulationDate : action,
+            getStatistics : action
         })
     }
     setStatus(status: String) {
@@ -64,14 +68,14 @@ export class AdminStore {
         this.CohortByFilter = cohort
     }
     
-    editQuestion( questionId : Number, title : String, question : String,  sulotion : String){
+    async editQuestion( questionId : Number, title : String, question : String,  sulotion : String){
         let questionData = {
-            questionId: questionId,
-            title : title ,
-            question : question ,
-            sulotion : sulotion
+            questionId: questionId ,
+            title : title + " ",
+            question : question + " " ,
+            sulotion : sulotion + " "
         }
-        fetch('http://localhost:8888/adminPage/question', {
+        await fetch('http://localhost:8888/adminPage/question', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(questionData),

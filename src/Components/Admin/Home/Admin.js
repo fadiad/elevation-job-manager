@@ -5,7 +5,7 @@ import GeneralStatistics from '../Home/GeneralStatistics'
 import StatisticsByFilter from './StatisticsByFilter'
 
 import Filter from './Filter'
-import NavBar from '../../NavBar';
+import NavBar from '../../AdminNavBar';
 import '../../../styles/Admin.css';
 import '../../theme';
 import {  Link } from 'react-router-dom'
