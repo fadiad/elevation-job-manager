@@ -1,31 +1,26 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import '../../styles/Filter.css'
+import '../../../styles/Filter.css'
 import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { ThemeProvider } from '@material-ui/core';
-import theme from '../theme';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../../theme';
 
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
 
 class Filter extends Component {
 
     StatusChange = (e) => {
-        console.log(e.target.value);
         this.props.adminStore.setStatus(e.target.value)
-        console.log(this.props.adminStore);
     }
     CohortChange = (e) => {
-        console.log(e.target.value);
         this.props.adminStore.setCohort(e.target.value)
-        console.log(this.props.adminStore);
     }
     filterBy = () => {
         this.props.adminStore.getUsersInterviews()
         this.props.adminStore.getStatisticsByFilter()
     }
     
-
     render() {
         return (
             <div className='Filter'>
@@ -51,7 +46,7 @@ class Filter extends Component {
                     </Select>
                 </FormControl>
                 <ThemeProvider theme={theme}>
-                        <Button color="primary" variant="outlined" startIcon={<SearchIcon />} onClick={this.filterBy}>Search</Button>
+                        <Button color='primary' variant="text" startIcon={<SearchIcon />} onClick={this.filterBy}>Search</Button>
                     </ThemeProvider>
             </div>
         );

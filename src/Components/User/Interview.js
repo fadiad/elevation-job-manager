@@ -10,18 +10,18 @@ import theme from '../theme';
 import AddQuestion from './AddQuestion';
 import Fail from './Fail'
 import Pass from './Pass'
+import PickSimualtionDate from './PickSimualtionDate';
 
 class Interview extends Component {
     constructor() {
         super()
         this.state = {
-            pass: false,
-            fail: false,
             openFailDialog: false,
             openPassDialog: false,
             openDialog: false
         }
     }
+<<<<<<< HEAD
     setOpenFailDialog = () => {
         this.setState({
             openFailDialog: true
@@ -73,14 +73,23 @@ class Interview extends Component {
             fail: true
         })
     }
+=======
+    setOpenFailDialog = () => {this.setState({openFailDialog: true})}
+    setCloseFailDialog = () => {this.setState({openFailDialog: false})}
+    setOpenPassDialog = () => {this.setState({openPassDialog: true})}
+    setClosePassDialog = () => {this.setState({openPassDialog: false})}
+
+    setOpenQuestionDialog = () => {this.setState({openDialog: true})}
+    setCloseQuestionDialog = () => {this.setState({openDialog: false})}
+>>>>>>> 21c8ad2b53faac259b0429ccf566c6871d2779d7
     render() {
         let interview = this.props.interview
-        console.log(this.props.interview);
         return (
             <div className='interview'>
                 <div>{interview.type}</div>
                 <div>{interview.interViewerName}</div>
                 <div>{interview.date}</div>
+<<<<<<< HEAD
                 <div><Button disabled={interview.simulationDate === undefined}>Simulation</Button></div>
                 <div>
                     {interview.status === "Scheduled" || interview.status === "Pending" ?
@@ -103,13 +112,16 @@ class Interview extends Component {
 
 
                 {/* <div>{interview.status === "Scheduled" ?
+=======
+                <div>{interview.simulationDate}</div>
+                <div>{interview.status === "Scheduled" ?
+>>>>>>> 21c8ad2b53faac259b0429ccf566c6871d2779d7
                     <div>
                         <Stack spacing={2} direction="row">
                             <ThemeProvider theme={theme}>
                                 <Button color="success" variant="outlined" startIcon={<DoneSharpIcon />} onClick={this.setOpenPassDialog}>Pass</Button>
                                 <Button color="error" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenFailDialog}>Fail</Button>
-                                <Button  variant="outlined"  startIcon={<ClearSharpIcon />} onClick={this.setOpenQuestionDialog}>Add Question</Button>
-                               
+                                <Button   variant="outlined"  startIcon={<ClearSharpIcon />} onClick={this.setOpenQuestionDialog}></Button>
                             </ThemeProvider>
                         </Stack>
                     </div> : this.props.interview.status === "Passed" ?
@@ -118,7 +130,6 @@ class Interview extends Component {
                 }
                 </div> */}
                 <Fail
-                    setFail={this.setFail}
                     id={this.props.interview.id}
                     processId={this.props.interview.processId}
                     type={this.props.interview.type}
@@ -127,7 +138,6 @@ class Interview extends Component {
                     setCloseDialog={this.setCloseFailDialog}
                 />
                 <Pass
-                    setPass={this.setPass}
                     id={this.props.interview.id}
                     processId={this.props.interview.processId}
                     type={this.props.interview.type}

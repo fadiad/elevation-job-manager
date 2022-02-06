@@ -41,17 +41,18 @@ router.get('/userData/:id', function (req, res) { // id : user id
             res.send(results)
         })
 })
-router.get('/Semoletions/:id', async function (req, res) { // id : user id 
+router.get('/Simulations/:id', async function (req, res) { // id : user id 
 
-    let Semoletions = await sequelize.query(`
-        select  i.type , p.companyName ,  p.jobTitle , i.date , i.simulationDate
+    let Simulations = await sequelize.query(`
+        select  i.type , p.companyName ,  p.jobTitle , i.date ,DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate
             from userproporties As u inner join Candidate As c   On u.id=c.id
                                      inner join Process As  p On p.UserId=c.id 
                                      inner join Interview As i On i.processId = p.id 
             where u.id ='${req.params.id}'
             `)
-    res.send(Semoletions[0])
+    res.send(Simulations[0])
 })
+
 
 
 
@@ -91,7 +92,7 @@ router.get('/interviews/:id', async function (req, res) { // id : process id
 
 
     sequelize
-        .query(`SELECT i.id, i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId
+        .query(`SELECT i.id, i.type , i.date , DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate , i.interviewerName , i.status , i.processId
     FROM Process AS p , Interview AS i
     WHERE i.processId = '${req.params.id}' AND  p.id = i.processId`)
         .then(function ([results, metadata]) {
@@ -187,8 +188,6 @@ async function sentEmail(interViewId, processId, status) {
     const date = userData[0][0].date
     adminData[0].forEach(admin => {
 
-
-
         let transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -234,42 +233,66 @@ async function sentEmail(interViewId, processId, status) {
             } else {
                 console.log('Email sent: ' + info.response);
             }
+        })
 
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Email sent: ' + info.response);
-                }
-            })
-
-        });
-
-        res.send(result)
-    })
-
-
+    });
 }
 router.post('/processStatus', async function (req, res) {
 
     console.log(req.body)
     let processQuery = `Update Process SET status="Passed" WHERE id=${req.body.processId};`
     let processResult = await sequelize.query(processQuery)
+    let interviewQuery = `UPDATE INTERVIEW SET status="Passed" WHERE processId=${req.body.processId};`
+    let interviewResult = await sequelize.query(interviewQuery)
     let userQuery = `Update Candidate SET isEmployeed="1" WHERE id=${req.body.userID};`
     let userResult = await sequelize.query(userQuery)
     res.send("result")
 })
 
 
-router.post('/question', async function (req, res) {
+router.post('/question', async function(req, res) {
     const interviewId = req.body.interviewId
 
-    let query = `INSERT INTO Questions(id , question , solution , InterviewId  )
-        VALUES(NULL, "${req.body.question}" , NULL , "${interviewId}");`
+    let query = `INSERT INTO Questions(id ,title , question , solution , InterviewId  )
+        VALUES(NULL, "${req.body.title}","${req.body.question}" , NULL , "${interviewId}");`
     await sequelize.query(query)
     // res(result)
 })
 
+// -------------------------------------
+router.get('/simulationDates/:id', async function (req, res) {
+    console.log("simulationDates")
+    let userId = req.params.id
+    let simualtionDataQuery = `select s.id as "SimulationId", c.id as "UserID",p.id as "ProcessID",p.companyName,p.jobTitle,i.id as "interviewId",i.type,i.date,i.simulationDate,
+    DATE_FORMAT(s.date1, "%Y-%m-%d %T") as date1,
+    DATE_FORMAT(s.date2, "%Y-%m-%d %T") as date2,
+    DATE_FORMAT(s.date3, "%Y-%m-%d %T") as date3,adminId 
+       from candidate as c inner join process as p on c.id=p.UserId 
+       inner join interview as i on p.id=i.processId 
+       inner join simulation as s on i.id=s.interviewId
+       where c.id=${userId};`
+    let result = await sequelize.query(simualtionDataQuery);
+    res.send(result[0])
+})
+
+
+router.post('/interviewSimlationDate/:id', async function (req, res) {
+    let userId = req.params.id
+    let interviewId = req.body.interviewId
+    let date = req.body.date
+    //Set simulationDate=DATE_FORMAT(${date}, "%d/%m/%Y %r") 
+    let update = `UPDATE Interview Set simulationDate="${date}"
+    where id=${interviewId} `
+    let result = await sequelize.query(update)
+    res.send(result)
+})
+
+router.delete('/Simulation/:id', async function (req, res) {
+    let sId = req.body.simulationId
+    let deleteQuery = `Delete from Simulation where id=${sId}`
+    let result = await sequelize.query(deleteQuery)
+    res.send(result)
+})
 // -------------------------------------
 
 

@@ -17,14 +17,15 @@ sequelize
 router.get('/AdminData', function (req, res) {
     res.send("lotem")
 })
-
 router.get('/qustions', async function (req, res) {
 
-    console.log("amir");
     const qustions = await sequelize.query(`    
-        SELECT q.id ,q.InterviewId, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date
-        FROM Questions As q inner join Interview As i On q.InterviewId = i.id
-        inner join Process As p On i.processId = p.id
+    SELECT q.id As questionId ,q.InterviewId ,q.title, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date ,u.firstName , u.lastName 
+    FROM Questions As q inner join Interview As i On q.InterviewId = i.id
+                        inner join Process As p On i.processId = p.id 
+                        inner join Candidate As c On c.id = p.UserId 
+                        inner join userproporties As u On c.id = u.id 
+                        ORDER BY i.id
     `)
 
     res.send(qustions[0])
@@ -81,9 +82,45 @@ router.get('/notificationsType/:adminId', async function (req, res) {
         })
 })
 
-router.post('/simulation', async function (req, res) {
 
-    console.log(req.body);
+router.delete('/question', async function (req, res) {
+    const questionDeleted = await sequelize.query(`
+    DELETE FROM questions
+    WHERE id = "${req.body.questionId}"
+    `)
+    res.send(questionDeleted[0])
+
+})
+router.put('/question', async function (req, res) {
+    const editQuestionData = await sequelize.query(`
+  UPDATE questions 
+    SET         
+        title = "${req.body.title}",
+        question = "${req.body.question}",
+            solution ="${req.body.sulotion}"
+
+    WHERE
+        id = "${req.body.questionId}"
+   
+`)
+    res.send(editQuestionData[0])
+})
+
+router.put('/sulotion', async function (req, res) {
+
+    const sulotion = await sequelize.query(`
+    UPDATE questions 
+    SET 
+        solution = "${req.body.sulotion}"
+    WHERE
+        id = "${req.body.questionId}"
+        `)
+    res.send(sulotion[0])
+
+})
+
+router.post('/simulation', async function (req, res) {
+    let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
     let secondaryDate1 = null
     let secondaryDate2 = null
     let primaryDate = null
@@ -104,8 +141,6 @@ router.post('/simulation', async function (req, res) {
     if (req.body.secondaryDate2 != '') {
         secondaryDate2 = req.body.secondaryDate2.toString().slice(0, 10) + ' ' + req.body.secondaryDate2.toString().slice(11, 19) + ':00'
     }
-
-    console.log(primaryDate, secondaryDate1, secondaryDate2);
 
     if (secondaryDate1 === null && secondaryDate2 != null) {
         let query = `INSERT INTO simulation(id,date1,date2,date3,InterviewId,adminId)
@@ -142,8 +177,7 @@ router.get('/interviews', async function (req, res) {
             on u.id = p.UserId inner join interview As i
             on p.id = i.processId
         `)
-    }
-    else if (cohort === 'all') {
+    } else if (cohort === 'all') {
         user = await sequelize.query(`    
             select i.id ,u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
@@ -151,8 +185,7 @@ router.get('/interviews', async function (req, res) {
             on p.id = i.processId
             where i.status = '${interViewStatus}'
         `)
-    }
-    else if (interViewStatus === 'all') {
+    } else if (interViewStatus === 'all') {
         user = await sequelize.query(`    
             select i.id , u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
@@ -160,8 +193,7 @@ router.get('/interviews', async function (req, res) {
             on p.id = i.processId
             where c.cohort = '${cohort}' 
         `)
-    }
-    else {
+    } else {
         user = await sequelize.query(`    
             select i.id, u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
@@ -215,8 +247,7 @@ router.get('/Statistics', async function (req, res) {
             InProcess: inProcess,
             NotActive: NotActive
         }
-    }
-    else if (req.query.cohort === 'all') {
+    } else if (req.query.cohort === 'all') {
         let inProcess = await sequelize.query(` 
         select count(*) As NumberOfemployed
         from candidate AS c
@@ -274,8 +305,7 @@ router.get('/Statistics', async function (req, res) {
             InProcess: inProcess[0][0].NumberOfemployed,
             NotActive: NotActive
         }
-    }
-    else if (req.query.interViewStatus === 'all') {
+    } else if (req.query.interViewStatus === 'all') {
         let inProcess = await sequelize.query(` 
         select count(*) As NumberOfemployed
         from candidate AS c
@@ -328,8 +358,7 @@ router.get('/Statistics', async function (req, res) {
             InProcess: inProcess[0][0].NumberOfemployed,
             NotActive: NotActive
         }
-    }
-    else {
+    } else {
         let inProcess = await sequelize.query(`   
         select count(*) As NumberOfemployed
         from candidate AS c
@@ -392,6 +421,21 @@ router.get('/Statistics', async function (req, res) {
     res.send(obj)
 
 
+})
+
+router.get('/cohort', async function (req, res) {
+    let getCohort = `select co.name,co.start_date,co.end_date,co.deadline,u.id,u.firstName,u.lastName ,u.email,u.phone
+    from cohort as co inner join candidate as ca 
+    on co.name=ca.cohort
+    inner join userProporties as u on u.id=ca.id`
+    let result = await sequelize.query(getCohort)
+    res.send(result[0])
+})
+
+router.post('/cohort', async function (req, res) {
+    let query = `INSERT INTO COHORT VALUES(${req.body.name},${req.body.startDate},${req.body.endDate},${req.body.deadline})`
+    let result = await sequelize.query(query)
+    res.send(result[0])
 })
 
 module.exports = router;

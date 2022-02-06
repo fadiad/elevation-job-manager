@@ -1,12 +1,14 @@
 /* eslint-disable */
-// import { lastIndexOf } from 'core-js/core/array';
 import { observable, action, makeAutoObservable } from 'mobx'
 const axios = require('axios')
 import { UserInterview } from './UserInterview';
-import { qustion } from './qustion';
+import { Qustions } from './Qustions';
+import { Qustion } from './Qustion';
+import { Cohort } from './Cohort';
+import { Participant } from './Participant'
 
 export class AdminStore {
-    adminId: 3;
+    adminId: Number;
     interviewId: Number;
     adminName: String;
     statusByFilter: String;
@@ -14,15 +16,20 @@ export class AdminStore {
     usersInterViews: Array<UserInterview>;
     generalStatistics: Object;
     statisticsByFilter: Object;
-    qustions: Array<qustion>;
+    qustions: Array<Qustions>;
+    qustion: Qustion;
+    cohorts: Array<Cohort>;
+    participant: Participant;
+
     constructor() {
         this.usersInterViews = [];
         this.adminName = ' ';
-        this.adminId = 3;
+        this.adminId;
         this.interviewId = 1;
         this.statusByFilter = 'Scheduled';
         this.CohortByFilter = 'all';
         this.qustions = [];
+        this.qustion;
         this.generalStatistics = {
             InProcess: '',
             employed: '',
@@ -44,12 +51,21 @@ export class AdminStore {
             adminName: observable,
             generalStatistics: observable,
             qustions: observable,
+            qustion: observable,
+            cohorts: observable,
+            participant: observable,
             getUsersInterviews: action,
             getAdminData: action,
             setCohort: action,
             setStatus: action,
             getStatisticsByFilter: action,
-            getQustions: action
+            getQustions: action,
+            addSulotion: action,
+            editQuestion: action,
+            deleteQuestion: action,
+            addSimulationDate: action,
+            getStatistics: action,
+            getCohorts: action
         })
     }
 
@@ -177,19 +193,124 @@ export class AdminStore {
     setCohort(cohort: String) {
         this.CohortByFilter = cohort
     }
+
+    async editQuestion(questionId: Number, title: String, question: String, sulotion: String) {
+        let questionData = {
+            questionId: questionId,
+            title: title + " ",
+            question: question + " ",
+            sulotion: sulotion + " "
+        }
+        await fetch('http://localhost:8888/adminPage/question', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(questionData),
+        })
+            .then(data => {
+                console.log(data);
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+
+    async deleteQuestion(questionId: Number) {
+        let body = {
+            questionId: questionId,
+        }
+        fetch('http://localhost:8888/adminPage/question',
+            {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+
+            })
+            .then(
+                () => {
+                    console.log("delete Question work");
+                });
+
+    }
+    async addSulotion(questionId: Number, sulotion: String) {
+        let body = {
+            questionId: questionId,
+            sulotion: sulotion
+        }
+        fetch('http://localhost:8888/adminPage/Sulotion', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        })
+            .then(data => {
+                console.log(data);
+
+                // this.getUserData(this.userID)
+            }).catch(err => {
+                console.log(err)
+            })
+    }
     async getAdminData() {
         let user = await axios.get("http://localhost:8888/adminPage/AdminData")
         this.adminName = user.data
     }
     async getQustions() {
         let qustionsFromServer = await axios.get("http://localhost:8888/adminPage/qustions")
-        qustionsFromServer.data.forEach(e => {
-            this.qustions.push(new qustion(e.id, e.interviewId, e.jobTitle, e.question, e.solution, e.interviewType, e.interviewDate))
-        })
+        let id = qustionsFromServer.data[0].InterviewId
+        this.qustions = []
+        if (qustionsFromServer !== undefined) {
+            this.qustions.push(new Qustions(
+                qustionsFromServer.data[0].InterviewId,
+                qustionsFromServer.data[0].type,
+                qustionsFromServer.data[0].companyName,
+                qustionsFromServer.data[0].jobTitle,
+                qustionsFromServer.data[0].firstName,
+                qustionsFromServer.data[0].lastName,
+                qustionsFromServer.data[0].date
+
+            ))
+            this.qustion = new Qustion(
+                qustionsFromServer.data[0].questionId,
+                qustionsFromServer.data[0].title,
+                qustionsFromServer.data[0].question,
+                qustionsFromServer.data[0].solution
+            )
+            this.qustions[0].qustion.push(this.qustion)
+        }
+        for (let i = 1; i < qustionsFromServer.data.length; i++) {
+            if (qustionsFromServer.data[i].InterviewId == id) {
+                this.qustion = new Qustion(
+                    qustionsFromServer.data[i].questionId,
+                    qustionsFromServer.data[i].title,
+                    qustionsFromServer.data[i].question,
+                    qustionsFromServer.data[i].solution
+                )
+                this.qustions[this.qustions.length - 1].qustion.push(this.qustion)
+            } else {
+                this.qustions.push(new Qustions(
+                    qustionsFromServer.data[i].InterviewId,
+                    qustionsFromServer.data[i].type,
+                    qustionsFromServer.data[i].companyName,
+                    qustionsFromServer.data[i].jobTitle,
+                    qustionsFromServer.data[i].firstName,
+                    qustionsFromServer.data[i].lastName,
+                    qustionsFromServer.data[i].date,
+                ))
+                this.qustion = new Qustion(
+                    qustionsFromServer.data[i].questionId,
+                    qustionsFromServer.data[i].title,
+                    qustionsFromServer.data[i].question,
+                    qustionsFromServer.data[i].solution
+                )
+                this.qustions[this.qustions.length - 1].qustion.push(this.qustion)
+                id = qustionsFromServer.data[i].InterviewId
+            }
+        }
     }
+    async getCohorts() {
+        let cohortsFromServer = await axios.get("http://localhost:8888/adminPage/cohort")
 
+
+    }
     addSimulationDate = async (primaryDate, secondaryDate1, secondaryDate2) => {
-
         let body = {
             interviewId: this.interviewId,
             adminId: this.adminId,

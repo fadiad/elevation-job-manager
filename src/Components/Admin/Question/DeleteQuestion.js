@@ -2,25 +2,27 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core'
 import { Button } from '@mui/material';
+import TextField from '@mui/material/TextField';
 
-class Accepted extends Component {
+class DeleteQuestion extends Component {
+
+
 
 
     handleClose = () => {
         this.props.setCloseDialog()
     }
-    assignAsAccepted = () => {
-        this.props.userStore.assignAsAccepted(this.props.id)
-        let date = new Date()
-        this.props.userStore.addInterView(this.props.processId, "Contract", date, "", 'Passed')
-        this.props.setProcessUnActive();
+
+    deleteQuestion = () => {
+        this.props.adminStore.deleteQuestion(this.props.questionId)
         this.handleClose();
     }
+
     render() {
         return (
             <Dialog
                 onClose={this.handleClose}
-                open={this.props.openDialog}
+                open={this.props.openDeleteDialog}
                 fullWidth
                 PaperProps={{
                     sx: {
@@ -30,26 +32,25 @@ class Accepted extends Component {
                 }}
             >
                 <DialogTitle>
-                    <div>
-                        contract Interview
-                    </div>
+                        Delete Question
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Did she sign the contract ?
+                        Are you sure want delete the question
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={this.handleClose}>
                         Disagree
                     </Button>
-                    <Button onClick={this.assignAsAccepted} autoFocus>
-                        Agree
+                    <Button onClick={this.deleteQuestion} autoFocus>
+                        Submit
                     </Button>
                 </DialogActions>
             </Dialog>
+
         );
     }
 }
-export default inject("userStore")(observer(Accepted));
+export default inject("adminStore")(observer(DeleteQuestion));
 

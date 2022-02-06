@@ -2,39 +2,45 @@
 import axios from 'axios';
 import { observable, action, makeAutoObservable, computed } from 'mobx'
 import { Process } from './Process';
-import { Interview } from './Interview'
+
 export class UserStore {
     constructor() {
         this.userID
         this.userData = {};
         this.processes = [];
-        this.Semoletions = [];
+        this.Simulations = [];
+        this.simulationsData = [];
+
         makeAutoObservable(this, {
             userID: observable,
             processes: observable,
             userData: observable,
             setuserID: observable,
-            Semoletions : observable ,
+            Simulations: observable,
+            simulationsData: observable,
             getUserData: action,
             getprocesses: action,
             addProcess: action,
             addInterView: action,
-            changeStatus: action
+            changeStatus: action,
+            getSimulationsOfInterView: action,
+            SelectSimulationDate: action,
+            getSimulations: action
         })
     }
     setuserID = (id) => {
         this.userID = id
     }
 
-    async getSemoletions(){ 
-        
-        let Semoletions = await axios.get(`http://localhost:8888/studentPage/Semoletions/${this.userID}`)
-        this.Semoletions = Semoletions.data
+    async getSimulations() {
+        let Simulations = await axios.get(`http://localhost:8888/studentPage/Simulations/${this.userID}`)
+        this.Simulations = Simulations.data
     }
-    async setNewQuestionFromInterview(id , question) {
+    async setNewQuestionFromInterview(id, question, title) {
         const obj = {
-            interviewId : id ,
-            question: question
+            interviewId: id,
+            question: question,
+            title: title
         }
         await fetch(`http://localhost:8888/studentPage/question`, {
             method: 'POST',
@@ -154,23 +160,17 @@ export class UserStore {
             type: type
         }
 
-        // console.log("entered client change status")
-        // console.log(bodyParams)
         let self = this;
-        //         console.log("Status Before:" + this.getInterViewById(interviewId, processId))
         fetch(`http://localhost:8888/studentPage/interViewStatus/${this.userID}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(bodyParams),
-            // mode: 'no-cors'
         })
             .then(data => {
                 if (bodyParams.type == 'Contract') {
                     this.assignAsAccepted(bodyParams.processId)
                 }
-                //                 console.log("Status Before:" + self.getInterViewById(interviewId, processId))
                 self.getInterViewById(interviewId, processId).status = status
-                //                 console.log("Status After:" + self.getInterViewById(interviewId, processId))
             }).catch(err => {
                 console.log(err)
             })
@@ -183,6 +183,47 @@ export class UserStore {
                 return process
         });
         return null;
+    }
+
+    getSimulationsOfInterView = async () => {
+        let result = await axios.get(`http://localhost:8888/studentPage/simulationDates/${this.userID}`);
+        this.simulationsData = result.data;
+    }
+    SelectSimulationDate = async (simulationId, simulationDate, interviewId) => {
+        let bodyParams = {
+            date: simulationDate,
+            interviewId: interviewId
+        }
+        let self = this;
+        await fetch(`http://localhost:8888/studentPage/interviewSimlationDate/${this.userID}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bodyParams),
+        })
+        let body = {
+            simulationId: simulationId,
+        }
+        // fetch('http://localhost:8888/adminPage/question', 
+        // { 
+        //     method: 'DELETE' ,
+        //     headers: { 'Content-Type': 'application/json' },
+        //     body: JSON.stringify(body),
+
+        // })
+        // .then(
+        //     () =>{ console.log("delete Question work");
+        // });
+        await fetch(`http://localhost:8888/studentPage/Simulation/${this.userID}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        }).then(data => {
+            console.log("delete success")
+        }).catch(err => {
+
+        })
+
+
     }
 
     getInterViewById = (interviewId, ProcessId) => {

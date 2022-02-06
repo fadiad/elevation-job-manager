@@ -1,4 +1,10 @@
-.Start-Working{
+.Start-Working {
     text-align: center;
     color: green;
+}
+
+.user-home-header {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
 }

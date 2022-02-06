@@ -43,7 +43,7 @@ const Login = (props) => {
                     <img src="elevation.png" style={logoStyle} />
                     <h2>Sign In</h2>
                 </Grid>
-                <TextField label='Email' placeholder='Enter Email' fullWidth required onChange={handleEmail} />
+                <TextField label='Email' placeholder='Enter email' fullWidth required onChange={handleEmail} />
                 <TextField label='Password' placeholder='Enter password' type='password' fullWidth required onChange={handlePassword} />
                  <ThemeProvider theme={theme}>
                     <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth onClick={login}>Sign in</Button>

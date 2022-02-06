@@ -4,17 +4,19 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } 
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 
-class AddQuestion extends Component {
+class EditQuestion extends Component {
 
     constructor() {
         super()
         this.state = {
             status: ' ',
-            question: ' ',
-            title : ' '
+            title : ' ',
+            question : ' ',  
+            solution : ' '   
         }
     }
-    handleChange = (event) => {
+
+    handleChangeQuestion = (event) => {
         this.setState({
             question: event.target.value
         })
@@ -26,21 +28,25 @@ class AddQuestion extends Component {
         })
         console.log(this.state.title);
     }
+    handleChangeSulotion= (event) => {
+        this.setState({
+            solution: event.target.value
+        })
+    }
     handleClose = () => {
         this.props.setCloseDialog()
     }
 
-    addQuestion = () => {
-        console.log("addQuestion");
-        this.props.userStore.setNewQuestionFromInterview(this.props.id, this.state.question , this.state.title)
+    editQuestion = () => {
+        this.props.adminStore.editQuestion(this.props.questionId, this.state.title , this.state.question ,  this.state.solution)
         this.handleClose();
     }
-
+    
     render() {
         return (
             <Dialog
                 onClose={this.handleClose}
-                open={this.props.openQuestionDialog}
+                open={this.props.openEditDialog}
                 fullWidth
                 PaperProps={{
                     sx: {
@@ -49,9 +55,16 @@ class AddQuestion extends Component {
                     }
                 }}
             >
+                {()=> {
+                   this.setState({
+                    title: this.props.title,
+                    question : this.props.question ,
+                    solution : this.props.solution
+                })
+                }}
                 <DialogTitle>
                     <div>
-                        Add Question from the Interview
+                        Edit Question
                     </div>
                 </DialogTitle>
                 <TextField 
@@ -59,6 +72,7 @@ class AddQuestion extends Component {
                     label="Title" 
                     variant="outlined" 
                     onChange={this.handleChangeTitle}
+                    defaultValue={this.props.title  }
 
                 />
                 <br/>
@@ -67,16 +81,24 @@ class AddQuestion extends Component {
                     label="Question"
                     multiline
                     // value={this.}
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeQuestion}
                     rows={4}
-                    defaultValue="Question :"
+                    defaultValue={this.props.question }
+                />
+                <TextField
+                    id="outlined-multiline-static"
+                    label="Sulotion"
+                    multiline
+                    // value={this.}
+                    onChange={this.handleChangeSulotion}
+                    rows={4}
+                    defaultValue={this.props.solution }
                 />
                 <DialogActions>
-                    <Button >add</Button>
                     <Button autoFocus onClick={this.handleClose}>
                         Disagree
                     </Button>
-                    <Button onClick={this.addQuestion} autoFocus>
+                    <Button onClick={this.editQuestion} autoFocus>
                         Submit
                     </Button>
                 </DialogActions>
@@ -85,5 +107,5 @@ class AddQuestion extends Component {
         );
     }
 }
-export default inject("userStore")(observer(AddQuestion));
+export default inject("adminStore")(observer(EditQuestion));
 

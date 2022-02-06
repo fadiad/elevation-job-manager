@@ -15,3 +15,17 @@
     display: grid;
     grid-template-columns: auto auto auto auto;
 }
+
+.question {
+    margin: 15px;
+    padding: 10px;
+    box-shadow: 5px 5px 5px 5px rgb(198 202 209 / 80%);
+}
+
+#sub-header {
+    background-color: rgb(249 251 251);
+}
+
+#main-header {
+    background-color: rgb(204 221 243);
+}

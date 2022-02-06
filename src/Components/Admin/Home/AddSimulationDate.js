@@ -10,8 +10,9 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 
 
-import '../../styles/Filter.css'
-
+import '../../../styles/Filter.css'
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../../theme';
 
 class AddSimulationDate extends Component {
 
@@ -190,8 +191,10 @@ class AddSimulationDate extends Component {
                         </Snackbar>
 
                         <div className='Buttons'>
-                            <Button style={{ margin: "10px" }} size="medium" variant="contained" onClick={this.addSimulationDate}>Add</Button>
-                            <Button size="medium" variant="contained" onClick={this.handleClose}>cancel</Button>
+                            <ThemeProvider theme={theme}>
+                                <Button style={{ margin: "10px" }} size="medium" variant="contained" onClick={this.addSimulationDate}>Add</Button>
+                                <Button size="medium" variant="contained" onClick={this.handleClose}>cancel</Button>
+                            </ThemeProvider>
                         </div>
 
                     </div>

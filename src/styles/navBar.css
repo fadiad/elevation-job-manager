@@ -1,21 +1,37 @@
 .navBar-Container {
     display: grid;
     grid-template-columns: 1fr 2fr 10fr;
-    background-color: #426696;
-    height: 70px;
+    background-color: white;
+    height: 50px;
     justify-items: center;
-}
-
-h2 {
-    display: inline;
-    vertical-align: middle;
-    color: #658ec6;
-    font-weight: 500;
-    opacity: 0.8;
+    box-shadow: 5px 5px 5px 5px rgb(198 202 209 / 70%);
+    margin-bottom: 15px;
 }
 
 .nav-Buttons {
-    justify-self: end;
     justify-content: center;
-    padding: 17px;
+}
+
+.tooltiptext {
+    visibility: hidden;
+    font-size: 20px;
+    width: 120;
+    background-color: white;
+    color: #ff96aa;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.icon {
+    color: #ff96aa;
+}
+
+.icon:hover .tooltiptext {
+    visibility: visible;
 }

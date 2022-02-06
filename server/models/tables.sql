@@ -123,13 +123,41 @@ Create TABLE NotificationType(
     type2 varchar(15)
 );
 Use jobManagerDB;
-Drop TABLE IF EXISTS Questions
-Use jobManagerDB;
+Drop TABLE IF EXISTS Questions;
 
+Use jobManagerDB;
 Create TABLE Questions(
     id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    question TEXT NOT NULL,
-    solution TEXT,
+    title VARCHAR(300) NOT NULL ,
+    question VARCHAR(5000) NOT NULL,
+    solution VARCHAR(5000),
     InterviewId MEDIUMINT,
     FOREIGN Key(InterviewId) REFERENCES Interview(id)
 )
+COLLATION = utf8_unicode_ci & CHARACTER SET = utf8
+
+
+Use jobManagerDB;
+ALTER TABLE Interview MODIFY simulationDate datetime;
+
+ALTER TABLE simulation MODIFY date1 datetime;
+ALTER TABLE simulation MODIFY date2 datetime;
+ALTER TABLE simulation MODIFY date3 datetime;
+
+Use jobManagerDB;
+CREATE table cohort(
+    name varchar(10) NOT NULL PRIMARY KEY,
+    start_date datetime,
+    end_date datetime,
+    deadline datetime
+)
+
+Use jobManagerDB;
+insert into cohort (name)values("Atidna 1");
+insert into cohort (name)values("Atidna 2");
+insert into cohort (name)values("Atidna 3");
+insert into cohort (name)values("Atidna 4");
+
+
+Use jobManagerDB;
+ALTER TABLE Candidate ADD FOREIGN KEY (cohort) REFERENCES cohort(name);
