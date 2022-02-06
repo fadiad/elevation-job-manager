@@ -44,28 +44,7 @@ class UsersInterviews extends Component {
 
 
   handleChangePage = (event, newPage) => {
-    // let rows = this.props.adminStore.usersInterViews.length
-    // let numOfPage
-    // let rowInLastPage
-    // if ((rows/this.state.rowsPerPage) === 0) {
-    //   numOfPage =parseInt(rows/this.state.rowsPerPage) 
-    //   rowInLastPage = rows%this.state.rowsPerPage      
-    // }else{
-    //   numOfPage =parseInt(rows/this.state.rowsPerPage) +1
-    //   rowInLastPage = rows%(this.state.rowsPerPage)
-    // }
-
-    // if((numOfPage-1) === newPage )
-    // {
-    // this.setState({
-    //   rowsPerPage : rowInLastPage ,
-    //   page:newPage})
-    // }
-    // else {
-    //     this.setState({
-    //       rowsPerPage :this.state.rowsPerPage +0 ,
-    //       page:newPage})      
-    // }
+    
     this.setState({
       page: newPage
     })
@@ -76,10 +55,8 @@ class UsersInterviews extends Component {
       rowsPerPage: event.target.value,
       page: 0
     })
-    // setRowsPage(+event.target.value);
-    // setPage(0);
+  
   }
-  //  dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
 
   componentDidMount() {
     this.props.adminStore.getUsersInterviews()
@@ -107,7 +84,6 @@ class UsersInterviews extends Component {
             </TableHead>
 
             <TableBody>
-              {/* .slice(page* rowsPerPage , page * rowsPerPage + rowsPerPage) */}
               {this.props.adminStore.usersInterViews.slice(
                 this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row, index) => (
                   <TableRow key={row.firstName}>

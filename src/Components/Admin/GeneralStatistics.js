@@ -8,7 +8,7 @@ class GeneralStatistics extends Component {
         this.props.adminStore.getStatistics()
     }
     render() {
-
+        console.log(this.props.adminStore.generalStatistics);
         return (
             <div className='statistics'>
                 <h3>General Statistics : </h3>

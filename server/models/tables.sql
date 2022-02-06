@@ -122,3 +122,14 @@ Create TABLE NotificationType(
     type1 varchar(15) ,
     type2 varchar(15)
 );
+Use jobManagerDB;
+Drop TABLE IF EXISTS Questions
+Use jobManagerDB;
+
+Create TABLE Questions(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    question TEXT NOT NULL,
+    solution TEXT,
+    InterviewId MEDIUMINT,
+    FOREIGN Key(InterviewId) REFERENCES Interview(id)
+)

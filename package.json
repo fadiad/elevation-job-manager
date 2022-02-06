@@ -40,6 +40,8 @@
         "express-session": "^1.17.2",
         "faker": "^6.6.6",
         "material-components-web": "^13.0.0",
+        "material-paper": "^0.0.8",
+        "material-table": "^1.69.3",
         "mobx": "^6.3.13",
         "mobx-react": "^7.2.1",
         "moment": "^2.29.1",

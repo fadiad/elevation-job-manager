@@ -134,7 +134,6 @@ class AddInterview extends Component {
 
 
                 <div className='inputs' >
-
                     <div className='inpt'>
                         <FormControl className='FormControl'  >
                             <InputLabel className='InputLabel'>Type</InputLabel>
@@ -146,8 +145,7 @@ class AddInterview extends Component {
                             </Select>
                         </FormControl>
                     </div>
-
-
+                    
                     <div className='inpt'>
                         <TextField
                             variant="outlined"

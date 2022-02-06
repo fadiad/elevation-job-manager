@@ -8,12 +8,13 @@ export class UserStore {
         this.userID
         this.userData = {};
         this.processes = [];
-
+        this.Semoletions = [];
         makeAutoObservable(this, {
             userID: observable,
             processes: observable,
             userData: observable,
             setuserID: observable,
+            Semoletions : observable ,
             getUserData: action,
             getprocesses: action,
             addProcess: action,
@@ -25,6 +26,23 @@ export class UserStore {
         this.userID = id
     }
 
+    async getSemoletions(){ 
+        
+        let Semoletions = await axios.get(`http://localhost:8888/studentPage/Semoletions/${this.userID}`)
+        this.Semoletions = Semoletions.data
+    }
+    async setNewQuestionFromInterview(id , question) {
+        const obj = {
+            interviewId : id ,
+            question: question
+        }
+        await fetch(`http://localhost:8888/studentPage/question`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        })
+        this.getProcesses(this.userID)
+    }
     async getUserData(id) {
         let userData = await axios.get(`http://localhost:8888/studentPage/userData/${id}`)
         this.userData = userData.data
@@ -54,6 +72,7 @@ export class UserStore {
         this.userData = userData.data[0]
     }
 
+
     async addInterView(processId, type, date, interViewerName, status = 'Scheduled') {
         const interview = {
             processId: processId,
@@ -67,7 +86,6 @@ export class UserStore {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(interview)
         })
-
 
         this.getProcesses(this.userID)
 

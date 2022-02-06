@@ -18,14 +18,28 @@ router.get('/AdminData', function (req, res) {
     res.send("lotem")
 })
 
+router.get('/qustions', async function (req, res) {
+
+    console.log("amir");
+    const qustions = await sequelize.query(`    
+        SELECT q.id ,q.InterviewId, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date
+        FROM Questions As q inner join Interview As i On q.InterviewId = i.id
+        inner join Process As p On i.processId = p.id
+    `)
+
+    res.send(qustions[0])
+})
 
 router.post('/setNotificationsType', async function (req, res) {
 
-    let notificatiosWanted = req.body.wantedNotifications
+    let wanted = req.body.wanted
+    let unWanted = req.body.unWanted
     let adminId = req.body.adminId
-    console.log(req.body);
 
-    for (let notification of notificatiosWanted) {
+    let query0 = `Delete from NotificationForAdmin WHERE adminId = ${adminId}`
+    let result0 = await sequelize.query(query0)
+
+    for (let notification of wanted) {
         let query1 = `INSERT INTO NotificationType(id,type1,type2)
         VALUES(NULL,"${notification.type1}","${notification.type2}");`
         let result1 = await sequelize.query(query1)
@@ -36,22 +50,36 @@ router.post('/setNotificationsType', async function (req, res) {
         let result2 = await sequelize.query(query2)
     }
 
+    for (let notification of unWanted) {
+        let query1 = `INSERT INTO NotificationType(id,type1,type2)
+        VALUES(NULL,"${notification.type1}","${notification.type2}");`
+        let result1 = await sequelize.query(query1)
+        let notificationTypeId = result1[0]
+
+        let query2 = `INSERT INTO NotificationForAdmin(adminId,notificationId,isNotified)
+        VALUES(${adminId},${notificationTypeId},0);`
+        let result2 = await sequelize.query(query2)
+    }
+    res.send("succeed")
+})
+
+router.post('/resetNotifications', async function (req, res) {
+    console.log(req.body);
+    let query0 = `Delete from NotificationForAdmin WHERE adminId = ${req.body.adminId}`
+    let result0 = await sequelize.query(query0)
     res.send("succeed")
 })
 
 router.get('/notificationsType/:adminId', async function (req, res) {
 
     sequelize
-        .query(`SELECT *
+        .query(`SELECT type1 ,type2
              FROM Admin AS a  , NotificationType AS NT , NotificationForAdmin AS NFA
-            WHERE a.id = '${req.params.adminId}' AND a.id = NFA.adminId AND NT.id = NFA.notificationId`)
+            WHERE a.id = '${req.params.adminId}' AND a.id = NFA.adminId AND NT.id = NFA.notificationId AND NFA.isNotified = 1`)
         .then(function ([results, metadata]) {
             res.send(results)
         })
-
-    // res.send("succeed")
 })
-
 
 router.post('/simulation', async function (req, res) {
 

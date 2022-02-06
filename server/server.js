@@ -2,6 +2,7 @@ const express = require('express')
 const loginApi = require('./routes/loginApi')
 const studentapi = require('./routes/studentApi')
 const adminApi = require('./routes/adminApi')
+const signupApi = require('./routes/signupApi')
 const login = require('./login-utils');
 const session = require('express-session');
 const cors = require("cors");
@@ -44,7 +45,7 @@ app.use(function(req, res, next) {
 })
 
 app.use('/login', loginApi)
-
+app.use('/signup', signupApi)
 app.use('/studentPage', (req, res, next) => {
     // if (login.isStudentLoggedIn(req.session)) {
     console.log("entered /studentPage")

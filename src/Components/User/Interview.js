@@ -7,7 +7,7 @@ import DoneSharpIcon from '@mui/icons-material/DoneSharp';
 import ClearSharpIcon from '@mui/icons-material/ClearSharp';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
-
+import AddQuestion from './AddQuestion';
 import Fail from './Fail'
 import Pass from './Pass'
 
@@ -18,7 +18,8 @@ class Interview extends Component {
             pass: false,
             fail: false,
             openFailDialog: false,
-            openPassDialog: false
+            openPassDialog: false,
+            openDialog: false
         }
     }
     setOpenFailDialog = () => {
@@ -41,6 +42,27 @@ class Interview extends Component {
             openPassDialog: false
         })
     }
+
+    setOpenQuestionDialog = () => {
+        this.setState({
+            openDialog: true
+        })
+    }
+    setCloseQuestionDialog = () => {
+        this.setState({
+            openDialog: false
+        })
+    }
+    // setOpenQuestionDialog = () => {
+    //     this.setState({
+    //         openQuestionDialog: true
+    //     })
+    // }
+    // setCloseQuestionDialog = () => {
+    //     this.setState({
+    //         openQuestionDialog: false
+    //     })
+    // }
     setFail = () => {
         this.setState({
             fail: true
@@ -67,6 +89,8 @@ class Interview extends Component {
                                 <ThemeProvider theme={theme}>
                                     <Button color="success" variant="outlined" startIcon={<DoneSharpIcon />} onClick={this.setOpenPassDialog}>Pass</Button>
                                     <Button color="error" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenFailDialog}>Fail</Button>
+                                    <Button variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenQuestionDialog}>Add Question</Button>
+
                                 </ThemeProvider>
                             </Stack>
                         </div> :
@@ -78,6 +102,21 @@ class Interview extends Component {
                 </div>
 
 
+                {/* <div>{interview.status === "Scheduled" ?
+                    <div>
+                        <Stack spacing={2} direction="row">
+                            <ThemeProvider theme={theme}>
+                                <Button color="success" variant="outlined" startIcon={<DoneSharpIcon />} onClick={this.setOpenPassDialog}>Pass</Button>
+                                <Button color="error" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenFailDialog}>Fail</Button>
+                                <Button  variant="outlined"  startIcon={<ClearSharpIcon />} onClick={this.setOpenQuestionDialog}>Add Question</Button>
+                               
+                            </ThemeProvider>
+                        </Stack>
+                    </div> : this.props.interview.status === "Passed" ?
+                    <h4 style={{ color: "green" }}>Passed</h4> : this.props.interview.status === "Failed" ?
+                    <h4 style={{ color: "red" }}>failed</h4> : null
+                }
+                </div> */}
                 <Fail
                     setFail={this.setFail}
                     id={this.props.interview.id}
@@ -86,7 +125,7 @@ class Interview extends Component {
                     openFailDialog={this.state.openFailDialog}
                     setOpenDialog={this.setOpenFailDialog}
                     setCloseDialog={this.setCloseFailDialog}
-                ></Fail>
+                />
                 <Pass
                     setPass={this.setPass}
                     id={this.props.interview.id}
@@ -95,7 +134,13 @@ class Interview extends Component {
                     openPassDialog={this.state.openPassDialog}
                     setOpenDialog={this.setOpenPassDialog}
                     setCloseDialog={this.setClosePassDialog}
-                ></Pass>
+                />
+                <AddQuestion
+                    id={this.props.interview.id}
+                    openQuestionDialog={this.state.openDialog}
+                    setOpenDialog={this.setOpenQuestionDialog}
+                    setCloseDialog={this.setCloseQuestionDialog}
+                />
             </div>
         );
     }

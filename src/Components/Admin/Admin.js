@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import UsersInterviews from './UsersInterviews';
+import UsersInterviews from './usersInterviews';
 import GeneralStatistics from './GeneralStatistics'
 import StatisticsByFilter from './StatisticsByFilter'
 
@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // import AddSimulationDate from './AddSimulationDate'
 
+import DisplayQuestion from '../DisplayQuestion'
 import Filter from './Filter'
 import NavBar from '../NavBar';
 import '../../styles/Admin.css'
@@ -51,6 +52,8 @@ class Admin extends Component {
 
                 <UsersInterviews setOpenDialog={this.setOpenDialog} />
 
+                {/* <UsersInterviews setOpenDialog={this.setOpenDialog} /> */}
+                <DisplayQuestion/>
             </div>
         );
     }

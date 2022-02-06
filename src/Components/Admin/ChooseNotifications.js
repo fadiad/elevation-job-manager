@@ -43,9 +43,11 @@ export class ChooseNotifications extends Component {
         }
     }
 
-    componentDidMount() {
-        // let notifications = this.props.adminStore.getnotificationsType()
-        // console.log(notifications);
+    componentDidMount = async () => {
+        let savedNotifications = await this.props.adminStore.getnotificationsType()
+        this.setState({
+            notificationsTypeArr: savedNotifications
+        })
     }
 
     handleToggle = (value) => () => {
@@ -61,8 +63,6 @@ export class ChooseNotifications extends Component {
 
         this.setState({
             notificationsTypeArr: newChecked
-        }, function () {
-            // console.log(this.state.notificationsTypeArr);
         })
     };
 
@@ -82,6 +82,15 @@ export class ChooseNotifications extends Component {
         let statusCode = await this.props.adminStore.setNotifications(this.state.notificationsTypeArr)
     }
 
+    resetNotifications = async () => {
+        let statusCode = await this.props.adminStore.resetNotifications(this.state.notificationsTypeArr)
+        if (statusCode == 200) {
+            this.setState({
+                notificationsTypeArr: []
+            })
+        }
+    }
+
     render() {
         return (
             <div>
@@ -98,7 +107,7 @@ export class ChooseNotifications extends Component {
                     <AccordionDetails>
                         {/* <div className='Buttons'> */}
                         <Button style={{ margin: "10px" }} size="medium" variant="contained" onClick={this.setNotifications}>set</Button>
-                        <Button size="medium" variant="contained" onClick={this.handleClose}>reset</Button>
+                        <Button size="medium" variant="contained" onClick={this.resetNotifications}>reset</Button>
                         {/* </div> */}
                         <div className='list'>
                             <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>

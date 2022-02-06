@@ -2,33 +2,37 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@material-ui/core'
 import { Button } from '@mui/material';
-import Pass from './Pass';
+import TextField from '@mui/material/TextField';
 
-class Accepted extends Component {
+class AddQuestion extends Component {
 
     constructor() {
         super()
         this.state = {
             status: ' ',
+            question: ' '
         }
     }
+    handleChange = (event) => {
+        this.setState({
+            question: event.target.value
+        })
+        console.log(this.state.question);
+
+    };
     handleClose = () => {
         this.props.setCloseDialog()
     }
-    assignAsAccepted = () => {
-        this.props.userStore.assignAsAccepted(this.props.id)
-        let date = new Date()
-        // this.props.userStore.addInterView(this.props.processId, this.state.status, this.state.date._d, this.state.interviewerName)
-
-        this.props.userStore.addInterView(this.props.processId, "Contract", date, "", 'Passed')
-        this.props.setProcessUnActive();
+    addQuestion = () => {
+        console.log("addQuestion");
+        this.props.userStore.setNewQuestionFromInterview(this.props.id , this.state.question) 
         this.handleClose();
     }
     render() {
         return (
             <Dialog
                 onClose={this.handleClose}
-                open={this.props.openDialog}
+                open={this.props.openQuestionDialog}
                 fullWidth
                 PaperProps={{
                     sx: {
@@ -39,25 +43,31 @@ class Accepted extends Component {
             >
                 <DialogTitle>
                     <div>
-                        contract Interview
+                        Add Question from the Interview
                     </div>
                 </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Did she sign the contract ?
-                    </DialogContentText>
-                </DialogContent>
+                <TextField
+                    id="outlined-multiline-static"
+                    label="Multiline"
+                    multiline
+                    // value={this.}
+                    onChange={this.handleChange}
+                    rows={4}
+                    defaultValue="Question 1 :"
+                />
                 <DialogActions>
+                    <Button >add</Button>
                     <Button autoFocus onClick={this.handleClose}>
                         Disagree
                     </Button>
-                    <Button onClick={this.assignAsAccepted} autoFocus>
-                        Agree
+                    <Button onClick={this.addQuestion} autoFocus>
+                        Submit
                     </Button>
                 </DialogActions>
             </Dialog>
+
         );
     }
 }
-export default inject("userStore")(observer(Accepted));
+export default inject("userStore")(observer(AddQuestion));
 
