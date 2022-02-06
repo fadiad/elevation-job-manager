@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Home';
 import QuizIcon from '@mui/icons-material/Quiz';
 import WorkIcon from '@mui/icons-material/Work';
-import EditNotificationsIcon from '@mui/icons-material/EditNotifications';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Stack from '@mui/material/Stack';
 import { ThemeProvider } from '@mui/material/styles';
 import '../styles/navBar.css';
@@ -48,10 +48,10 @@ class NavBar extends Component {
                                 <WorkIcon fontSize='inherit' />
                             </IconButton>
                         </Link>
-                        <Link to="/adminPage/notification">
-                            <IconButton className='icon' aria-label='Notification' color='secondary' size="large">
-                                <span className='tooltiptext'>Notification</span>
-                                <EditNotificationsIcon fontSize='inherit' />
+                        <Link to="/adminPage/Settings">
+                            <IconButton className='icon' aria-label='Settings' color='secondary' size="large">
+                                <span className='tooltiptext'>Settings</span>
+                                <SettingsIcon fontSize='inherit' />
                             </IconButton>
                         </Link>
                         

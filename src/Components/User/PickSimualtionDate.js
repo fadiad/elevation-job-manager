@@ -44,7 +44,7 @@ class PickSimulationDate extends Component {
         console.log(this.state.data)
         return (
             <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                <h4>You have Simualtion Dates to choose between</h4>
+                {this.state.data.length > 0 ? <h4>You have Simualtion Dates to choose between</h4>:null }
                 <List component="div" role="group">
                    
                     {this.state.data.map((d,i) => {

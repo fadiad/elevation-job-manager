@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import { Dialog, DialogTitle } from '@material-ui/core'
+import { ThemeProvider } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 import '../../styles/addProcess.css'
-import ShowSemoletionTable from './ShowSemoletionTable'
+import ShowSimulationTable from './ShowSimulationTable'
+import theme from '../theme'
 
-class ShowSemoletion extends Component {
+class ShowSimulations extends Component {
 
     constructor() {
         super()
@@ -21,17 +24,11 @@ class ShowSemoletion extends Component {
         }
     }
   
-
-    handleClose = () => {
-        this.props.setCloseDialog()
-    }
-
+    handleClose = () => {this.props.setCloseDialog()}
 
     render() {
         return (
-
             <div className='addProcess'>
-
                 <Dialog
                     onClose={this.handleClose}
                     open={this.props.openDialog}
@@ -43,17 +40,19 @@ class ShowSemoletion extends Component {
                         }
                     }}
                 >
-                    
                     <DialogTitle>
                         <div className='DialogTitle'>
-                        SEMOLETION FOR SCHEDULED INTERVIEWS
+                        SIMULATIONS FOR SCHEDULED INTERVIEWS
                         </div>
                     </DialogTitle>
-                    <ShowSemoletionTable />
+                    <ShowSimulationTable />
+                    <ThemeProvider theme={theme}>
+                        <Button size="medium" variant="contained" onClick={this.handleClose}>Close</Button>
+                    </ThemeProvider>
                 </Dialog>
             </div>
         );
     }
 }
-export default inject("userStore")(observer(ShowSemoletion));
+export default inject("userStore")(observer(ShowSimulations));
 

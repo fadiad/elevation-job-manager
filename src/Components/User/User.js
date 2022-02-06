@@ -10,7 +10,7 @@ import Processes from './Processes';
 import NavBar from '../UserNavBar';
 import AddProcess from './AddProcess';
 import '../../styles/User.css'
-import ShowSemoletion from './ShowSemoletion';
+import ShowSimulation from './ShowSimulations';
 import PickSimualtionDate from './PickSimualtionDate';
 
 
@@ -19,7 +19,7 @@ class User extends Component {
         super()
         this.state = {
             openDialog: false,
-            openSemoletionDialog: false
+            openSimulationDialog: false
         }
     }
 
@@ -31,31 +31,19 @@ class User extends Component {
 
     setOpenDialog = () => { this.setState({ openDialog: true }) }
     setCloseDialog = () => { this.setState({ openDialog: false }) }
-    setOpenSemoletionDialog = () => {
-        this.setState({ openSemoletionDialog: true })
-    }
-    setCloseSemoletionDialog = () => {
-        this.setState({
-            openSemoletionDialog: false
-        }
-        )
-    }
+    setOpenSimulationDialog = () => {this.setState({ openSimulationDialog: true })}
+    setCloseSimulationDialog = () => {this.setState({openSimulationDialog: false})}
 
     render() {
         return (
             <div>
                 <NavBar />
-                {
-                    this.props.userStore.userData.isEmployeed === 1 ?
-                        <div className='Start-Working'> Start working </div>
-                        : null
-                }
-                <br />
+ 
                 <div className='user-home-header'>
                     <Stack spacing={2} width={"20%"}>
                         <ThemeProvider theme={theme}>
                             <Button variant="contained" startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>Add Process</Button>
-                            <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSemoletionDialog}>Show Simulations</Button>
+                            <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Show Simulations</Button>
                         </ThemeProvider>
                     </Stack>
 
@@ -64,10 +52,10 @@ class User extends Component {
                         setOpenDialog={this.setOpenDialog}
                         setCloseDialog={this.setCloseDialog}
                     />
-                    <ShowSemoletion
-                        openDialog={this.state.openSemoletionDialog}
-                        setOpenDialog={this.setOpenSemoletionDialog}
-                        setCloseDialog={this.setCloseSemoletionDialog}
+                    <ShowSimulation
+                        openDialog={this.state.openSimulationDialog}
+                        setOpenDialog={this.setOpenSimulationDialog}
+                        setCloseDialog={this.setCloseSimulationDialog}
                     />
                     <PickSimualtionDate />
 

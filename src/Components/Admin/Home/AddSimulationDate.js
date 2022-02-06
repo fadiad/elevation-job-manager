@@ -6,6 +6,8 @@ import DateMomentUtils from '@date-io/moment'
 import TextField from '@mui/material/TextField';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import '../../../styles/Filter.css'
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../../theme';
 
 class AddSimulationDate extends Component {
 
@@ -121,8 +123,10 @@ class AddSimulationDate extends Component {
                         </MuiPickersUtilsProvider>
 
                         <div className='Buttons'>
+                            <ThemeProvider theme={theme}>
                             <Button style={{ margin: "10px" }} size="medium" variant="contained" onClick={this.addSimulationDate}>Add</Button>
                             <Button size="medium" variant="contained" onClick={this.handleClose}>cancel</Button>
+                            </ThemeProvider>
                         </div>
 
                     </div>
