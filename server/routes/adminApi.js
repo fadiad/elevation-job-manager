@@ -120,7 +120,8 @@ router.put('/sulotion', async function (req, res) {
 })
 
 router.post('/simulation', async function (req, res) {
-    let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
+    // let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
+    
     let secondaryDate1 = null
     let secondaryDate2 = null
     let primaryDate = null

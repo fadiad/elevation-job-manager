@@ -67,11 +67,6 @@ class AddInterview extends Component {
 
     addInterView = () => {
         if (this.isValid(this.state.date._d)) {
-<<<<<<< HEAD
-          
-            console.log("add interview");
-=======
->>>>>>> 21c8ad2b53faac259b0429ccf566c6871d2779d7
             this.props.userStore.addInterView(this.props.processId, this.state.type, this.state.date._d, this.state.interviewerName)
             // this.handleSuccess()
            

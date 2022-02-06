@@ -36,6 +36,7 @@ export class UserStore {
         let Simulations = await axios.get(`http://localhost:8888/studentPage/Simulations/${this.userID}`)
         this.Simulations = Simulations.data
     }
+
     async setNewQuestionFromInterview(id, question, title) {
         const obj = {
             interviewId: id,
@@ -186,6 +187,7 @@ export class UserStore {
     }
 
     getSimulationsOfInterView = async () => {
+        // this.simulationsData = []
         let result = await axios.get(`http://localhost:8888/studentPage/simulationDates/${this.userID}`);
         this.simulationsData = result.data;
     }
@@ -218,7 +220,8 @@ export class UserStore {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         }).then(data => {
-            console.log("delete success")
+            // console.log("delete success")
+            this.getSimulationsOfInterView()
         }).catch(err => {
 
         })

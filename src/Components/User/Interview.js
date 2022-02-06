@@ -21,67 +21,13 @@ class Interview extends Component {
             openDialog: false
         }
     }
-<<<<<<< HEAD
-    setOpenFailDialog = () => {
-        this.setState({
-            openFailDialog: true
-        })
-    }
-    setCloseFailDialog = () => {
-        this.setState({
-            openFailDialog: false
-        })
-    }
-    setOpenPassDialog = () => {
-        this.setState({
-            openPassDialog: true
-        })
-    }
-    setClosePassDialog = () => {
-        this.setState({
-            openPassDialog: false
-        })
-    }
+    setOpenFailDialog = () => { this.setState({ openFailDialog: true }) }
+    setCloseFailDialog = () => { this.setState({ openFailDialog: false }) }
+    setOpenPassDialog = () => { this.setState({ openPassDialog: true }) }
+    setClosePassDialog = () => { this.setState({ openPassDialog: false }) }
 
-    setOpenQuestionDialog = () => {
-        this.setState({
-            openDialog: true
-        })
-    }
-    setCloseQuestionDialog = () => {
-        this.setState({
-            openDialog: false
-        })
-    }
-    // setOpenQuestionDialog = () => {
-    //     this.setState({
-    //         openQuestionDialog: true
-    //     })
-    // }
-    // setCloseQuestionDialog = () => {
-    //     this.setState({
-    //         openQuestionDialog: false
-    //     })
-    // }
-    setFail = () => {
-        this.setState({
-            fail: true
-        })
-    }
-    setPass = () => {
-        this.setState({
-            fail: true
-        })
-    }
-=======
-    setOpenFailDialog = () => {this.setState({openFailDialog: true})}
-    setCloseFailDialog = () => {this.setState({openFailDialog: false})}
-    setOpenPassDialog = () => {this.setState({openPassDialog: true})}
-    setClosePassDialog = () => {this.setState({openPassDialog: false})}
-
-    setOpenQuestionDialog = () => {this.setState({openDialog: true})}
-    setCloseQuestionDialog = () => {this.setState({openDialog: false})}
->>>>>>> 21c8ad2b53faac259b0429ccf566c6871d2779d7
+    setOpenQuestionDialog = () => { this.setState({ openDialog: true }) }
+    setCloseQuestionDialog = () => { this.setState({ openDialog: false }) }
     render() {
         let interview = this.props.interview
         return (
@@ -89,46 +35,21 @@ class Interview extends Component {
                 <div>{interview.type}</div>
                 <div>{interview.interViewerName}</div>
                 <div>{interview.date}</div>
-<<<<<<< HEAD
-                <div><Button disabled={interview.simulationDate === undefined}>Simulation</Button></div>
-                <div>
-                    {interview.status === "Scheduled" || interview.status === "Pending" ?
-                        <div>
-                            <Stack spacing={2} direction="row">
-                                <ThemeProvider theme={theme}>
-                                    <Button color="success" variant="outlined" startIcon={<DoneSharpIcon />} onClick={this.setOpenPassDialog}>Pass</Button>
-                                    <Button color="error" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenFailDialog}>Fail</Button>
-                                    <Button variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenQuestionDialog}>Add Question</Button>
-
-                                </ThemeProvider>
-                            </Stack>
-                        </div> :
-                        this.props.interview.status === "Passed" ? <spane style={{ color: "green" }}>Passed</spane> :
-                            this.props.interview.status === "Failed" ? <spane style={{ color: "red" }}>failed</spane> :
-                                this.props.interview.status === "No Reply" ? <spane style={{ color: "red" }}>No Reply</spane> :
-                                    null
-                    }
-                </div>
-
-
-                {/* <div>{interview.status === "Scheduled" ?
-=======
                 <div>{interview.simulationDate}</div>
                 <div>{interview.status === "Scheduled" ?
->>>>>>> 21c8ad2b53faac259b0429ccf566c6871d2779d7
                     <div>
                         <Stack spacing={2} direction="row">
                             <ThemeProvider theme={theme}>
                                 <Button color="success" variant="outlined" startIcon={<DoneSharpIcon />} onClick={this.setOpenPassDialog}>Pass</Button>
                                 <Button color="error" variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenFailDialog}>Fail</Button>
-                                <Button   variant="outlined"  startIcon={<ClearSharpIcon />} onClick={this.setOpenQuestionDialog}></Button>
+                                <Button variant="outlined" startIcon={<ClearSharpIcon />} onClick={this.setOpenQuestionDialog}></Button>
                             </ThemeProvider>
                         </Stack>
                     </div> : this.props.interview.status === "Passed" ?
-                    <h4 style={{ color: "green" }}>Passed</h4> : this.props.interview.status === "Failed" ?
-                    <h4 style={{ color: "red" }}>failed</h4> : null
+                        <h4 style={{ color: "green" }}>Passed</h4> : this.props.interview.status === "Failed" ?
+                            <h4 style={{ color: "red" }}>failed</h4> : null
                 }
-                </div> */}
+                </div>
                 <Fail
                     id={this.props.interview.id}
                     processId={this.props.interview.processId}
