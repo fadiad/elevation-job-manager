@@ -1,11 +1,12 @@
 /* eslint-disable */
-import { lastIndexOf } from 'core-js/core/array';
 import { observable, action, makeAutoObservable } from 'mobx'
 const axios = require('axios')
 import { UserInterview } from './UserInterview';
-// import {Qustion} from './Qustion';
 import { Qustions } from './Qustions';
 import { Qustion } from './Qustion';
+import { Cohort } from './Cohort';
+import { Participant } from './Participant'
+
 export class AdminStore {
     adminId: Number;
     interviewId: Number;
@@ -16,11 +17,14 @@ export class AdminStore {
     generalStatistics: Object;
     statisticsByFilter: Object;
     qustions: Array<Qustions>;
-    qustion: Qustion
+    qustion: Qustion;
+    cohorts: Array<Cohort>;
+    participant: Participant;
+
     constructor() {
         this.usersInterViews = [];
         this.adminName = ' ';
-        this.adminId ;
+        this.adminId;
         this.interviewId = 1;
         this.statusByFilter = 'Scheduled';
         this.CohortByFilter = 'all';
@@ -48,6 +52,8 @@ export class AdminStore {
             generalStatistics: observable,
             qustions: observable,
             qustion: observable,
+            cohorts: observable,
+            participant: observable,
             getUsersInterviews: action,
             getAdminData: action,
             setCohort: action,
@@ -58,7 +64,8 @@ export class AdminStore {
             editQuestion : action ,
             deleteQuestion : action ,
             addSimulationDate : action,
-            getStatistics : action
+            getStatistics : action ,
+            getCohorts: action
         })
     }
     setStatus(status: String) {
@@ -156,7 +163,7 @@ export class AdminStore {
                     qustionsFromServer.data[i].question,
                     qustionsFromServer.data[i].solution
                 )
-                this.qustions[this.qustions.length-1].qustion.push(this.qustion)
+                this.qustions[this.qustions.length - 1].qustion.push(this.qustion)
             } else {
                 this.qustions.push(new Qustions(
                     qustionsFromServer.data[i].InterviewId,
@@ -173,12 +180,15 @@ export class AdminStore {
                     qustionsFromServer.data[i].question,
                     qustionsFromServer.data[i].solution
                 )
-                this.qustions[this.qustions.length-1].qustion.push(this.qustion)
-                id = qustionsFromServer.data[i].InterviewId  
+                this.qustions[this.qustions.length - 1].qustion.push(this.qustion)
+                id = qustionsFromServer.data[i].InterviewId
             }
         }
     }
+    async getCohorts (){
+        let cohortsFromServer = await axios.get("http://localhost:8888/adminPage/cohort")
 
+    }
     addSimulationDate = (primaryDate, secondaryDate1, secondaryDate2) => {
 
         let body = {

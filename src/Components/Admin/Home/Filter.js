@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react';
 import '../../../styles/Filter.css'
 import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme';
 
 import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'

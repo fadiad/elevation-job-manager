@@ -55,7 +55,13 @@ class EditQuestion extends Component {
                     }
                 }}
             >
-               
+                {()=> {
+                   this.setState({
+                    title: this.props.title,
+                    question : this.props.question ,
+                    solution : this.props.solution
+                })
+                }}
                 <DialogTitle>
                     <div>
                         Edit Question

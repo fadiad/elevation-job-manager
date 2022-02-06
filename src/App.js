@@ -10,6 +10,7 @@ import { Redirect } from "react-router-dom";
 import './styles/App.css';
 import Questions from './Components/Admin/Question/Questions';
 import DisplayJobs from './Components/Admin/Jobs/DisplayJobs'
+import Settings from './Components/Admin/Settings/Settings';
  class App extends Component {
 
   constructor() {
@@ -44,6 +45,7 @@ import DisplayJobs from './Components/Admin/Jobs/DisplayJobs'
             <Route path="/adminPage" exact render={() => <Admin />} />
             <Route path="/adminPage/qustion" exact render={() => <Questions />} />
             <Route path="/adminPage/displayJobs" exact render={() => <DisplayJobs />} />
+            <Route path="/adminPage/Settings" exact render={() => <Settings />} />
             <Route path="/signup" exact render={() => <Signup />} />
             {
               role === "admin" ? <Redirect to='/adminPage' /> :

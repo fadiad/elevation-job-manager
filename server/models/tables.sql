@@ -102,4 +102,16 @@ ALTER TABLE simulation MODIFY date1 datetime;
 ALTER TABLE simulation MODIFY date2 datetime;
 ALTER TABLE simulation MODIFY date3 datetime;
 
+CREATE table cohort(
+    name varchar(10) NOT NULL PRIMARY KEY,
+    start_date datetime,
+    end_date datetime,
+    deadline datetime
+)
 
+insert into cohort (name)values("Atidna 1")
+insert into cohort (name)values("Atidna 2")
+insert into cohort (name)values("Atidna 3")
+insert into cohort (name)values("Atidna 4")
+
+ALTER TABLE Candidate ADD FOREIGN KEY (cohort) REFERENCES cohort(name);

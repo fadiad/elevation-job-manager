@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 import '../../../styles/UsersInterview.css'
 import { Button } from '@mui/material';
 import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme';
 import AddSimulationDate from './AddSimulationDate'
 

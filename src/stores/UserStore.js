@@ -8,7 +8,7 @@ export class UserStore {
         this.userID
         this.userData = {};
         this.processes = [];
-        this.Semoletions = [];
+        this.Simulations = [];
         this.simulationsData = [];
 
         makeAutoObservable(this, {
@@ -16,7 +16,7 @@ export class UserStore {
             processes: observable,
             userData: observable,
             setuserID: observable,
-            Semoletions: observable,
+            Simulations: observable,
             simulationsData: observable,
             getUserData: action,
             getprocesses: action,
@@ -24,16 +24,17 @@ export class UserStore {
             addInterView: action,
             changeStatus: action,
             getSimulationsOfInterView: action,
-            SelectSimulationDate: action
+            SelectSimulationDate: action,
+            getSimulations: action
         })
     }
     setuserID = (id) => {
         this.userID = id
     }
 
-    async getSemoletions() {
-        let Semoletions = await axios.get(`http://localhost:8888/studentPage/Semoletions/${this.userID}`)
-        this.Semoletions = Semoletions.data
+    async getSimulations() {
+        let Simulations = await axios.get(`http://localhost:8888/studentPage/Simulations/${this.userID}`)
+        this.Simulations = Simulations.data
     }
     async setNewQuestionFromInterview(id, question, title) {
         const obj = {
@@ -60,10 +61,10 @@ export class UserStore {
         }
 
         fetch('http://localhost:8888/studentPage/processStatus', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body),
-            })
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        })
             .then(data => {
                 this.getUserData(this.userID)
             }).catch(err => {
@@ -142,10 +143,10 @@ export class UserStore {
 
         if (this.isValid(companyName, jobTitle, location, foundBy, link)) {
             fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(processe)
-                })
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(processe)
+            })
                 .then(res => res.json())
                 .then(data => {
                     // this.processes = []
@@ -169,10 +170,10 @@ export class UserStore {
 
         let self = this;
         fetch(`http://localhost:8888/studentPage/interViewStatus/${this.userID}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(bodyParams),
-            })
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bodyParams),
+        })
             .then(data => {
                 if (bodyParams.type == 'Contract') {
                     this.assignAsAccepted(bodyParams.processId)
@@ -192,11 +193,11 @@ export class UserStore {
         return null;
     }
 
-    getSimulationsOfInterView = async() => {
+    getSimulationsOfInterView = async () => {
         let result = await axios.get(`http://localhost:8888/studentPage/simulationDates/${this.userID}`);
         this.simulationsData = result.data;
     }
-    SelectSimulationDate = async(simulationId, simulationDate, interviewId) => {
+    SelectSimulationDate = async (simulationId, simulationDate, interviewId) => {
         let bodyParams = {
             date: simulationDate,
             interviewId: interviewId

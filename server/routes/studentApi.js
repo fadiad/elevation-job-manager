@@ -41,17 +41,18 @@ router.get('/userData/:id', function(req, res) { // id : user id
             res.send(results)
         })
 })
-router.get('/Semoletions/:id', async function(req, res) { // id : user id 
+router.get('/Simulations/:id', async function(req, res) { // id : user id 
 
-    let Semoletions = await sequelize.query(`
-        select  i.type , p.companyName ,  p.jobTitle , i.date , i.simulationDate
+    let Simulations = await sequelize.query(`
+        select  i.type , p.companyName ,  p.jobTitle , i.date ,DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate
             from userproporties As u inner join Candidate As c   On u.id=c.id
                                      inner join Process As  p On p.UserId=c.id 
                                      inner join Interview As i On i.processId = p.id 
             where u.id ='${req.params.id}'
             `)
-    res.send(Semoletions[0])
+    res.send(Simulations[0])
 })
+
 
 
 
@@ -88,7 +89,7 @@ WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
 
 router.get('/interviews/:id', function(req, res) { // id : process id 
     sequelize
-        .query(`SELECT i.id, i.type , i.date , i.simulationDate , i.interviewerName , i.status , i.processId
+    .query(`SELECT i.id, i.type , i.date , DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate , i.interviewerName , i.status , i.processId
     FROM Process AS p , Interview AS i
     WHERE i.processId = '${req.params.id}' AND  p.id = i.processId`)
         .then(function([results, metadata]) {

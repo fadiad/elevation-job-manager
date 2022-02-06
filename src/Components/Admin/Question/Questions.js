@@ -50,7 +50,6 @@ class Questions extends Component {
             isExp = false
         }
         this.setState({ expanded: isExp })
-
     };
     componentDidMount() {
         this.props.adminStore.getQustions()
@@ -62,7 +61,6 @@ class Questions extends Component {
                 <NavBar />
                 <br></br>
                 <br></br>
-
                 <FormGroup row={true}>
                     <FormControlLabel onChange={this.onChangeHR} control={<Checkbox defaultChecked />} label="Technical" />
                     <FormControlLabel onChange={this.onChangeTechnical} control={<Checkbox defaultChecked/>} label="HR" />
