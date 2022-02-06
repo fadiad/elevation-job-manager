@@ -10,13 +10,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
 import './styles/App.css';
 
- class App extends Component {
+class App extends Component {
 
   constructor() {
     super()
     this.state = {
       role: "",
-      userID:0
+      userID: 0
     }
   }
 
@@ -25,12 +25,12 @@ import './styles/App.css';
   }
 
   setUserId = (id) => {
-    this.setState({userID : id},() =>{
+    this.setState({ userID: id }, () => {
       this.props.userStore.userID = this.state.userID
-      
+
     })
 
-  } 
+  }
   render() {
 
     let role = this.state.role
@@ -45,12 +45,12 @@ import './styles/App.css';
 
             <Route path="/Profile" exact render={() => <Profile />} />
 
-            
+
             {
               role === "admin" ? <Redirect to='/adminPage' /> :
                 role === "student" ? <Redirect to='/studentPage' /> : null
             }
-           
+
           </div>
         </Router>
       </div>
@@ -58,4 +58,4 @@ import './styles/App.css';
   }
 }
 
-export default inject("userStore","adminStore")(observer(App))
+export default inject("userStore", "adminStore")(observer(App))
