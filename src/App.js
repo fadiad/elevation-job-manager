@@ -5,7 +5,7 @@ import Admin from './Components/Admin/Home/Admin';
 import User from './Components/User/User';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
-import Profile from './Components/Admin/Profile';
+import Profile from './Components/Admin/Profile/Profile';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
 import './styles/App.css';

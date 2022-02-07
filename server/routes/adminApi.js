@@ -17,6 +17,24 @@ sequelize
 router.get('/AdminData', function (req, res) {
     res.send("lotem")
 })
+
+// router.get('/AdminAllData', function (req, res) {
+//     res.send("lotem")
+// })
+
+
+router.get('/AdminAllData/:id', function (req, res) { // id : user id 
+    sequelize
+        .query(`SELECT *
+        FROM Admin AS a  , UserProporties AS u
+        WHERE a.id = '${req.params.id}' AND a.id = u.id`)
+        .then(function ([results, metadata]) {
+            console.log(results);
+            res.send(results)
+        })
+})
+
+
 router.get('/qustions', async function (req, res) {
 
     const qustions = await sequelize.query(`    
@@ -27,7 +45,6 @@ router.get('/qustions', async function (req, res) {
                         inner join userproporties As u On c.id = u.id 
                         ORDER BY i.id
     `)
-
     res.send(qustions[0])
 })
 
@@ -121,7 +138,7 @@ router.put('/sulotion', async function (req, res) {
 
 router.post('/simulation', async function (req, res) {
     // let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
-    
+
     let secondaryDate1 = null
     let secondaryDate2 = null
     let primaryDate = null
