@@ -94,7 +94,98 @@ USE jobManagerDB;
  
 USE jobManagerDB;
 
+<<<<<<< HEAD
+select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        where c.isEmployeed = 1 
+        GROUP BY p.UserId
+
+    USE jobManagerDB;
+     select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 1 
+        GROUP BY p.UserId
+
+    USE jobManagerDB;
+        select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 1 and i.status = '${req.query.interViewStatus}'
+        GROUP BY p.UserId
+
+                    USE jobManagerDB;
+
+        select *
+        from candidate As c  inner join process As p 
+            on c.id = p.UserId inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and  p.status = 'In progress' and i.status = 'Scheduled'
+        GROUP BY p.UserId
+            USE jobManagerDB;
+        select count(*) As NumberOfemployed
+        
+         USE jobManagerDB;
+        select count(*) As NumberOfemployed
+                USE jobManagerDB;
+        select count(*) As NumberOfemployed
+        from candidate As c
+        where c.id In (
+        select  c.id
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and i.status = 'Scheduled'
+        GROUP BY  c.id)
+
+         USE jobManagerDB;
+        select u.firstName , u.lastName , u.email , i.type , p.companyName , i.status
+        from Interview As i inner join process As p on i.processId = p.id
+        inner join candidate As c on c.id = p.UserId 
+        inner join userproporties As u on u.id = c.id
+        where i.id =80
+
+        select count(*) As NumberOfemployed
+        from candidate As c inner join process As p 
+        on  c.id = p.UserId 
+        inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and i.status = 'Scheduled'
+        GROUP BY p.UserId
+       
+     USE jobManagerDB;
+     select count(*) As NumberOfemployed
+     from candidate AS c
+     where  c.id In(
+         select  p.UserId
+        from candidate As c  inner join process As p 
+            on c.id = p.UserId inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and  c.cohort = 'Atidna 4' and i.status = 'Scheduled'
+        GROUP BY p.UserId)
+
+      where  c.cohort = 'Atidna 4' and i.status = 'Scheduled'
+      GROUP BY p.UserId) 
+
+      select *
+        from candidate As c  inner join process As p 
+            on c.id = p.UserId 
+        where c.isEmployeed = 0 and p.status = 'In progress'  and c.cohort = 'Atidna 4'
+        GROUP BY p.UserId
+
+INSERT INTO simulation VALUES(NULL,"2022-10-10 10:00:00",NULL,NULL,1,2)
+
+
+USE jobManagerDB;
+
+Delete from admin ;
+
+USE jobManagerDB;
+DELETE FROM NotificationForAdmin ;
+DELETE FROM NotificationType ;
+=======
 SELECT * 
 from questions
     DELETE FROM questions
     WHERE id =3
+>>>>>>> 21c8ad2b53faac259b0429ccf566c6871d2779d7

@@ -57,15 +57,67 @@ router.get('/qustions', async function(req, res) {
     res.send(qustions[0])
 })
 
-router.delete('/question', async function (req, res) {
+router.post('/setNotificationsType', async function(req, res) {
+
+    let wanted = req.body.wanted
+    let unWanted = req.body.unWanted
+    let adminId = req.body.adminId
+
+    let query0 = `Delete from NotificationForAdmin WHERE adminId = ${adminId}`
+    let result0 = await sequelize.query(query0)
+
+    for (let notification of wanted) {
+        let query1 = `INSERT INTO NotificationType(id,type1,type2)
+        VALUES(NULL,"${notification.type1}","${notification.type2}");`
+        let result1 = await sequelize.query(query1)
+        let notificationTypeId = result1[0]
+
+        let query2 = `INSERT INTO NotificationForAdmin(adminId,notificationId,isNotified)
+        VALUES(${adminId},${notificationTypeId},1);`
+        let result2 = await sequelize.query(query2)
+    }
+
+    for (let notification of unWanted) {
+        let query1 = `INSERT INTO NotificationType(id,type1,type2)
+        VALUES(NULL,"${notification.type1}","${notification.type2}");`
+        let result1 = await sequelize.query(query1)
+        let notificationTypeId = result1[0]
+
+        let query2 = `INSERT INTO NotificationForAdmin(adminId,notificationId,isNotified)
+        VALUES(${adminId},${notificationTypeId},0);`
+        let result2 = await sequelize.query(query2)
+    }
+    res.send("succeed")
+})
+
+router.post('/resetNotifications', async function(req, res) {
+    console.log(req.body);
+    let query0 = `Delete from NotificationForAdmin WHERE adminId = ${req.body.adminId}`
+    let result0 = await sequelize.query(query0)
+    res.send("succeed")
+})
+
+router.get('/notificationsType/:adminId', async function(req, res) {
+
+    sequelize
+        .query(`SELECT type1 ,type2
+             FROM Admin AS a  , NotificationType AS NT , NotificationForAdmin AS NFA
+            WHERE a.id = '${req.params.adminId}' AND a.id = NFA.adminId AND NT.id = NFA.notificationId AND NFA.isNotified = 1`)
+        .then(function([results, metadata]) {
+            res.send(results)
+        })
+})
+
+
+router.delete('/question', async function(req, res) {
     const questionDeleted = await sequelize.query(`
     DELETE FROM questions
     WHERE id = "${req.body.questionId}"
     `)
-        res.send(questionDeleted[0])
+    res.send(questionDeleted[0])
 
 })
-router.put('/question', async function (req, res) {
+router.put('/question', async function(req, res) {
     const editQuestionData = await sequelize.query(`
   UPDATE questions 
     SET         
@@ -77,11 +129,11 @@ router.put('/question', async function (req, res) {
         id = "${req.body.questionId}"
    
 `)
-        res.send(editQuestionData[0])
+    res.send(editQuestionData[0])
 })
 
-router.put('/sulotion', async function (req, res) {
- 
+router.put('/sulotion', async function(req, res) {
+
     const sulotion = await sequelize.query(`
     UPDATE questions 
     SET 
@@ -92,14 +144,22 @@ router.put('/sulotion', async function (req, res) {
     res.send(sulotion[0])
 
 })
+
 router.post('/simulation', async function(req, res) {
-    let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
+    // let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
 
     let secondaryDate1 = null
     let secondaryDate2 = null
+    let primaryDate = null
 
-    if (primaryDate.length < 17) {
-        primaryDate = primaryDate + ':00'
+    let interviewId = req.body.interviewId
+    let adminId = req.body.adminId
+
+    if (req.body.primaryDate != '') {
+        primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19) + ':00'
+    } else {
+        res.status(422).send({ error: "error:primary simulation should not be empty" });
+        return
     }
 
     if (req.body.secondaryDate1 != '') {
@@ -108,11 +168,6 @@ router.post('/simulation', async function(req, res) {
     if (req.body.secondaryDate2 != '') {
         secondaryDate2 = req.body.secondaryDate2.toString().slice(0, 10) + ' ' + req.body.secondaryDate2.toString().slice(11, 19) + ':00'
     }
-
-    let interviewId = req.body.interviewId
-    let adminId = req.body.adminId
-
-
 
     if (secondaryDate1 === null && secondaryDate2 != null) {
         let query = `INSERT INTO simulation(id,date1,date2,date3,InterviewId,adminId)
@@ -132,7 +187,7 @@ router.post('/simulation', async function(req, res) {
         let result = await sequelize.query(query)
     }
 
-    res.send("result")
+    res.send("succeed")
 })
 
 router.get('/interviews', async function(req, res) {
@@ -396,18 +451,20 @@ router.get('/Statistics', async function(req, res) {
 })
 
 router.get('/cohort', async function(req, res) {
-    let getCohort = `select co.name,co.start_date,co.end_date,co.deadline,u.id,u.firstName,u.lastName ,u.email,u.phone
-    from cohort as co inner join candidate as ca 
-    on co.name=ca.cohort
-    inner join userProporties as u on u.id=ca.id`
-    let result = await sequelize.query(getCohort)
+    let cohorts = `select * from cohort`
+    let result = await sequelize.query(cohorts)
     res.send(result[0])
 })
 
 router.post('/cohort', async function(req, res) {
-    let query = `INSERT INTO COHORT VALUES(${req.body.name},${req.body.startDate},${req.body.endDate},${req.body.deadline})`
+    console.log(req.body)
+    let startDate = req.body.startDate.toString().slice(0, 10)
+    let endDate = req.body.endDate.toString().slice(0, 10)
+    let deadline = req.body.deadline.toString().slice(0, 10)
+
+    let query = `INSERT INTO COHORT VALUES("${req.body.name}","${startDate}","${endDate}","${deadline}")`
     let result = await sequelize.query(query)
-    res.send(result[0])
+    res.send(true)
 })
 
 module.exports = router;

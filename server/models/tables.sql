@@ -1,10 +1,23 @@
 -- Create DATABASE jobManagerDB;
 USE jobManagerDB;
+
+
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS UserProporties;
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS Candidate;
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS Admin;
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS Interview;
+
+USE jobManagerDB;
 Drop TABLE IF EXISTS Process;
+
 
 USE jobManagerDB;
 CREATE TABLE UserProporties(
@@ -30,7 +43,7 @@ CREATE TABLE Candidate(
 USE jobManagerDB;
 CREATE TABLE Admin(
     id MEDIUMINT NOT NULL PRIMARY KEY,
-    isNotified Boolean,
+    type ENUM('HR','Technical','Manager') DEFAULT 'Manager',
     FOREIGN KEY (id) REFERENCES UserProporties(id)
 );
 
@@ -62,6 +75,14 @@ CREATE TABLE Interview(
 
 Use jobmanagerdb;
 
+ALTER TABLE Admin 
+    ADD  type ENUM('HR','Technical','Manager') DEFAULT 'Manager'
+    AFTER id
+
+Use jobmanagerdb;
+ALTER TABLE Admin 
+    Drop isNotified
+
 ALTER TABLE UserProporties
   ADD isAdmin boolean DEFAULT false
     AFTER password;
@@ -83,6 +104,24 @@ Create TABLE simulation(
 );
 
 
+
+Use jobManagerDB;
+Create TABLE NotificationForAdmin(
+    adminId MEDIUMINT,
+    notificationId MEDIUMINT,
+    isNotified BOOLEAN,
+
+    FOREIGN Key(adminId) REFERENCES Admin(id),
+    FOREIGN Key(notificationId) REFERENCES NotificationType(id)
+);
+
+
+Use jobManagerDB;
+Create TABLE NotificationType(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    type1 varchar(15) ,
+    type2 varchar(15)
+);
 Use jobManagerDB;
 Drop TABLE IF EXISTS Questions;
 
@@ -94,14 +133,18 @@ Create TABLE Questions(
     solution VARCHAR(5000),
     InterviewId MEDIUMINT,
     FOREIGN Key(InterviewId) REFERENCES Interview(id)
-)COLLATION = utf8_unicode_ci & CHARACTER SET = utf8
+)
+COLLATION = utf8_unicode_ci & CHARACTER SET = utf8
 
+
+Use jobManagerDB;
 ALTER TABLE Interview MODIFY simulationDate datetime;
 
 ALTER TABLE simulation MODIFY date1 datetime;
 ALTER TABLE simulation MODIFY date2 datetime;
 ALTER TABLE simulation MODIFY date3 datetime;
 
+Use jobManagerDB;
 CREATE table cohort(
     name varchar(10) NOT NULL PRIMARY KEY,
     start_date datetime,
@@ -109,13 +152,15 @@ CREATE table cohort(
     deadline datetime
 )
 
-insert into cohort (name)values("Atidna 1")
-insert into cohort (name)values("Atidna 2")
-insert into cohort (name)values("Atidna 3")
-insert into cohort (name)values("Atidna 4")
+Use jobManagerDB;
+insert into cohort (name)values("Atidna 1");
+insert into cohort (name)values("Atidna 2");
+insert into cohort (name)values("Atidna 3");
+insert into cohort (name)values("Atidna 4");
 
+
+Use jobManagerDB;
 ALTER TABLE Candidate ADD FOREIGN KEY (cohort) REFERENCES cohort(name);
-
 
 Use jobManagerDB;
 CREATE table job(
@@ -130,25 +175,12 @@ CREATE table job(
     FOREIGN Key(adminId) REFERENCES admin(id)
 )
 
-Use jobManagerDB;
 
+Use jobManagerDB;
 CREATE table JobOffer(
     jobId MEDIUMINT NOT NULL ,
     adminId MEDIUMINT  NOT NULL,
     candidateId MEDIUMINT  NOT NULL,
     date datetime ,
-    -- FOREIGN Key(adminId) REFERENCES admin(id),
-    -- FOREIGN Key(jobId) REFERENCES job(id),
-    -- FOREIGN Key(candidateId) REFERENCES Candidate(id),
     PRIMARY KEY (jobId, adminId, candidateId) 
 )
-
-Use jobManagerDB;
-select *
-from Candidate As c inner join UserProporties As u 
-On c.id = u.id
-
-Use jobManagerDB;
-INSERT INTO job(id ,adminId,companyName,jobTitle,link,jobNumber,description , creatingJobDate)
-        VALUES(NULL,3,"intel","full stack developer","www.intel.com","1534864" ,"full stack developer at intel" , "2022-02-06");
-        

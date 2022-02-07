@@ -13,11 +13,11 @@ class StatisticsByFilter extends Component {
             <div className='statistics'>
                 <h3>Statistics By Filter : </h3>
                 <PieChartByFilter
-                    student    = {this.props.adminStore.statisticsByFilter.student}    
-                    employed   = {this.props.adminStore.statisticsByFilter.employed}  
-                    unEmployed = {this.props.adminStore.statisticsByFilter.unEmployed}
-                    InProcess  = {this.props.adminStore.statisticsByFilter.InProcess} 
-                    NotActive  = {this.props.adminStore.statisticsByFilter.NotActive}     
+                    student={this.props.adminStore.statisticsByFilter.student}
+                    employed={this.props.adminStore.statisticsByFilter.employed}
+                    unEmployed={this.props.adminStore.statisticsByFilter.unEmployed}
+                    InProcess={this.props.adminStore.statisticsByFilter.InProcess}
+                    NotActive={this.props.adminStore.statisticsByFilter.NotActive}
                 />
             </div>
         );

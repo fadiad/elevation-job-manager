@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import UsersInterviews from './UsersInterviews';
-import GeneralStatistics from '../Home/GeneralStatistics'
+import GeneralStatistics from './GeneralStatistics'
 import StatisticsByFilter from './StatisticsByFilter'
-
 import Filter from './Filter'
 import NavBar from '../../AdminNavBar';
 import '../../../styles/Admin.css';
 import '../../theme';
-import {  Link } from 'react-router-dom'
+
 
 class Admin extends Component {
 
@@ -27,7 +26,6 @@ class Admin extends Component {
                     <StatisticsByFilter />
                 </div>
                 <UsersInterviews setOpenDialog={this.setOpenDialog} />
-                
             </div>
         );
     }

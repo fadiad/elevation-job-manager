@@ -31,14 +31,14 @@ class User extends Component {
 
     setOpenDialog = () => { this.setState({ openDialog: true }) }
     setCloseDialog = () => { this.setState({ openDialog: false }) }
-    setOpenSimulationDialog = () => {this.setState({ openSimulationDialog: true })}
-    setCloseSimulationDialog = () => {this.setState({openSimulationDialog: false})}
+    setOpenSimulationDialog = () => { this.setState({ openSimulationDialog: true }) }
+    setCloseSimulationDialog = () => { this.setState({ openSimulationDialog: false }) }
 
     render() {
         return (
             <div>
                 <NavBar />
- 
+
                 <div className='user-home-header'>
                     <Stack spacing={2} width={"20%"}>
                         <ThemeProvider theme={theme}>

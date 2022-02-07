@@ -13,6 +13,7 @@ import '../styles/navBar.css';
 import theme from './theme';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import cookie from 'react-cookies'
 
 
 class NavBar extends Component {
@@ -22,6 +23,8 @@ class NavBar extends Component {
             console.log(res);
             <Redirect to="/" />
         })
+        cookie.remove('userID', { path: '/' })
+        cookie.remove('role', { path: '/' })
     }
     render() {
         return (
@@ -36,13 +39,13 @@ class NavBar extends Component {
                                 <HomeIcon fontSize="inherit" />
                             </IconButton>
                         </Link>
-                        <Link to="/adminPage/displayJobs">
+                        <Link to="/studentPage/displayJobs">
                             <IconButton className='icon' aria-label='jobs' color='secondary' size="large">
                                 <span className='tooltiptext'>Jobs</span>
                                 <WorkIcon fontSize='inherit' />
                             </IconButton>
                         </Link>
-                        <Link to="/profile">
+                        <Link to="/studentPage/profile">
                             <IconButton className='icon' aria-label='Profile' color='secondary' size="large">
                                 <span className='tooltiptext'>Profile</span>
                                 <AccountCircleSharpIcon fontSize='inherit' />

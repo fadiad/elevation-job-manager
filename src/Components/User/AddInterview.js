@@ -6,6 +6,9 @@ import { Dialog, DialogTitle, Grid, } from '@material-ui/core'
 import DateMomentUtils from '@date-io/moment'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+
 import {
     DatePicker,
     MuiPickersUtilsProvider,
@@ -15,7 +18,7 @@ import { Select, MenuItem, FormControl, InputLabel } from '@material-ui/core'
 
 
 import '../../styles/AddInterview.css'
-import { invalid } from 'moment';
+// import { invalid } from 'moment';
 
 class AddInterview extends Component {
 
@@ -26,14 +29,15 @@ class AddInterview extends Component {
             type: 'Phone',
             interviewerName: ' ',
             date: new Date(),
-            dateError: false
+            dateError: false,
+            openSuccess: false
         }
     }
 
-    // setDate = (event) => {
-    //     let date = event.target.value
+
+    // handleSuccess = () => {
     //     this.setState({
-    //         date: date
+    //         openSuccess: true
     //     })
     // }
 
@@ -64,9 +68,16 @@ class AddInterview extends Component {
     addInterView = () => {
         if (this.isValid(this.state.date._d)) {
             this.props.userStore.addInterView(this.props.processId, this.state.type, this.state.date._d, this.state.interviewerName)
-            this.handleClose();
+            // this.handleSuccess()
+           
+            // setTimeout(() => {
+            //     this.handleClose();
+            //     this.setState({
+            //         openSuccess: false
+            //     })
+            // }, 3000);
         } else {
-            console.log("did not add interview ");
+            // console.log("did not add interview ");
             this.setState({
                 dateError: true
             })
@@ -83,6 +94,15 @@ class AddInterview extends Component {
     handleClose = () => {
         this.props.setCloseDialog()
     }
+
+    // handleCloseMessage = (event, reason) => {
+    //     if (reason === 'clickaway') {
+    //         return;
+    //     }
+    //     this.setState({
+    //         openSuccess: false
+    //     })
+    // };
 
 
     render() {
@@ -105,6 +125,12 @@ class AddInterview extends Component {
                         Add Interview
                     </div>
                 </DialogTitle>
+{/* 
+                <Snackbar open={this.state.openSuccess} autoHideDuration={8000} onClose={this.handleCloseMessage}>
+                    <Alert severity="success">Dates Added Successfully!</Alert>
+                </Snackbar> */}
+
+
                 <div className='inputs' >
                     <div className='inpt'>
                         <FormControl className='FormControl'  >
@@ -136,7 +162,10 @@ class AddInterview extends Component {
                         <CalendarTodayIcon></CalendarTodayIcon>
                     </div>
 
+
+
                 </div>
+
 
 
                 <div className='Buttons'>

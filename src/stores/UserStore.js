@@ -36,6 +36,7 @@ export class UserStore {
         let Simulations = await axios.get(`http://localhost:8888/studentPage/Simulations/${this.userID}`)
         this.Simulations = Simulations.data
     }
+
     async setNewQuestionFromInterview(id, question, title) {
         const obj = {
             interviewId: id,
@@ -74,7 +75,7 @@ export class UserStore {
 
     async getUserData(userID) {
         let userData = await axios.get(`http://localhost:8888/studentPage/userData/${userID}`)
-        console.log(userData.data[0]);
+        // console.log(userData.data[0]);
         this.userData = userData.data[0]
     }
 
@@ -131,7 +132,7 @@ export class UserStore {
     }
 
     //async
-    addProcess = (companyName, jobTitle, location, foundBy, link) => {
+    addProcess = async (companyName, jobTitle, location, foundBy, link) => {
 
         let processe = {
             companyName: companyName,
@@ -142,21 +143,13 @@ export class UserStore {
         }
 
         if (this.isValid(companyName, jobTitle, location, foundBy, link)) {
-            fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
+            let data = await fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(processe)
             })
-                .then(res => res.json())
-                .then(data => {
-                    // this.processes = []
-
-                    // data.forEach(async e => {
-                    //     let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
-                    //     this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
-                    // });
-                    this.getProcesses(this.userID)
-                })
+            this.getProcesses(this.userID)
+            return data.status;
         }
     }
 
@@ -194,6 +187,7 @@ export class UserStore {
     }
 
     getSimulationsOfInterView = async () => {
+        // this.simulationsData = []
         let result = await axios.get(`http://localhost:8888/studentPage/simulationDates/${this.userID}`);
         this.simulationsData = result.data;
     }
@@ -222,11 +216,12 @@ export class UserStore {
         //     () =>{ console.log("delete Question work");
         // });
         await fetch(`http://localhost:8888/studentPage/Simulation/${this.userID}`, {
-            method: 'DELETE' ,
-            headers: { 'Content-Type': 'application/json' },      
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         }).then(data => {
-            console.log("delete success")
+            // console.log("delete success")
+            this.getSimulationsOfInterView()
         }).catch(err => {
 
         })
@@ -256,3 +251,33 @@ export class UserStore {
         })
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// this.processes = []
+// data.forEach(async e => {
+//     let interviews = await axios.get(`http://localhost:8888/studentPage/interviews/${e.id}`)
+//     this.processes.push(new Process(e.companyName, e.foundBy, e.id, e.jobTitle, e.link, e.location, e.status, interviews.data))
+// });
+
+
+ // fetch(`http://localhost:8888/studentPage/processes/${this.userID}`, {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(processe)
+            // })
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         this.getProcesses(this.userID)
+            //     })
