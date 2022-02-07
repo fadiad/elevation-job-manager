@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
 import './styles/App.css';
 import Questions from './Components/Admin/Question/Questions';
-import DisplayJobs from './Components/Admin/Jobs/DisplayJobs'
+import Jobs from './Components/Admin/Jobs/Jobs'
 import Settings from './Components/Admin/Settings/Settings';
  class App extends Component {
 
@@ -44,7 +44,7 @@ import Settings from './Components/Admin/Settings/Settings';
             <Route path="/studentPage" exact render={() => <User />} />
             <Route path="/adminPage" exact render={() => <Admin />} />
             <Route path="/adminPage/qustion" exact render={() => <Questions />} />
-            <Route path="/adminPage/displayJobs" exact render={() => <DisplayJobs />} />
+            <Route path="/adminPage/Jobs" exact render={() => <Jobs />} />
             <Route path="/adminPage/Settings" exact render={() => <Settings />} />
             <Route path="/signup" exact render={() => <Signup />} />
             {

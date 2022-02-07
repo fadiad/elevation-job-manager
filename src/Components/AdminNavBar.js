@@ -16,6 +16,62 @@ import { Link } from 'react-router-dom';
 
 
 class NavBar extends Component {
+    constructor() {
+        super()
+        this.state = {
+
+            home: "primary",
+            questions: "secondary",
+            jobs : "secondary" ,
+            settings : "secondary" ,
+            profile : "secondary"
+        }
+    }
+    setColorIconHome = async () => {
+        await this.setState({
+            home: "primary",
+            questions: "secondary",
+            jobs : "secondary" ,
+            settings : "secondary" ,
+            profile : "secondary"
+        })
+    }
+     setColorIconQuestions = async () => {
+        await this.setState({
+            home: "secondary",
+            questions:  "primary" ,
+            jobs : "secondary" ,
+            settings : "secondary" ,
+            profile : "secondary"
+        })
+    }
+    setColorIconJobs = () => {
+        this.setState({
+            home: "secondary",
+            questions:  "secondary" ,
+            jobs : "primary" ,
+            settings : "secondary" ,
+            profile : "secondary"
+        })
+    }
+    setColorIconProfile = () => {
+        this.setState({
+            home: "secondary",
+            questions:  "secondary" ,
+            jobs : "secondary" ,
+            settings : "secondary" ,
+            profile : "primary"
+        })
+    }
+    setColorIconSettings = () => {
+        this.setState({
+            home: "secondary",
+            questions:  "secondary" ,
+            jobs : "secondary" ,
+            settings : "primary" ,
+            profile : "secondary"
+        })
+    }
     logout = () => {
         console.log("entered logout")
         axios.get("http://localhost:8888/logout", function (res) {
@@ -31,32 +87,32 @@ class NavBar extends Component {
                 <Stack className='nav-Buttons' spacing={4} direction="row">
                     <ThemeProvider theme={theme}>
                         <Link to="/adminPage">
-                            <IconButton className='icon' aria-label="home" color='secondary' size="large">
+                            <IconButton  onClick={this.setColorIconHome} className='icon' aria-label="home" color={this.state.home} size="large">
                                 <span className='tooltiptext'>Home</span>
                                 <HomeIcon fontSize="inherit" />
                             </IconButton>
                         </Link>
-                        <Link to="/adminPage/qustion">
-                            <IconButton className='icon' aria-label='questions' color='secondary' size="large">
+                        <Link to="/adminPage/qustion" >
+                            <IconButton onClick={this.setColorIconQuestions} className='icon' aria-label='questions' color={this.state.questions} size="large">
                                 <span className='tooltiptext'>Questions</span>
                                 <QuizIcon fontSize='inherit' />
                             </IconButton>
                         </Link>
-                        <Link to="/adminPage/displayJobs">
-                            <IconButton className='icon' aria-label='jobs' color='primary' size="large">
+                        <Link to="/adminPage/jobs"  onClick={this.setColorIconJobs}>
+                            <IconButton className='icon' aria-label='jobs' color={this.state.jobs} size="large">
                                 <span className='tooltiptext'>Jobs</span>
                                 <WorkIcon fontSize='inherit' />
                             </IconButton>
                         </Link>
-                        <Link to="/adminPage/Settings">
-                            <IconButton className='icon' aria-label='Settings' color='secondary' size="large">
+                        <Link to="/adminPage/Settings" onClick={this.setColorIconSettings}>
+                            <IconButton className='icon' aria-label='Settings' color={this.state.settings} size="large">
                                 <span className='tooltiptext'>Settings</span>
                                 <SettingsIcon fontSize='inherit' />
                             </IconButton>
                         </Link>
                         
-                        <Link to="/profile">
-                            <IconButton className='icon' aria-label='Profile' color='secondary' size="large">
+                        <Link to="/profile"  onClick={this.setColorIconProfile}>
+                            <IconButton className='icon' aria-label='Profile' color={this.state.profile} size="large">
                                 <span className='tooltiptext'>Profile</span>
                                 <AccountCircleSharpIcon fontSize='inherit' />
                             </IconButton>

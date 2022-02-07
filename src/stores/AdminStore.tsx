@@ -6,7 +6,7 @@ import { Qustions } from './Qustions';
 import { Qustion } from './Qustion';
 import { Cohort } from './Cohort';
 import { Participant } from './Participant'
-
+import {User} from './User';
 export class AdminStore {
     adminId: Number;
     interviewId: Number;
@@ -20,8 +20,9 @@ export class AdminStore {
     qustion: Qustion;
     cohorts: Array<Cohort>;
     participant: Participant;
-
+    users : Array<User>;
     constructor() {
+        this.users = [];
         this.usersInterViews = [];
         this.adminName = ' ';
         this.adminId;
@@ -68,6 +69,41 @@ export class AdminStore {
             getCohorts: action
         })
     }
+    sendJobToUser(company : String, jobNumber : String, jobTitle : String, description : String, link : String, date : Date){
+        let body = {
+            userId : 1 ,
+            adminId : 3 ,
+            company: company,
+            jobNumber: jobNumber,
+            jobTitle: jobTitle,
+            description: description,
+            link: link , 
+            date : date
+        }
+
+        fetch('http://localhost:8888/adminPage/sendJob', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        })
+            .then(data => {
+                console.log(data);
+
+                // this.getUserData(this.userID)
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+    async getUser(){
+        this.users = []
+        let usersData = await axios.get("http://localhost:8888/adminPage/candidate")
+        // console.log(users.data);
+        usersData.data.forEach(e => {
+            this.users.push(new User(e.id, e.firstName, e.lastName, e.cohort, e.status, e.email, e.phone))
+        });
+        
+    }    
+
     setStatus(status: String) {
         this.statusByFilter = status
     }
@@ -78,9 +114,9 @@ export class AdminStore {
     async editQuestion( questionId : Number, title : String, question : String,  sulotion : String){
         let questionData = {
             questionId: questionId ,
-            title : title + " ",
-            question : question + " " ,
-            sulotion : sulotion + " "
+            title : title ,
+            question : question ,
+            sulotion : sulotion 
         }
         await fetch('http://localhost:8888/adminPage/question', {
             method: 'PUT',
@@ -199,7 +235,7 @@ export class AdminStore {
             secondaryDate2: secondaryDate2
         }
 
-        fetch('http://localhost:8888/adminPage/simulation', {
+        fetch('http://localhost:8888/adminPage/simultaion', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),

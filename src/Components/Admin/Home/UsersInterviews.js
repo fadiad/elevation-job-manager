@@ -153,18 +153,10 @@ class UsersInterviews extends Component {
               onPageChange={this.handleChangePage}
               onRowsPerPageChange={this.handleChangeRowsPerPage}
             />
-
-
           </Table>
 
         </TableContainer>
-
-        <AddSimulationDate
-          openDialog={this.state.openDialog}
-          setOpenDialog={this.setOpenDialog}
-          setCloseDialog={this.setCloseDialog}
-          interviewId={this.state.interviewId}
-        />
+       
 
       </div>
     );

@@ -2,18 +2,19 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import NavBar from '../../AdminNavBar';
-// import '../../../styles/Admin.css'
+// import '../../../styles/Admin.css';
 // import '../../theme';
-import usersData from './usersData'
-class DisplayJobs extends Component {
+import Users from './Users';
+class Jobs extends Component {
 
     render() {
         return (
             <div className='Filter'>
-                <NavBar />
-                <usersData></usersData>
+                {/* <NavBar /> */}
+
+                <Users></Users>
             </div>
         );
     }
 }
-export default inject("adminStore")(observer(DisplayJobs))
+export default inject("adminStore")(observer(Jobs))

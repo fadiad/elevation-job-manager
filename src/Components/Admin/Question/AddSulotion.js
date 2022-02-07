@@ -10,27 +10,23 @@ class AddSulotion extends Component {
         super()
         this.state = {
             status: ' ',
-            sulotion: ' ',
+            solution: ' ',
         }
     }
     handleChange = (event) => {
         this.setState({
-            sulotion: event.target.value
+            solution: event.target.value
         })
-        console.log(this.state.sulotion);
     };
-
     handleClose = () => {
         this.props.setCloseDialog()
     }
-
     addSulotion = () => {
-        console.log("addSulotion");
-        this.props.adminStore.addSulotion(this.props.questionId,  this.state.sulotion)
+
+        this.props.adminStore.addSulotion(this.props.questionId, this.state.solution)
         this.props.adminStore.getQustions()
         this.handleClose();
     }
-
     render() {
         return (
             <Dialog
@@ -46,10 +42,10 @@ class AddSulotion extends Component {
             >
                 <DialogTitle>
                     <div>
-                         Add Sulotion 
+                        Add solution
                     </div>
                 </DialogTitle>
-               
+
                 <TextField
                     id="outlined-multiline-static"
                     label="Sulotion"
@@ -57,7 +53,7 @@ class AddSulotion extends Component {
                     // value={this.}
                     onChange={this.handleChange}
                     rows={4}
-                    defaultValue=""
+                    defaultValue={this.props.solution}
                 />
                 <DialogActions>
                     <Button autoFocus onClick={this.handleClose}>
@@ -68,9 +64,7 @@ class AddSulotion extends Component {
                     </Button>
                 </DialogActions>
             </Dialog>
-
         );
     }
 }
 export default inject("adminStore")(observer(AddSulotion));
-

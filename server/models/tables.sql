@@ -72,7 +72,7 @@ ALTER TABLE UserProporties
 
 Use jobManagerDB;
 Create TABLE simulation(
-        id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     date1 Date NOT NULL,
     date2 Date,
     date3 Date,
@@ -115,3 +115,40 @@ insert into cohort (name)values("Atidna 3")
 insert into cohort (name)values("Atidna 4")
 
 ALTER TABLE Candidate ADD FOREIGN KEY (cohort) REFERENCES cohort(name);
+
+
+Use jobManagerDB;
+CREATE table job(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    adminId MEDIUMINT  NOT NULL,
+    companyName VARCHAR(50) NOT NULL ,
+    jobTitle VARCHAR(100) NOT NULL ,
+    link VARCHAR(100) NOT NULL ,
+    jobNumber VARCHAR(100) NOT NULL,
+    description varchar(500) ,
+    creatingJobDate datetime ,
+    FOREIGN Key(adminId) REFERENCES admin(id)
+)
+
+Use jobManagerDB;
+
+CREATE table JobOffer(
+    jobId MEDIUMINT NOT NULL ,
+    adminId MEDIUMINT  NOT NULL,
+    candidateId MEDIUMINT  NOT NULL,
+    date datetime ,
+    -- FOREIGN Key(adminId) REFERENCES admin(id),
+    -- FOREIGN Key(jobId) REFERENCES job(id),
+    -- FOREIGN Key(candidateId) REFERENCES Candidate(id),
+    PRIMARY KEY (jobId, adminId, candidateId) 
+)
+
+Use jobManagerDB;
+select *
+from Candidate As c inner join UserProporties As u 
+On c.id = u.id
+
+Use jobManagerDB;
+INSERT INTO job(id ,adminId,companyName,jobTitle,link,jobNumber,description , creatingJobDate)
+        VALUES(NULL,3,"intel","full stack developer","www.intel.com","1534864" ,"full stack developer at intel" , "2022-02-06");
+        
