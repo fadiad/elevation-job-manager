@@ -13,6 +13,7 @@ import '../styles/navBar.css';
 import theme from './theme';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import cookie from 'react-cookies'
 
 
 class NavBar extends Component {
@@ -22,12 +23,15 @@ class NavBar extends Component {
             console.log(res);
             <Redirect to="/" />
         })
+        // cookie.remove('userID', { path: '/' })
+        // cookie.remove('role', { path: '/' })
+
     }
     render() {
         return (
             <div class="navBar-Container">
                 <img width="45" height="45" src="elevation.png" alt="" />
-                <img width="120" style={{padding: 15+"px"}} src="elevation_logo.png" alt="" />
+                <img width="120" style={{padding: 15+"px"}} src="/elevation_logo.png" alt="" />
                 <Stack className='nav-Buttons' spacing={4} direction="row">
                     <ThemeProvider theme={theme}>
                         <Link to="/adminPage">
@@ -55,7 +59,7 @@ class NavBar extends Component {
                             </IconButton>
                         </Link>
                         
-                        <Link to="/profile">
+                        <Link to="/adminPage/profile">
                             <IconButton className='icon' aria-label='Profile' color='secondary' size="large">
                                 <span className='tooltiptext'>Profile</span>
                                 <AccountCircleSharpIcon fontSize='inherit' />

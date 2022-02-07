@@ -14,10 +14,10 @@ sequelize
         console.error('Unable to connect to the database:', err);
     })
 
-router.get('/AdminData', function (req, res) {
+router.get('/AdminData', function(req, res) {
     res.send("lotem")
 })
-router.get('/qustions', async function (req, res) {
+router.get('/qustions', async function(req, res) {
 
     const qustions = await sequelize.query(`    
     SELECT q.id As questionId ,q.InterviewId ,q.title, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date ,u.firstName , u.lastName 
@@ -31,7 +31,7 @@ router.get('/qustions', async function (req, res) {
     res.send(qustions[0])
 })
 
-router.post('/setNotificationsType', async function (req, res) {
+router.post('/setNotificationsType', async function(req, res) {
 
     let wanted = req.body.wanted
     let unWanted = req.body.unWanted
@@ -64,26 +64,26 @@ router.post('/setNotificationsType', async function (req, res) {
     res.send("succeed")
 })
 
-router.post('/resetNotifications', async function (req, res) {
+router.post('/resetNotifications', async function(req, res) {
     console.log(req.body);
     let query0 = `Delete from NotificationForAdmin WHERE adminId = ${req.body.adminId}`
     let result0 = await sequelize.query(query0)
     res.send("succeed")
 })
 
-router.get('/notificationsType/:adminId', async function (req, res) {
+router.get('/notificationsType/:adminId', async function(req, res) {
 
     sequelize
         .query(`SELECT type1 ,type2
              FROM Admin AS a  , NotificationType AS NT , NotificationForAdmin AS NFA
             WHERE a.id = '${req.params.adminId}' AND a.id = NFA.adminId AND NT.id = NFA.notificationId AND NFA.isNotified = 1`)
-        .then(function ([results, metadata]) {
+        .then(function([results, metadata]) {
             res.send(results)
         })
 })
 
 
-router.delete('/question', async function (req, res) {
+router.delete('/question', async function(req, res) {
     const questionDeleted = await sequelize.query(`
     DELETE FROM questions
     WHERE id = "${req.body.questionId}"
@@ -91,7 +91,7 @@ router.delete('/question', async function (req, res) {
     res.send(questionDeleted[0])
 
 })
-router.put('/question', async function (req, res) {
+router.put('/question', async function(req, res) {
     const editQuestionData = await sequelize.query(`
   UPDATE questions 
     SET         
@@ -106,7 +106,7 @@ router.put('/question', async function (req, res) {
     res.send(editQuestionData[0])
 })
 
-router.put('/sulotion', async function (req, res) {
+router.put('/sulotion', async function(req, res) {
 
     const sulotion = await sequelize.query(`
     UPDATE questions 
@@ -119,9 +119,9 @@ router.put('/sulotion', async function (req, res) {
 
 })
 
-router.post('/simulation', async function (req, res) {
+router.post('/simulation', async function(req, res) {
     // let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
-    
+
     let secondaryDate1 = null
     let secondaryDate2 = null
     let primaryDate = null
@@ -164,7 +164,7 @@ router.post('/simulation', async function (req, res) {
     res.send("succeed")
 })
 
-router.get('/interviews', async function (req, res) {
+router.get('/interviews', async function(req, res) {
     const cohort = req.query.cohort
     const interViewStatus = req.query.interViewStatus
 
@@ -208,7 +208,7 @@ router.get('/interviews', async function (req, res) {
 })
 
 
-router.get('/Statistics', async function (req, res) {
+router.get('/Statistics', async function(req, res) {
     // const cohort = req.query.cohort
     // const interViewStatus = req.query.interViewStatus
     let obj = {};
@@ -424,19 +424,21 @@ router.get('/Statistics', async function (req, res) {
 
 })
 
-router.get('/cohort', async function (req, res) {
-    let getCohort = `select co.name,co.start_date,co.end_date,co.deadline,u.id,u.firstName,u.lastName ,u.email,u.phone
-    from cohort as co inner join candidate as ca 
-    on co.name=ca.cohort
-    inner join userProporties as u on u.id=ca.id`
-    let result = await sequelize.query(getCohort)
+router.get('/cohort', async function(req, res) {
+    let cohorts = `select * from cohort`
+    let result = await sequelize.query(cohorts)
     res.send(result[0])
 })
 
-router.post('/cohort', async function (req, res) {
-    let query = `INSERT INTO COHORT VALUES(${req.body.name},${req.body.startDate},${req.body.endDate},${req.body.deadline})`
+router.post('/cohort', async function(req, res) {
+    console.log(req.body)
+    startDate = req.body.startDate.toString().slice(0, 10)
+    endDate = req.body.endDate.toString().slice(0, 10)
+    deadline = req.body.deadline.toString().slice(0, 10)
+
+    let query = `INSERT INTO COHORT VALUES("${req.body.name}","${startDate}","${endDate}","${deadline}")`
     let result = await sequelize.query(query)
-    res.send(result[0])
+    res.send(true)
 })
 
 module.exports = router;

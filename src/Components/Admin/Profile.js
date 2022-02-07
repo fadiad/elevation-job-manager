@@ -1,16 +1,11 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-
-import ChooseNotifications from './ChooseNotifications'
-
+import NavBar from '../AdminNavBar';
 
 export class Profile extends Component {
-
     render() {
         return (
             <div>
-                <ChooseNotifications />
-
+                <NavBar />
             </div>
         );
     }

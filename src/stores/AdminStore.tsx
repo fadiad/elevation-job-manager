@@ -65,7 +65,8 @@ export class AdminStore {
             deleteQuestion: action,
             addSimulationDate: action,
             getStatistics: action,
-            getCohorts: action
+            getCohorts: action,
+            addCohort: action
         })
     }
 
@@ -307,9 +308,18 @@ export class AdminStore {
     }
     async getCohorts() {
         let cohortsFromServer = await axios.get("http://localhost:8888/adminPage/cohort")
-
-
+        let cohorts = cohortsFromServer
     }
+
+    async addCohort(newCohort) {
+        let data = await fetch(`http://localhost:8888/adminPage/cohort`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newCohort)
+        })
+       this.getCohorts()
+    }
+
     addSimulationDate = async (primaryDate, secondaryDate1, secondaryDate2) => {
         let body = {
             interviewId: this.interviewId,
