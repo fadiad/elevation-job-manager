@@ -11,8 +11,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 class PickSimulationDate extends Component {
 
-    componentDidMount = async () => {
-        await this.props.userStore.getSimulationsOfInterView()
+    componentDidMount () {
+        this.props.userStore.getSimulationsOfInterView()
         this.setState({ data: this.props.userStore.simulationsData })
 
     }
