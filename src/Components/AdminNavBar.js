@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import cookie from 'react-cookies'
 
 
-class NavBar extends Component {
+class AdminNavBar extends Component {
     constructor() {
         super()
         this.state = {
@@ -76,11 +76,10 @@ class NavBar extends Component {
     logout = () => {
         console.log("entered logout")
         axios.get("http://localhost:8888/logout", function (res) {
-            console.log(res);
             <Redirect to="/" />
         })
-        // cookie.remove('userID', { path: '/' })
-        // cookie.remove('role', { path: '/' })
+        cookie.remove('userID', { path: '/' })
+        cookie.remove('role', { path: '/' })
 
     }
     render() {
@@ -90,7 +89,7 @@ class NavBar extends Component {
                 <img width="120" style={{padding: 15+"px"}} src="/elevation_logo.png" alt="" />
                 <Stack className='nav-Buttons' spacing={4} direction="row">
                     <ThemeProvider theme={theme}>
-                        <Link to="/adminPage">
+                        <Link exact to="/adminPage">
                             <IconButton  onClick={this.setColorIconHome} className='icon' aria-label="home" color={this.state.home} size="large">
                                 <span className='tooltiptext'>Home</span>
                                 <HomeIcon fontSize="inherit" />
@@ -122,7 +121,7 @@ class NavBar extends Component {
                             </IconButton>
                         </Link>
                         <Link to="/">
-                            <IconButton className='icon' aria-label='Logout' color='secondary' size="large">
+                            <IconButton className='icon' aria-label='Logout' color='secondary' size="large" onClick={this.logout}>
                                 <span className='tooltiptext'>Logout</span>
                                 <ExitToAppSharpIcon fontSize='inherit' />
                             </IconButton>
@@ -133,4 +132,4 @@ class NavBar extends Component {
         );
     }
 }
-export default NavBar;
+export default AdminNavBar;

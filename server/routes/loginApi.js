@@ -7,9 +7,10 @@ router.post('/', async(req, res) => {
     let session = req.session;
     let email = req.body.email
     let password = req.body.password
+
     console.log("entered /login")
     console.log(req.session.id)
-    session.save()
+
     if (await login.isVerified(email, password)) {
         await login.storeUserInSession(session, email)
         if (login.isLoggedIn(session)) {

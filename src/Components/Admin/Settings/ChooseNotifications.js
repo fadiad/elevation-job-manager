@@ -7,7 +7,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
+import { Grid, Paper, TextField } from '@material-ui/core'
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -15,7 +15,9 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
-
+import Stack from '@mui/material/Stack';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../../theme';
 export class ChooseNotifications extends Component {
 
     constructor() {
@@ -83,6 +85,8 @@ export class ChooseNotifications extends Component {
             })
         }
     }
+    paperStyle = { width: 280, margin: "0px auto" }
+    btnstyle = { padding: '10px 50px 0px' }
 
     render() {
         return (
@@ -98,50 +102,54 @@ export class ChooseNotifications extends Component {
                     </AccordionSummary>
 
                     <AccordionDetails>
-                        {/* <div className='Buttons'> */}
-                        <Button style={{ margin: "10px" }} size="medium" variant="contained" onClick={this.setNotifications}>set</Button>
-                        <Button size="medium" variant="contained" onClick={this.resetNotifications}>reset</Button>
-                        {/* </div> */}
-                        <div className='list'>
-                            <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-                                {this.state.constNotificationsTypeArr.map((value) => {
-                                    const labelId = `checkbox-list-label-${value}`;
+                        <Grid>
+                            <Paper elevation={10} style={this.paperStyle}>
+                                <Stack spacing={2} direction="row" style={this.btnstyle}>
+                                    <ThemeProvider theme={theme}>
+                                        <Button size="medium" variant="contained" onClick={this.setNotifications}>set</Button>
+                                        <Button size="medium" variant="contained" onClick={this.resetNotifications}>reset</Button>
+                                    </ThemeProvider>
+                                </Stack>
+                                <div className='list'>
+                                    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+                                        {this.state.constNotificationsTypeArr.map((value) => {
+                                            const labelId = `checkbox-list-label-${value}`;
 
-                                    return (
-                                        <ListItem
-                                            key={value}
-                                            secondaryAction={
-                                                <IconButton edge="end" aria-label="comments">
-                                                    {/* <CommentIcon /> */}
-                                                </IconButton>
-                                            }
-                                            disablePadding
-                                        >
-                                            <ListItemButton
-                                                role={undefined}
-                                                onClick={this.handleToggle(value)}
-                                                dense
-                                            >
-                                                <ListItemIcon>
-                                                    <Checkbox
-                                                        edge="start"
-                                                        checked={this.state.notificationsTypeArr.indexOf(value) !== -1}
-                                                        // tabIndex={-1}
-                                                        disableRipple
-                                                        inputProps={{ "aria-labelledby": labelId }}
-                                                    />
+                                            return (
 
-                                                </ListItemIcon>
+                                                <ListItem
+                                                    key={value}
+                                                    secondaryAction={
+                                                        <IconButton edge="end" aria-label="comments">
+                                                            {/* <CommentIcon /> */}
+                                                        </IconButton>
+                                                    }
+                                                    disablePadding
+                                                >
+                                                    <ListItemButton
+                                                        role={undefined}
+                                                        onClick={this.handleToggle(value)}
+                                                        dense
+                                                    >
+                                                        <ListItemIcon>
+                                                            <Checkbox
+                                                                edge="start"
+                                                                checked={this.state.notificationsTypeArr.indexOf(value) !== -1}
+                                                                // tabIndex={-1}
+                                                                disableRipple
+                                                                inputProps={{ "aria-labelledby": labelId }}
+                                                            />
 
-                                                <ListItemText id={labelId} primary={`${value}`} />
-
-                                            </ListItemButton>
-
-                                        </ListItem>
-                                    );
-                                })}
-                            </List>
-                        </div>
+                                                        </ListItemIcon>
+                                                        <ListItemText id={labelId} primary={`${value}`} />
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            );
+                                        })}
+                                    </List>
+                                </div>
+                            </Paper>
+                        </Grid>
                     </AccordionDetails>
                 </Accordion>
             </div>

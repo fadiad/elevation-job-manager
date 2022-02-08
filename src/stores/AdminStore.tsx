@@ -21,6 +21,7 @@ export class AdminStore {
     cohorts: Array<Cohort>;
     participant: Participant;
     users : Array<User>;
+
     constructor() {
         this.users = [];
         this.usersInterViews = [];
@@ -67,7 +68,8 @@ export class AdminStore {
             addSimulationDate: action,
             getStatistics: action,
             getCohorts: action,
-            addCohort: action
+            addCohort: action,
+            addAdmin:action
         })
     }
     sendJobToUser(company : String, jobNumber : String, jobTitle : String, description : String, link : String, date : Date){
@@ -354,7 +356,14 @@ export class AdminStore {
         })
        this.getCohorts()
     }
-
+    async addAdmin(newAdmin){
+       let result = await  fetch(`http://localhost:8888/adminPage/admin`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newAdmin)
+        })
+        return result.status
+    }
     addSimulationDate = async (primaryDate, secondaryDate1, secondaryDate2) => {
         let body = {
             interviewId: this.interviewId,
