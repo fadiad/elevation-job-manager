@@ -14,7 +14,7 @@ sequelize
         console.error('Unable to connect to the database:', err);
     })
 
-router.post('/sendJob', async function (req, res) {
+router.post('/job', async function (req, res) {
     let userId = req.body.userId
     let adminId = req.body.adminId
     let company = req.body.company
@@ -23,6 +23,7 @@ router.post('/sendJob', async function (req, res) {
     let description = req.body.description
     let link = req.body.link
     let date = req.body.date.toString().slice(0, 10)
+    let users = req.body.usersSelected
     let query =
         `
         INSERT INTO job(id ,adminId,companyName,jobTitle,link,jobNumber,description , creatingJobDate)
@@ -30,6 +31,16 @@ router.post('/sendJob', async function (req, res) {
         `
     await sequelize.query(query)
 
+    const newJob = await sequelize.query(query)
+    for (let user of users) {
+        let queryJobOffer =
+            `
+            INSERT INTO joboffer(jobId ,adminId, candidateId , date)
+            VALUES("${newJob[0]}","${adminId}","${user.id}" , "${date}");
+             `
+        await sequelize.query(queryJobOffer)
+    }
+    res.send(newJob)
 })
 router.get('/candidate', async function (req, res) {
 
@@ -478,10 +489,10 @@ router.post('/cohort', async function (req, res) {
     let result = await sequelize.query(query)
     res.send(true)
 })
- 
+
 
 router.put('/profileDetails', async function (req, res) {
-   
+
     if (req.body.name) {
         await sequelize.query(`UPDATE userproporties 
               SET         
@@ -502,14 +513,6 @@ router.put('/profileDetails', async function (req, res) {
         await sequelize.query(`UPDATE userproporties 
               SET         
               password = "${req.body.password}"
-              WHERE
-                id = "${req.body.adminId}"`)
-    }
-
-    if (req.body.email) {
-        await sequelize.query(`UPDATE userproporties 
-              SET         
-              email = "${req.body.email}"
               WHERE
                 id = "${req.body.adminId}"`)
     }

@@ -13,7 +13,7 @@ import Questions from './Components/Admin/Question/Questions';
 import Jobs from './Components/Admin/Jobs/Jobs'
 import Settings from './Components/Admin/Settings/Settings';
 import cookie from 'react-cookies'
-
+import DisplayJobs from './Components/User/DisplayJobs.js'
 class App extends Component {
 
   constructor() {
@@ -49,6 +49,8 @@ class App extends Component {
             <Route path="/" exact render={() => <Login setUser={this.setUser} />} />
 
             <Route path="/studentPage" exact render={() => <User />} />
+            <Route path="/studentPage/displayJobs" exact render={() => <DisplayJobs />} />
+
             <Route path="/adminPage" exact render={() => <Admin />} />
             <Route path="/adminPage/question" exact render={() => <Questions />} />
             <Route path="/adminPage/Jobs" exact render={() => <Jobs />} />

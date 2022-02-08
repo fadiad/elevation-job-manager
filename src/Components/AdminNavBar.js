@@ -13,8 +13,7 @@ import '../styles/navBar.css';
 import theme from './theme';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import cookie from 'react-cookies'
-
+import cookie from 'react-cookies';
 
 class NavBar extends Component {
     constructor() {

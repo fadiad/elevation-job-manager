@@ -75,6 +75,7 @@ export class AdminStore {
     }
 
     sendEdits = async (name, lastName, password, email, phone) => {
+
         let body = {
             "adminId": this.adminId,
             "name": name,
@@ -84,7 +85,7 @@ export class AdminStore {
             "phone": phone
         }
         console.log(body);
-        
+
 
         let data = await fetch(`http://localhost:8888/adminPage/profileDetails`, {
             method: 'PUT',
@@ -94,7 +95,7 @@ export class AdminStore {
         return data.status
     }
 
-    sendJobToUser(company: String, jobNumber: String, jobTitle: String, description: String, link: String, date: Date) {
+    async sendJobToUser(company: String, jobNumber: String, jobTitle: String, description: String, link: String, date: Date, usersSelected) {
         let body = {
             userId: 1,
             adminId: 3,
@@ -103,21 +104,22 @@ export class AdminStore {
             jobTitle: jobTitle,
             description: description,
             link: link,
-            date: date
+            date: date,
+            usersSelected: usersSelected
         }
 
-        fetch('http://localhost:8888/adminPage/sendJob', {
+        let data = await fetch('http://localhost:8888/adminPage/job', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         })
-            .then(data => {
-                console.log(data);
-
-                // this.getUserData(this.userID)
-            }).catch(err => {
-                console.log(err)
-            })
+        console.log(data);
+        // .then(data => {
+        //     console.log(data);                
+        //     // this.getUserData(this.userID)
+        // }).catch(err => {
+        //     console.log(err)
+        // })
     }
     async getUser() {
         this.users = []
@@ -126,7 +128,7 @@ export class AdminStore {
         usersData.data.forEach(e => {
             this.users.push(new User(e.id, e.firstName, e.lastName, e.cohort, e.status, e.email, e.phone))
         });
-
+        return this.users;
     }
 
     resetNotifications = async () => {

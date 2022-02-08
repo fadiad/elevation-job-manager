@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import NavBar from '../../AdminNavBar';
+import CreateJobAndSendToUser from './CreateJobAndSendToUser';
 // import '../../../styles/Admin.css';
 // import '../../theme';
 import Users from './Users';
@@ -11,8 +12,8 @@ class Jobs extends Component {
         return (
             <div className='Filter'>
                 {/* <NavBar /> */}
-
-                <Users></Users>
+                <CreateJobAndSendToUser></CreateJobAndSendToUser>
+                {/* <Users></Users> */}
             </div>
         );
     }

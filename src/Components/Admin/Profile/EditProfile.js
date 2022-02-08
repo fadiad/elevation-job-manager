@@ -57,12 +57,12 @@ export class EditProfile extends Component {
         })
     }
 
-    setEmail = (event) => {
-        let email = event.target.value
-        this.setState({
-            email: email
-        })
-    }
+    // setEmail = (event) => {
+    //     let email = event.target.value
+    //     this.setState({
+    //         email: email
+    //     })
+    // }
 
     setPassword = (event) => {
         let password = event.target.value
@@ -157,14 +157,14 @@ export class EditProfile extends Component {
                             />
                         </div>
 
-                        <div className='inp'>
+                        {/* <div className='inp'>
                             <TextField
                                 variant="outlined"
                                 label="New Email"
                                 value={this.state.email}
                                 onChange={this.setEmail}
                             />
-                        </div>
+                        </div> */}
 
                         <div className='inp'>
                             <TextField
