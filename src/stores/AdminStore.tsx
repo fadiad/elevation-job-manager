@@ -70,7 +70,7 @@ export class AdminStore {
             addCohort: action
         })
     }
-    sendJobToUser(company : String, jobNumber : String, jobTitle : String, description : String, link : String, date : Date){
+    async sendJobToUser(company : String, jobNumber : String, jobTitle : String, description : String, link : String, date : Date , usersSelected){
         let body = {
             userId : 1 ,
             adminId : 3 ,
@@ -79,21 +79,22 @@ export class AdminStore {
             jobTitle: jobTitle,
             description: description,
             link: link , 
-            date : date
+            date : date , 
+            usersSelected : usersSelected
         }
 
-        fetch('http://localhost:8888/adminPage/sendJob', {
+        let data = await fetch('http://localhost:8888/adminPage/job', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         })
-            .then(data => {
-                console.log(data);
-
-                // this.getUserData(this.userID)
-            }).catch(err => {
-                console.log(err)
-            })
+        console.log(data);                
+            // .then(data => {
+            //     console.log(data);                
+            //     // this.getUserData(this.userID)
+            // }).catch(err => {
+            //     console.log(err)
+            // })
     }
     async getUser(){
         this.users = []
@@ -102,7 +103,7 @@ export class AdminStore {
         usersData.data.forEach(e => {
             this.users.push(new User(e.id, e.firstName, e.lastName, e.cohort, e.status, e.email, e.phone))
         });
-        
+        return this.users;
     }    
 
     resetNotifications = async () => {

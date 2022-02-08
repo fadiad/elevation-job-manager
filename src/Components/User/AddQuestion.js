@@ -11,14 +11,13 @@ class AddQuestion extends Component {
         this.state = {
             status: ' ',
             question: ' ',
-            title : ' '
+            title: ' '
         }
     }
     handleChange = (event) => {
         this.setState({
             question: event.target.value
         })
-        console.log(this.state.question);
     };
     handleChangeTitle = (event) => {
         this.setState({
@@ -31,8 +30,7 @@ class AddQuestion extends Component {
     }
 
     addQuestion = () => {
-        console.log("addQuestion");
-        this.props.userStore.setNewQuestionFromInterview(this.props.id, this.state.question , this.state.title)
+        this.props.userStore.setNewQuestionFromInterview(this.props.id, this.state.question, this.state.title)
         this.handleClose();
     }
 
@@ -54,14 +52,14 @@ class AddQuestion extends Component {
                         Add Question from the Interview
                     </div>
                 </DialogTitle>
-                <TextField 
-                    id="outlined-basic" 
-                    label="Title" 
-                    variant="outlined" 
+                <TextField
+                    id="outlined-basic"
+                    label="Title"
+                    variant="outlined"
                     onChange={this.handleChangeTitle}
 
                 />
-                <br/>
+                <br />
                 <TextField
                     id="outlined-multiline-static"
                     label="Question"
@@ -69,10 +67,10 @@ class AddQuestion extends Component {
                     // value={this.}
                     onChange={this.handleChange}
                     rows={4}
-                    defaultValue="Question :"
+                    defaultValue=""
                 />
                 <DialogActions>
-                    <Button >add</Button>
+                    {/* <Button >add</Button> */}
                     <Button autoFocus onClick={this.handleClose}>
                         Disagree
                     </Button>

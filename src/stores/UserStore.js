@@ -32,6 +32,11 @@ export class UserStore {
         this.userID = id
     }
 
+async getJobs(){
+    let Jobs = await axios.get(`http://localhost:8888/studentPage/jobs/${this.userID}`)
+    return Jobs.data
+}
+
     async getSimulations() {
         let Simulations = await axios.get(`http://localhost:8888/studentPage/Simulations/${this.userID}`)
         this.Simulations = Simulations.data
@@ -205,16 +210,6 @@ export class UserStore {
         let body = {
             simulationId: simulationId,
         }
-        // fetch('http://localhost:8888/adminPage/question', 
-        // { 
-        //     method: 'DELETE' ,
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(body),
-
-        // })
-        // .then(
-        //     () =>{ console.log("delete Question work");
-        // });
         await fetch(`http://localhost:8888/studentPage/Simulation/${this.userID}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },

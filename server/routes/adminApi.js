@@ -13,37 +13,46 @@ sequelize
     .catch(err => {
         console.error('Unable to connect to the database:', err);
     })
-    
-    router.post('/sendJob', async function(req, res) {
-        let userId = req.body.userId 
-        let adminId = req.body.adminId 
-        let company = req.body.company
-        let jobNumber = req.body.jobNumber
-        let jobTitle = req.body.jobTitle
-        let description = req.body.description
-        let link = req.body.link 
-        let date  =  req.body.date.toString().slice(0, 10)
-        let query = 
+
+router.post('/job', async function (req, res) {
+    let userId = req.body.userId
+    let adminId = req.body.adminId
+    let company = req.body.company
+    let jobNumber = req.body.jobNumber
+    let jobTitle = req.body.jobTitle
+    let description = req.body.description
+    let link = req.body.link
+    let date = req.body.date.toString().slice(0, 10)
+    let users = req.body.usersSelected
+    let query =
         `
         INSERT INTO job(id ,adminId,companyName,jobTitle,link,jobNumber,description , creatingJobDate)
         VALUES(NULL,"${adminId}","${company}","${jobTitle}","${link}","${jobNumber}" ,"${description}" , "${date}");
         `
-        await sequelize.query(query)
-        
-    })
-    router.get('/candidate', async function(req, res) {
+    const newJob = await sequelize.query(query)
+    for (let user of users) {
+        let queryJobOffer =
+            `
+            INSERT INTO joboffer(jobId ,adminId, candidateId , date)
+            VALUES("${newJob[0]}","${adminId}","${user.id}" , "${date}");
+             `
+        await sequelize.query(queryJobOffer)
+    }
+    res.send(newJob)
+})
+router.get('/candidate', async function (req, res) {
 
-        const qustions = await sequelize.query(` 
+    const qustions = await sequelize.query(` 
         select *
         from Candidate As c inner join UserProporties As u 
         On c.id = u.id
         `)
-        res.send(qustions[0])
-    })
-router.get('/AdminData', function(req, res) {
+    res.send(qustions[0])
+})
+router.get('/AdminData', function (req, res) {
     res.send("lotem")
 })
-router.get('/qustions', async function(req, res) {
+router.get('/qustions', async function (req, res) {
 
     const qustions = await sequelize.query(`    
     SELECT q.id As questionId ,q.InterviewId ,q.title, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date ,u.firstName , u.lastName 
@@ -57,7 +66,7 @@ router.get('/qustions', async function(req, res) {
     res.send(qustions[0])
 })
 
-router.post('/setNotificationsType', async function(req, res) {
+router.post('/setNotificationsType', async function (req, res) {
 
     let wanted = req.body.wanted
     let unWanted = req.body.unWanted
@@ -90,26 +99,26 @@ router.post('/setNotificationsType', async function(req, res) {
     res.send("succeed")
 })
 
-router.post('/resetNotifications', async function(req, res) {
+router.post('/resetNotifications', async function (req, res) {
     console.log(req.body);
     let query0 = `Delete from NotificationForAdmin WHERE adminId = ${req.body.adminId}`
     let result0 = await sequelize.query(query0)
     res.send("succeed")
 })
 
-router.get('/notificationsType/:adminId', async function(req, res) {
+router.get('/notificationsType/:adminId', async function (req, res) {
 
     sequelize
         .query(`SELECT type1 ,type2
              FROM Admin AS a  , NotificationType AS NT , NotificationForAdmin AS NFA
             WHERE a.id = '${req.params.adminId}' AND a.id = NFA.adminId AND NT.id = NFA.notificationId AND NFA.isNotified = 1`)
-        .then(function([results, metadata]) {
+        .then(function ([results, metadata]) {
             res.send(results)
         })
 })
 
 
-router.delete('/question', async function(req, res) {
+router.delete('/question', async function (req, res) {
     const questionDeleted = await sequelize.query(`
     DELETE FROM questions
     WHERE id = "${req.body.questionId}"
@@ -117,7 +126,7 @@ router.delete('/question', async function(req, res) {
     res.send(questionDeleted[0])
 
 })
-router.put('/question', async function(req, res) {
+router.put('/question', async function (req, res) {
     const editQuestionData = await sequelize.query(`
   UPDATE questions 
     SET         
@@ -132,7 +141,7 @@ router.put('/question', async function(req, res) {
     res.send(editQuestionData[0])
 })
 
-router.put('/sulotion', async function(req, res) {
+router.put('/sulotion', async function (req, res) {
 
     const sulotion = await sequelize.query(`
     UPDATE questions 
@@ -145,7 +154,7 @@ router.put('/sulotion', async function(req, res) {
 
 })
 
-router.post('/simulation', async function(req, res) {
+router.post('/simulation', async function (req, res) {
     // let primaryDate = req.body.primaryDate.toString().slice(0, 10) + ' ' + req.body.primaryDate.toString().slice(11, 19)
 
     let secondaryDate1 = null
@@ -190,7 +199,7 @@ router.post('/simulation', async function(req, res) {
     res.send("succeed")
 })
 
-router.get('/interviews', async function(req, res) {
+router.get('/interviews', async function (req, res) {
     const cohort = req.query.cohort
     const interViewStatus = req.query.interViewStatus
 
@@ -234,7 +243,7 @@ router.get('/interviews', async function(req, res) {
 })
 
 
-router.get('/Statistics', async function(req, res) {
+router.get('/Statistics', async function (req, res) {
     // const cohort = req.query.cohort
     // const interViewStatus = req.query.interViewStatus
     let obj = {};
@@ -450,13 +459,13 @@ router.get('/Statistics', async function(req, res) {
 
 })
 
-router.get('/cohort', async function(req, res) {
+router.get('/cohort', async function (req, res) {
     let cohorts = `select * from cohort`
     let result = await sequelize.query(cohorts)
     res.send(result[0])
 })
 
-router.post('/cohort', async function(req, res) {
+router.post('/cohort', async function (req, res) {
     console.log(req.body)
     let startDate = req.body.startDate.toString().slice(0, 10)
     let endDate = req.body.endDate.toString().slice(0, 10)
