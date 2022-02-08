@@ -53,13 +53,14 @@ router.get('/userData/:id', function (req, res) { // id : user id
 })
 router.get('/Simulations/:id', async function (req, res) { // id : user id 
 
-    let Simulations = await sequelize.query(`
-        select  i.type , p.companyName ,  p.jobTitle , i.date ,DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate
-            from userproporties As u inner join Candidate As c   On u.id=c.id
-                                     inner join Process As  p On p.UserId=c.id 
-                                     inner join Interview As i On i.processId = p.id 
-            where u.id ='${req.params.id}'
-            `)
+    let Simulations = await sequelize.query(
+        `
+                select  i.type , p.companyName ,  p.jobTitle , i.date ,DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate
+                from userproporties As u inner join Candidate As c   On u.id=c.id
+                inner join Process As  p On p.UserId=c.id 
+                inner join Interview As i On i.processId = p.id 
+                where u.id ='${req.params.id}' and i.simulationDate != 'null'
+        `)
     res.send(Simulations[0])
 })
 
@@ -210,14 +211,14 @@ async function sentEmail(interViewId, processId, status) {
         from admin As a inner join userproporties As u  on a.id = u.id
         inner join notificationforadmin As nfa On nfa.adminId = u.id 
         inner join notificationtype As nt On nt.id = nfa.notificationId
-        where  a.id =3 && nt.type1 = 'newInterview' && nt.type2= '${interviewType}'
+        where  a.id ='${admin.id}' && nt.type1 = 'newInterview' && nt.type2= '${interviewType}'
         `)
         const isNotifiedByContractInterview = await sequelize.query(`
         select  nfa.isNotified 
         from admin As a inner join userproporties As u  on a.id = u.id
         inner join notificationforadmin As nfa On nfa.adminId = u.id 
         inner join notificationtype As nt On nt.id = nfa.notificationId
-        where  a.id =3 && nt.type1 = 'Contract' && nt.type2= 'General'
+        where  a.id ='${admin.id}' && nt.type1 = 'Contract' && nt.type2= 'General'
         LIMIT 1;
     `)
         const isNotifiedByPassFailInterviewAndType = await sequelize.query(`
@@ -225,7 +226,7 @@ async function sentEmail(interViewId, processId, status) {
     from admin As a inner join userproporties As u  on a.id = u.id
     inner join notificationforadmin As nfa On nfa.adminId = u.id 
     inner join notificationtype As nt On nt.id = nfa.notificationId
-    where  a.id =3 && nt.type1 = 'Pass/Fail' && nt.type2= '${interviewType}'
+    where  a.id ='${admin.id}' && nt.type1 = 'Pass/Fail' && nt.type2= '${interviewType}'
     `)
         let mailOptions
 
@@ -295,7 +296,7 @@ router.post('/question', async function (req, res) {
             SELECT p.jobTitle , p.companyName ,  i.type 
             FROM questions As q inner join interview As i On q.interviewId = i.id
             inner join process As p On p.id = i.processId
-            where q.InterviewId = 123
+            where q.InterviewId = '${interviewId}'
         `)
     sentQuestionEmail(questionData[0])
     // res(result)

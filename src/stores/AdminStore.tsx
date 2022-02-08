@@ -94,6 +94,10 @@ export class AdminStore {
         })
         return data.status
     }
+    async getSimulations() {
+        let Simulations = await axios.get(`http://localhost:8888/adminPage/Simulations/${this.adminId}`)
+        return Simulations.data
+    }
 
     async sendJobToUser(company: String, jobNumber: String, jobTitle: String, description: String, link: String, date: Date, usersSelected) {
         let body = {

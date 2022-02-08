@@ -79,6 +79,19 @@ router.get('/qustions', async function (req, res) {
     `)
     res.send(qustions[0])
 })
+router.get('/Simulations/:id', async function (req, res) { // id : user id 
+
+    let Simulations = await sequelize.query(
+        `
+            select i.simulationDate , u.firstName , u.lastName , i.type, p.companyName
+            from simulation As s inner join interview As i On s.interviewId = i.id
+            inner join process As p On p.id = i.processId 
+            inner join candidate As c On c.id = p.UserId
+            inner join userproporties As u On u.id = c.id
+            where s.adminId = '${req.params.id}'
+        `)
+        res.send(Simulations[0])
+})
 
 router.post('/setNotificationsType', async function (req, res) {
 
@@ -270,7 +283,7 @@ router.get('/Statistics', async function (req, res) {
         where c.isEmployeed = 0 and ( p.status = 'In progress')
         GROUP BY p.UserId
         `)
-        let inProcess = InProcess.length
+        let inProcess = InProcess[0].length
 
         let student = await sequelize.query(`    
         select count(*) As NumberOfStudent
