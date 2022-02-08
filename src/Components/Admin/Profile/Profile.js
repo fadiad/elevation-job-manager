@@ -4,20 +4,30 @@ import NameField from './NameField';
 import PasswordField from './PasswordField';
 import EmailField from './EmailField';
 import AdminType from './AdminType';
-import { inject } from 'mobx-react';
+import PhoneField from './PhoneField';
+import EditProfile from './EditProfile';
+
+import { observer, inject } from 'mobx-react';
+import EditIcon from '@mui/icons-material/Edit';
 
 
+import '../../../styles/fileCard.css'
 
-// import ChooseNotifications from '../ChooseNotifications'
+
 
 
 export class Profile extends Component {
     constructor() {
         super()
         this.state = {
-            adminData: {}
+            adminData: {},
+            openDialog: false
         }
     }
+
+    setOpenDialog = () => { this.setState({ openDialog: true }) }
+    setCloseDialog = () => { this.setState({ openDialog: false }) }
+
 
     async componentDidMount() {
         let adminDate = await this.props.adminStore.getAdminData()
@@ -27,17 +37,36 @@ export class Profile extends Component {
         })
     }
 
+
+    sendEdits = (name, lastName, password, email, phone) => {
+        this.props.adminStore.sendEdits(name, lastName, password, email, phone)
+        // console.log(statusCode);
+        // this.setState({
+        //     adminData: adminDate
+        // })
+    }
+
     render() {
         return (
-            <div className='profile'>
-                {/* <ChooseNotifications /> */}
+            <div className='Profile'>
+                <EditIcon onClick={this.setOpenDialog} className='EditIcon' />
+
+                <EditProfile
+                    openDialog={this.state.openDialog}
+                    setOpenDialog={this.setOpenDialog}
+                    setCloseDialog={this.setCloseDialog}
+                    Password={this.state.adminData.password}
+                    sendEdits={this.sendEdits}
+                />
+
                 <NameField firstName={this.state.adminData.firstName} lastName={this.state.adminData.lastName} />
                 <PasswordField Password={this.state.adminData.Password} />
                 <EmailField email={this.state.adminData.email} />
                 <AdminType type={this.state.adminData.type} />
+                <PhoneField phone={this.state.adminData.phone} />
             </div>
         );
     }
 }
 
-export default inject("adminStore")(Profile)
+export default inject("adminStore")(observer(Profile))

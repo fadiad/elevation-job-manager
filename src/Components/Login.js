@@ -23,12 +23,11 @@ const Login = (props) => {
             password: password
         })
             .then((response) => {
-                props.setUserId(response.data.id);
                 if (response.data.isAdmin) {
-                    props.setRole("admin");
+                    props.setUser(response.data.id,"admin");
                     <Redirect to='/adminPage' />
                 } else if (response.data.isAdmin === false) {
-                    props.setRole("student");
+                    props.setUser(response.data.id,"student");
                     <Redirect to='/studentPage' />
                 }else{
                     <Redirect to='/' />

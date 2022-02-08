@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import EditIcon from '@mui/icons-material/Edit';
 import '../../../styles/fileCard.css'
 
 export class PasswordField extends Component {

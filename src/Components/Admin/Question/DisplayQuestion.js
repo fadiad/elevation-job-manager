@@ -166,6 +166,7 @@ class DisplayQuestion extends Component {
                 />
 
                 <AddSulotion
+                    solution = {this.state.solution}
                     questionId={this.state.idQustion}
                     openSulotionDialog={this.state.openSulotionDialog}
                     setOpenDialog={this.setOpenSulotionDialog}

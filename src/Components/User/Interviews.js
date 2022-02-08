@@ -12,6 +12,7 @@ class Interviews extends Component {
                     <div>interviewer Name</div>
                     <div>Date</div>
                     <div>Simualtion Date</div>
+                    <div>Questions</div>
                     <div>Status</div>
                 </div> : null }
                 {this.props.interviews.map((i, index) => <Interview  setProcessUnActive={this.props.setProcessUnActive}  interview={i} key={index} />)}

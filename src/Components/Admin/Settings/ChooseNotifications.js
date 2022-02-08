@@ -6,11 +6,7 @@ import Button from '@mui/material/Button';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-// import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-
-
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -19,9 +15,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
-// import CommentIcon from "@mui/icons-material/Comment";
-
-
 
 export class ChooseNotifications extends Component {
 
@@ -31,7 +24,6 @@ export class ChooseNotifications extends Component {
             expanded: false,
             notificationsTypeArr: [],
             constNotificationsTypeArr: ["Add new Phone Interview",
-                "Add new Contract Interview",
                 "Pass/Fail HR Interview",
                 "Pass/Fail Technical Interview",
                 "Add new HR Interview",

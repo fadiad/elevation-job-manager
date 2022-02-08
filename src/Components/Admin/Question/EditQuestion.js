@@ -8,12 +8,16 @@ class EditQuestion extends Component {
 
     constructor() {
         super()
+        
         this.state = {
             status: ' ',
             title : ' ',
             question : ' ',  
             solution : ' '   
         }
+        let title = " "
+        let question = " "   
+        let solution = " " 
     }
 
     handleChangeQuestion = (event) => {
@@ -38,8 +42,17 @@ class EditQuestion extends Component {
     }
 
     editQuestion = () => {
-        this.props.adminStore.editQuestion(this.props.questionId, this.state.title , this.state.question ,  this.state.solution)
-        this.handleClose();
+            this.setState({
+             title: this.state.title === ' ' ? this.props.title :  this.state.title ,
+             question :this.state.question === ' ' ?  this.props.question :  this.state.question,
+             solution : this.props.solution === ' ' ? this.props.solution : this.state.solution
+         })
+            this.title = this.state.title === ' ' ? this.props.title :  this.state.title 
+            this.question = this.state.question === ' ' ?  this.props.question :  this.state.question
+            this.solution = this.state.solution === ' ' ? this.props.solution : this.state.solution
+            this.props.adminStore.editQuestion(this.props.questionId,  this.title , this.question ,  this.solution)
+            this.handleClose();
+        
     }
     
     render() {
@@ -55,13 +68,7 @@ class EditQuestion extends Component {
                     }
                 }}
             >
-                {()=> {
-                   this.setState({
-                    title: this.props.title,
-                    question : this.props.question ,
-                    solution : this.props.solution
-                })
-                }}
+               
                 <DialogTitle>
                     <div>
                         Edit Question
@@ -72,7 +79,7 @@ class EditQuestion extends Component {
                     label="Title" 
                     variant="outlined" 
                     onChange={this.handleChangeTitle}
-                    defaultValue={this.props.title  }
+                    defaultValue={this.props.title}
 
                 />
                 <br/>
@@ -83,7 +90,7 @@ class EditQuestion extends Component {
                     // value={this.}
                     onChange={this.handleChangeQuestion}
                     rows={4}
-                    defaultValue={this.props.question }
+                    defaultValue={this.props.question}
                 />
                 <TextField
                     id="outlined-multiline-static"

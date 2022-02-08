@@ -1,8 +1,22 @@
 .fileCard{
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    width: 30%;
+    grid-template-columns: 1fr 1fr 0.5fr;
     text-align: center;
     border-style: groove;
-    margin: 10px;
+    margin: 20px;
+}
+
+.Profile{
+    width: 40%;
+    height: 50%;
+    padding: 10px;
+    background-color: rgb(235 235 235 / 70%);
+    margin-top: 40px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+.EditIcon{
+   margin-left: 500px;
 }

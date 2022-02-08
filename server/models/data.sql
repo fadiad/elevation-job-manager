@@ -94,7 +94,6 @@ USE jobManagerDB;
  
 USE jobManagerDB;
 
-<<<<<<< HEAD
 select count(*) As NumberOfemployed
         from candidate As c inner join process As p 
         on  c.id = p.UserId 
@@ -183,9 +182,16 @@ Delete from admin ;
 USE jobManagerDB;
 DELETE FROM NotificationForAdmin ;
 DELETE FROM NotificationType ;
-=======
 SELECT * 
 from questions
     DELETE FROM questions
     WHERE id =3
->>>>>>> 21c8ad2b53faac259b0429ccf566c6871d2779d7
+
+
+USE jobManagerDB;
+UPDATE userproporties 
+SET phone = 0543174067,
+    lastName = "Idkeidek",
+    firstName = "Fadi",
+    email = "admin@gmail.com" 
+    WHERE id = 3

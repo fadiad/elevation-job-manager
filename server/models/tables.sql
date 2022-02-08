@@ -93,7 +93,7 @@ ALTER TABLE UserProporties
 
 Use jobManagerDB;
 Create TABLE simulation(
-        id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     date1 Date NOT NULL,
     date2 Date,
     date3 Date,
@@ -161,3 +161,26 @@ insert into cohort (name)values("Atidna 4");
 
 Use jobManagerDB;
 ALTER TABLE Candidate ADD FOREIGN KEY (cohort) REFERENCES cohort(name);
+
+Use jobManagerDB;
+CREATE table job(
+    id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    adminId MEDIUMINT  NOT NULL,
+    companyName VARCHAR(50) NOT NULL ,
+    jobTitle VARCHAR(100) NOT NULL ,
+    link VARCHAR(100) NOT NULL ,
+    jobNumber VARCHAR(100) NOT NULL,
+    description varchar(500) ,
+    creatingJobDate datetime ,
+    FOREIGN Key(adminId) REFERENCES admin(id)
+)
+
+
+Use jobManagerDB;
+CREATE table JobOffer(
+    jobId MEDIUMINT NOT NULL ,
+    adminId MEDIUMINT  NOT NULL,
+    candidateId MEDIUMINT  NOT NULL,
+    date datetime ,
+    PRIMARY KEY (jobId, adminId, candidateId) 
+)

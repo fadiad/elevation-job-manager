@@ -14,14 +14,36 @@ sequelize
         console.error('Unable to connect to the database:', err);
     })
 
+router.post('/sendJob', async function (req, res) {
+    let userId = req.body.userId
+    let adminId = req.body.adminId
+    let company = req.body.company
+    let jobNumber = req.body.jobNumber
+    let jobTitle = req.body.jobTitle
+    let description = req.body.description
+    let link = req.body.link
+    let date = req.body.date.toString().slice(0, 10)
+    let query =
+        `
+        INSERT INTO job(id ,adminId,companyName,jobTitle,link,jobNumber,description , creatingJobDate)
+        VALUES(NULL,"${adminId}","${company}","${jobTitle}","${link}","${jobNumber}" ,"${description}" , "${date}");
+        `
+    await sequelize.query(query)
+
+})
+router.get('/candidate', async function (req, res) {
+
+    const qustions = await sequelize.query(` 
+        select *
+        from Candidate As c inner join UserProporties As u 
+        On c.id = u.id
+        `)
+    res.send(qustions[0])
+})
+
 router.get('/AdminData', function (req, res) {
     res.send("lotem")
 })
-
-// router.get('/AdminAllData', function (req, res) {
-//     res.send("lotem")
-// })
-
 
 router.get('/AdminAllData/:id', function (req, res) { // id : user id 
     sequelize
@@ -36,7 +58,6 @@ router.get('/AdminAllData/:id', function (req, res) { // id : user id
 
 
 router.get('/qustions', async function (req, res) {
-
     const qustions = await sequelize.query(`    
     SELECT q.id As questionId ,q.InterviewId ,q.title, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date ,u.firstName , u.lastName 
     FROM Questions As q inner join Interview As i On q.InterviewId = i.id
@@ -442,18 +463,65 @@ router.get('/Statistics', async function (req, res) {
 })
 
 router.get('/cohort', async function (req, res) {
-    let getCohort = `select co.name,co.start_date,co.end_date,co.deadline,u.id,u.firstName,u.lastName ,u.email,u.phone
-    from cohort as co inner join candidate as ca 
-    on co.name=ca.cohort
-    inner join userProporties as u on u.id=ca.id`
-    let result = await sequelize.query(getCohort)
+    let cohorts = `select * from cohort`
+    let result = await sequelize.query(cohorts)
     res.send(result[0])
 })
 
 router.post('/cohort', async function (req, res) {
-    let query = `INSERT INTO COHORT VALUES(${req.body.name},${req.body.startDate},${req.body.endDate},${req.body.deadline})`
+    console.log(req.body)
+    let startDate = req.body.startDate.toString().slice(0, 10)
+    let endDate = req.body.endDate.toString().slice(0, 10)
+    let deadline = req.body.deadline.toString().slice(0, 10)
+
+    let query = `INSERT INTO COHORT VALUES("${req.body.name}","${startDate}","${endDate}","${deadline}")`
     let result = await sequelize.query(query)
-    res.send(result[0])
+    res.send(true)
+})
+ 
+
+router.put('/profileDetails', async function (req, res) {
+   
+    if (req.body.name) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+                firstName = "${req.body.name}"
+              WHERE
+                  id = "${req.body.adminId}"`)
+    }
+
+    if (req.body.lastName) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+                lastName = "${req.body.lastName}"
+              WHERE
+                id = "${req.body.adminId}"`)
+    }
+
+    if (req.body.password) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+              password = "${req.body.password}"
+              WHERE
+                id = "${req.body.adminId}"`)
+    }
+
+    if (req.body.email) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+              email = "${req.body.email}"
+              WHERE
+                id = "${req.body.adminId}"`)
+    }
+
+    if (req.body.phone) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+                phone = ${req.body.phone}
+              WHERE
+                id = "${req.body.adminId}"`)
+    }
+    res.send("sucess")
 })
 
 module.exports = router;

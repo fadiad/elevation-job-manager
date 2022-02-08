@@ -9,6 +9,7 @@ import { Participant } from './Participant'
 
 import { fillterWantedNotificationsWhenGetThem, fillterNotificatios, allNots } from './HelperFunctions'
 
+import { User } from './User';
 export class AdminStore {
     adminId: Number;
     interviewId: Number;
@@ -22,8 +23,9 @@ export class AdminStore {
     qustion: Qustion;
     cohorts: Array<Cohort>;
     participant: Participant;
-
+    users: Array<User>;
     constructor() {
+        this.users = [];
         this.usersInterViews = [];
         this.adminName = ' ';
         this.adminId = 3;
@@ -67,8 +69,64 @@ export class AdminStore {
             deleteQuestion: action,
             addSimulationDate: action,
             getStatistics: action,
-            getCohorts: action
+            getCohorts: action,
+            addCohort: action
         })
+    }
+
+    sendEdits = async (name, lastName, password, email, phone) => {
+        let body = {
+            "adminId": this.adminId,
+            "name": name,
+            "lastName": lastName,
+            "password": password,
+            "email": email,
+            "phone": phone
+        }
+        console.log(body);
+        
+
+        let data = await fetch(`http://localhost:8888/adminPage/profileDetails`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        })
+        return data.status
+    }
+
+    sendJobToUser(company: String, jobNumber: String, jobTitle: String, description: String, link: String, date: Date) {
+        let body = {
+            userId: 1,
+            adminId: 3,
+            company: company,
+            jobNumber: jobNumber,
+            jobTitle: jobTitle,
+            description: description,
+            link: link,
+            date: date
+        }
+
+        fetch('http://localhost:8888/adminPage/sendJob', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        })
+            .then(data => {
+                console.log(data);
+
+                // this.getUserData(this.userID)
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+    async getUser() {
+        this.users = []
+        let usersData = await axios.get("http://localhost:8888/adminPage/candidate")
+        // console.log(users.data);
+        usersData.data.forEach(e => {
+            this.users.push(new User(e.id, e.firstName, e.lastName, e.cohort, e.status, e.email, e.phone))
+        });
+
     }
 
     resetNotifications = async () => {
@@ -124,9 +182,9 @@ export class AdminStore {
     async editQuestion(questionId: Number, title: String, question: String, sulotion: String) {
         let questionData = {
             questionId: questionId,
-            title: title + " ",
-            question: question + " ",
-            sulotion: sulotion + " "
+            title: title,
+            question: question,
+            sulotion: sulotion
         }
         await fetch('http://localhost:8888/adminPage/question', {
             method: 'PUT',
@@ -175,12 +233,12 @@ export class AdminStore {
                 console.log(err)
             })
     }
+
     async getAdminData() {
         let user = await axios.get(`http://localhost:8888/adminPage/AdminAllData/${this.adminId}`)
-        // console.log(user.data[0]);
-        
         return user.data[0]
     }
+
     async getQustions() {
         let qustionsFromServer = await axios.get("http://localhost:8888/adminPage/qustions")
         let id = qustionsFromServer.data[0].InterviewId
@@ -236,9 +294,18 @@ export class AdminStore {
     }
     async getCohorts() {
         let cohortsFromServer = await axios.get("http://localhost:8888/adminPage/cohort")
-
-
+        let cohorts = cohortsFromServer
     }
+
+    async addCohort(newCohort) {
+        let data = await fetch(`http://localhost:8888/adminPage/cohort`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newCohort)
+        })
+        this.getCohorts()
+    }
+
     addSimulationDate = async (primaryDate, secondaryDate1, secondaryDate2) => {
         let body = {
             interviewId: this.interviewId,

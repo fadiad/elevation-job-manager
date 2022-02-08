@@ -25,9 +25,7 @@ class Admin extends Component {
                     <GeneralStatistics />
                     <StatisticsByFilter />
                 </div>
-
                 <UsersInterviews setOpenDialog={this.setOpenDialog} />
-
             </div>
         );
     }
