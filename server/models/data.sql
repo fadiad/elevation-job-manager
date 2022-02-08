@@ -92,9 +92,9 @@ USE jobManagerDB;
     WHERE
         id = 3
  
+<<<<<<< HEAD
 USE jobManagerDB;
 
-<<<<<<< HEAD
 select count(*) As NumberOfemployed
         from candidate As c inner join process As p 
         on  c.id = p.UserId 
@@ -184,8 +184,97 @@ USE jobManagerDB;
 DELETE FROM NotificationForAdmin ;
 DELETE FROM NotificationType ;
 =======
+
+>>>>>>> 5fa7d67c5410e5ac724c13eb7bdf94ebe0f9972e
 SELECT * 
 from questions
     DELETE FROM questions
     WHERE id =3
->>>>>>> 21c8ad2b53faac259b0429ccf566c6871d2779d7
+
+<<<<<<< HEAD
+
+USE jobManagerDB;
+UPDATE userproporties 
+SET phone = 0543174067,
+    lastName = "Idkeidek",
+    firstName = "Fadi",
+    email = "admin@gmail.com" 
+    WHERE id = 3
+=======
+USE jobManagerDB;
+  DELETE FROM questions
+    WHERE InterviewId = 82
+
+
+USE jobManagerDB;
+  DELETE FROM interview
+  WHERE processId = 30
+
+USE jobManagerDB;
+  DELETE FROM process
+  WHERE id = 30
+
+ 
+USE jobManagerDB;
+  DELETE FROM  Candidate
+  WHERE id = 4
+
+USE jobManagerDB;
+  DELETE FROM  job
+  WHERE  id = 14
+   
+USE jobManagerDB;
+SELECT *
+from joboffer As jOffer  inner join job As j On jOffer.candidateId =j.id 
+WHERE jOffer.candidateId =5
+     INSERT INTO joboffer(jobId ,adminId, candidateId , date)
+            VALUES(16,3,1 , "2022-01-15");
+
+USE jobManagerDB;
+ALTER TABLE NotificationType 
+RENAME COLUMN type1 TO typeOfAction varchar(15); 
+USE jobManagerDB;
+ALTER TABLE notificationtype RENAME COLUMN type1 TO typeOfAction;
+
+USE jobManagerDB;
+select  a.id , u.email , nfa.isNotified , nt.type1 , nt.type2
+    from admin As a inner join userproporties As u  on a.id = u.id
+    inner join notificationforadmin As nfa On nfa.adminId = u.id 
+    inner join notificationtype As nt On nt.id = nfa.notificationId
+    where a.id = 3 and nt.type1 = 'Pass/Fail' && nt.type2= 'HR'
+
+    select  a.id , u.email
+    from admin As a inner join userproporties As u  on a.id = u.id
+    inner join notificationforadmin As nfa On nfa.adminId = u.id 
+    inner join notificationtype As nt On nt.id = nfa.notificationId
+    where  nt.type1 = 'Pass/Fail' && nt.type2= 'HR'
+    group BY a.id
+
+    where a.isNotified = 1
+ 
+USE jobManagerDB;
+select *
+from userproporties inner join admin On userproporties.id = admin.id
+
+
+USE jobManagerDB;
+            select  *
+            from admin As a inner join userproporties As u  on a.id = u.id
+            inner join notificationforadmin As nfa On nfa.adminId = u.id 
+            inner join notificationtype As nt On nt.id = nfa.notificationId
+            where  a.id =3 && nt.type1 = 'Contract' && nt.type2= 'General'
+            LIMIT 1;
+
+USE jobManagerDB;
+SELECT p.jobTitle , p.companyName ,  i.type 
+FROM questions As q inner join interview As i On q.interviewId = i.id
+                    inner join process As p On p.id = i.processId
+                    where q.InterviewId = 123
+--  nfa.isNotified
+    USE jobManagerDB;
+select u.firstName , u.lastName
+from interview As i inner join process As p On i.processId = p.id
+                    inner join candidate As c  On c.id = p.UserId
+                    inner join userproporties As u On u.id = c.id
+                    where i.id = 123
+>>>>>>> 5fa7d67c5410e5ac724c13eb7bdf94ebe0f9972e

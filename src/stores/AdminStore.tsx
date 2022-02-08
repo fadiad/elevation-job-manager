@@ -6,7 +6,10 @@ import { Qustions } from './Qustions';
 import { Qustion } from './Qustion';
 import { Cohort } from './Cohort';
 import { Participant } from './Participant'
-import {User} from './User';
+
+import { fillterWantedNotificationsWhenGetThem, fillterNotificatios, allNots } from './HelperFunctions'
+
+import { User } from './User';
 export class AdminStore {
     adminId: Number;
     interviewId: Number;
@@ -20,13 +23,12 @@ export class AdminStore {
     qustion: Qustion;
     cohorts: Array<Cohort>;
     participant: Participant;
-    users : Array<User>;
-
+    users: Array<User>;
     constructor() {
         this.users = [];
         this.usersInterViews = [];
         this.adminName = ' ';
-        this.adminId;
+        this.adminId = 3;
         this.interviewId = 1;
         this.statusByFilter = 'Scheduled';
         this.CohortByFilter = 'all';
@@ -72,40 +74,63 @@ export class AdminStore {
             addAdmin:action
         })
     }
-    sendJobToUser(company : String, jobNumber : String, jobTitle : String, description : String, link : String, date : Date){
+
+    sendEdits = async (name, lastName, password, email, phone) => {
+
         let body = {
-            userId : 1 ,
-            adminId : 3 ,
+            "adminId": this.adminId,
+            "name": name,
+            "lastName": lastName,
+            "password": password,
+            "email": email,
+            "phone": phone
+        }
+        console.log(body);
+
+
+        let data = await fetch(`http://localhost:8888/adminPage/profileDetails`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        })
+        return data.status
+    }
+
+    async sendJobToUser(company: String, jobNumber: String, jobTitle: String, description: String, link: String, date: Date, usersSelected) {
+        let body = {
+            userId: 1,
+            adminId: 3,
             company: company,
             jobNumber: jobNumber,
             jobTitle: jobTitle,
             description: description,
-            link: link , 
-            date : date
+            link: link,
+            date: date,
+            usersSelected: usersSelected
         }
 
-        fetch('http://localhost:8888/adminPage/sendJob', {
+        let data = await fetch('http://localhost:8888/adminPage/job', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
         })
-            .then(data => {
-                console.log(data);
-
-                // this.getUserData(this.userID)
-            }).catch(err => {
-                console.log(err)
-            })
+        console.log(data);
+        // .then(data => {
+        //     console.log(data);                
+        //     // this.getUserData(this.userID)
+        // }).catch(err => {
+        //     console.log(err)
+        // })
     }
-    async getUser(){
+    async getUser() {
         this.users = []
         let usersData = await axios.get("http://localhost:8888/adminPage/candidate")
         // console.log(users.data);
         usersData.data.forEach(e => {
             this.users.push(new User(e.id, e.firstName, e.lastName, e.cohort, e.status, e.email, e.phone))
         });
-        
-    }    
+        return this.users;
+    }
 
     resetNotifications = async () => {
         let body = { "adminId": this.adminId }
@@ -119,58 +144,15 @@ export class AdminStore {
 
     getnotificationsType = async () => {
         let temp = await axios.get(`http://localhost:8888/adminPage/notificationsType/${this.adminId}`)
-        let WantedNotifications = this.fillterWantedNotificationsWhenGetThem(temp.data)
+        let WantedNotifications = fillterWantedNotificationsWhenGetThem(temp.data)
         return WantedNotifications
     }
 
-    fillterWantedNotificationsWhenGetThem(arr) {
-        let body = []
-
-        for (let i of arr) {
-            if (i.type1 == 'Phone') {
-                body.push("Add new Phone Interview")
-            } else if (i.type1 == 'Contract') {
-                body.push("Add new Contract Interview")
-            } else if (i.type1 == 'Pass/Fail' && i.type2 == 'HR') {
-                body.push("Pass/Fail HR Interview")
-            } else if (i.type1 == 'Pass/Fail' && i.type2 == 'Technical') {
-                body.push("Pass/Fail Technical Interview")
-            } else if (i.type1 == 'newInterview' && i.type2 == 'Technical') {
-                body.push("Add new Technical Interview")
-            } else if (i.type1 == 'newProcess' && i.type2 == 'General') {
-                body.push("Add new Process")
-            } else if (i.type1 == 'newQuestion' && i.type2 == 'Technical') {
-                body.push("Add new Technical Question")
-            } else if (i.type1 == 'newQuestion' && i.type2 == 'HR') {
-                body.push("Add new HR Question")
-            } else if (i.type1 == 'contract' && i.type2 == 'General') {
-                body.push("User sign a contract and start work")
-            } else if (i.type1 == 'newInterview' && i.type2 == 'HR') {
-                body.push("Add new HR Interview")
-            }
-        }
-        return body
-    }
-
-
-
     setNotifications = async (wantedNotifications) => {
         let body = { "adminId": this.adminId }
-
-        let allNots = ["Add new Phone Interview",
-            "Add new Contract Interview",
-            "Pass/Fail HR Interview",
-            "Pass/Fail Technical Interview",
-            "Add new HR Interview",
-            "Add new Technical Interview",
-            "Add new Process",
-            "Add new Technical Question",
-            "Add new HR Question",
-            "User sign a contract and start work"]
-
-        let wanted = this.fillterNotificatios(wantedNotifications)
+        let wanted = fillterNotificatios(wantedNotifications)
         let unWanted = this.findUnWanted(allNots, wantedNotifications)
-        unWanted = this.fillterNotificatios(unWanted)
+        unWanted = fillterNotificatios(unWanted)
 
         body["wanted"] = wanted
         body["unWanted"] = unWanted
@@ -180,7 +162,6 @@ export class AdminStore {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
         })
-
 
         return data.status
     }
@@ -194,37 +175,6 @@ export class AdminStore {
         }
         return unWanted
     }
-
-    fillterNotificatios(arr) {
-        let wantedNotifications = []
-
-        for (let i in arr) {
-            let index = parseInt(i);
-            if (arr[index] === "Add new Phone Interview") {
-                wantedNotifications.push({ 'type1': 'Phone', 'type2': 'General' })
-            } else if (arr[index] === "Add new Contract Interview") {
-                wantedNotifications.push({ 'type1': 'Contract', 'type2': 'General' })
-            } else if (arr[index] === "Pass/Fail HR Interview") {
-                wantedNotifications.push({ 'type1': 'Pass/Fail', 'type2': 'HR' })
-            } else if (arr[index] === "Pass/Fail Technical Interview") {
-                wantedNotifications.push({ 'type1': 'Pass/Fail', 'type2': 'Technical' })
-            } else if (arr[index] === "Add new HR Interview") {
-                wantedNotifications.push({ 'type1': 'newInterview', 'type2': 'HR' })
-            } else if (arr[index] === "Add new Technical Interview") {
-                wantedNotifications.push({ 'type1': 'newInterview', 'type2': 'Technical' })
-            } else if (arr[index] === "Add new Process") {
-                wantedNotifications.push({ 'type1': 'newProcess', 'type2': 'General' })
-            } else if (arr[index] === "Add new Technical Question") {
-                wantedNotifications.push({ 'type1': 'newQuestion', 'type2': 'Technical' })
-            } else if (arr[index] === "Add new HR Question") {
-                wantedNotifications.push({ 'type1': 'newQuestion', 'type2': 'HR' })
-            } else if (arr[index] === "User sign a contract and start work") {
-                wantedNotifications.push({ 'type1': 'contract', 'type2': 'General' })
-            }
-        }
-        return wantedNotifications
-    }
-
     setStatus(status: String) {
         this.statusByFilter = status
     }
@@ -234,10 +184,10 @@ export class AdminStore {
 
     async editQuestion(questionId: Number, title: String, question: String, sulotion: String) {
         let questionData = {
-            questionId: questionId ,
-            title : title ,
-            question : question ,
-            sulotion : sulotion 
+            questionId: questionId,
+            title: title,
+            question: question,
+            sulotion: sulotion
         }
         await fetch('http://localhost:8888/adminPage/question', {
             method: 'PUT',
@@ -286,10 +236,12 @@ export class AdminStore {
                 console.log(err)
             })
     }
+
     async getAdminData() {
-        let user = await axios.get("http://localhost:8888/adminPage/AdminData")
-        this.adminName = user.data
+        let user = await axios.get(`http://localhost:8888/adminPage/AdminAllData/${this.adminId}`)
+        return user.data[0]
     }
+
     async getQustions() {
         let qustionsFromServer = await axios.get("http://localhost:8888/adminPage/qustions")
         let id = qustionsFromServer.data[0].InterviewId
@@ -354,7 +306,7 @@ export class AdminStore {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newCohort)
         })
-       this.getCohorts()
+        this.getCohorts()
     }
     async addAdmin(newAdmin){
        let result = await  fetch(`http://localhost:8888/adminPage/admin`, {

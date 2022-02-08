@@ -26,7 +26,6 @@ export class ChooseNotifications extends Component {
             expanded: false,
             notificationsTypeArr: [],
             constNotificationsTypeArr: ["Add new Phone Interview",
-                "Add new Contract Interview",
                 "Pass/Fail HR Interview",
                 "Pass/Fail Technical Interview",
                 "Add new HR Interview",

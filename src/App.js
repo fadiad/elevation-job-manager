@@ -5,7 +5,7 @@ import Admin from './Components/Admin/Home/Admin';
 import User from './Components/User/User';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
-import Profile from './Components/Admin/Profile';
+import Profile from './Components/Admin/Profile/Profile';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
 import './styles/App.css';
@@ -13,7 +13,7 @@ import Questions from './Components/Admin/Question/Questions';
 import Jobs from './Components/Admin/Jobs/Jobs'
 import Settings from './Components/Admin/Settings/Settings';
 import cookie from 'react-cookies'
-
+import DisplayJobs from './Components/User/DisplayJobs.js'
 class App extends Component {
 
   constructor() {
@@ -61,7 +61,7 @@ class App extends Component {
             <Route path="/adminPage/Settings" exact render={() => <Settings />} />
             <Route path="/signup" exact render={() => <Signup />} />
 
-            <Route path="/Profile" exact render={() => <Profile />} />
+            <Route path="/adminPage/Profile" exact render={() => <Profile />} />
 
 
             {

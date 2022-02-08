@@ -14,7 +14,7 @@ sequelize
         console.error('Unable to connect to the database:', err);
     })
 
-router.post('/sendJob', async function(req, res) {
+router.post('/job', async function(req, res) {
     let userId = req.body.userId
     let adminId = req.body.adminId
     let company = req.body.company
@@ -23,6 +23,7 @@ router.post('/sendJob', async function(req, res) {
     let description = req.body.description
     let link = req.body.link
     let date = req.body.date.toString().slice(0, 10)
+    let users = req.body.usersSelected
     let query =
         `
         INSERT INTO job(id ,adminId,companyName,jobTitle,link,jobNumber,description , creatingJobDate)
@@ -30,6 +31,16 @@ router.post('/sendJob', async function(req, res) {
         `
     await sequelize.query(query)
 
+    const newJob = await sequelize.query(query)
+    for (let user of users) {
+        let queryJobOffer =
+            `
+            INSERT INTO joboffer(jobId ,adminId, candidateId , date)
+            VALUES("${newJob[0]}","${adminId}","${user.id}" , "${date}");
+             `
+        await sequelize.query(queryJobOffer)
+    }
+    res.send(newJob)
 })
 router.get('/candidate', async function(req, res) {
 
@@ -40,11 +51,24 @@ router.get('/candidate', async function(req, res) {
         `)
     res.send(qustions[0])
 })
+
 router.get('/AdminData', function(req, res) {
     res.send("lotem")
 })
-router.get('/qustions', async function(req, res) {
 
+router.get('/AdminAllData/:id', function(req, res) { // id : user id 
+    sequelize
+        .query(`SELECT *
+        FROM Admin AS a  , UserProporties AS u
+        WHERE a.id = '${req.params.id}' AND a.id = u.id`)
+        .then(function([results, metadata]) {
+            console.log(results);
+            res.send(results)
+        })
+})
+
+
+router.get('/qustions', async function(req, res) {
     const qustions = await sequelize.query(`    
     SELECT q.id As questionId ,q.InterviewId ,q.title, q.question , q.solution , i.type , p.jobTitle , p.companyName , i.date ,u.firstName , u.lastName 
     FROM Questions As q inner join Interview As i On q.InterviewId = i.id
@@ -53,7 +77,6 @@ router.get('/qustions', async function(req, res) {
                         inner join userproporties As u On c.id = u.id 
                         ORDER BY i.id
     `)
-
     res.send(qustions[0])
 })
 
@@ -492,6 +515,41 @@ router.post('/admin', async function(req, res) {
     let addToAdmin = `INSERT INTO Admin VALUES(${result[0]},"${req.body.type}")`
     result = await sequelize.query(addToAdmin)
     res.send(true)
+})
+router.put('/profileDetails', async function(req, res) {
+
+    if (req.body.name) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+                firstName = "${req.body.name}"
+              WHERE
+                  id = "${req.body.adminId}"`)
+    }
+
+    if (req.body.lastName) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+                lastName = "${req.body.lastName}"
+              WHERE
+                id = "${req.body.adminId}"`)
+    }
+
+    if (req.body.password) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+              password = "${req.body.password}"
+              WHERE
+                id = "${req.body.adminId}"`)
+    }
+
+    if (req.body.phone) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+                phone = ${req.body.phone}
+              WHERE
+                id = "${req.body.adminId}"`)
+    }
+    res.send("sucess")
 })
 
 module.exports = router;

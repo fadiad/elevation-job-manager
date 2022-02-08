@@ -8,7 +8,7 @@ class Accepted extends Component {
 
     handleClose = () => {
         this.props.setCloseDialog()
-    }
+    }   
     assignAsAccepted = () => {
         this.props.userStore.assignAsAccepted(this.props.id)
         let date = new Date()
