@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
 import '../../../styles/editDialog.css'
 
 export class EditProfile extends Component {
@@ -25,8 +24,6 @@ export class EditProfile extends Component {
             openSuccess: false
         }
     }
-
-
 
     setPermissionPassword = (event) => {
         let permissionPassword = event.target.value
@@ -92,7 +89,6 @@ export class EditProfile extends Component {
                 passwordValidatorError: false
             })
         }
-
         if (this.state.permissionPassword != this.props.Password) {
             passEnterd = false
             this.setState({
@@ -106,7 +102,7 @@ export class EditProfile extends Component {
 
         if (passWordEqual && passEnterd) {
             let status = await this.props.sendEdits(this.state.name, this.state.lastName, this.state.password, this.state.email, this.state.phone)
-            // console.log(status);
+           
             if (status == 200) {
                 this.handleSuccess()
                 setTimeout(() => {
@@ -135,7 +131,6 @@ export class EditProfile extends Component {
             openFail: false
         })
     };
-
 
 
     render() {
@@ -180,15 +175,6 @@ export class EditProfile extends Component {
                                 onChange={this.setLastName}
                             />
                         </div>
-
-                        {/* <div className='inp'>
-                            <TextField
-                                variant="outlined"
-                                label="New Email"
-                                value={this.state.email}
-                                onChange={this.setEmail}
-                            />
-                        </div> */}
 
                         <div className='inp'>
                             <TextField
@@ -245,7 +231,6 @@ export class EditProfile extends Component {
                     <Button style={{ margin: "10px" }} size="medium" variant="contained" onClick={this.sendEdits}>Send Edits</Button>
                     <Button size="medium" variant="contained" onClick={this.handleClose}>cancel</Button>
                 </div>
-
 
                 <Snackbar open={this.state.openSuccess} autoHideDuration={5000} onClose={this.handleCloseMessage}>
                     <Alert severity="success">Proccess Added Successfully!</Alert>

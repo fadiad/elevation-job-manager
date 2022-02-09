@@ -6,6 +6,7 @@ import User from './Components/User/User';
 import Login from './Components/Login';
 import Signup from './Components/Signup';
 import Profile from './Components/Admin/Profile/Profile';
+import UserProfile from './Components/User/Profile/UserProfile'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
 import './styles/App.css';
@@ -62,6 +63,7 @@ class App extends Component {
             <Route path="/signup" exact render={() => <Signup />} />
 
             <Route path="/adminPage/Profile" exact render={() => <Profile />} />
+            <Route path="/studentPage/Profile" exact render={() => <UserProfile />} />
 
 
             {

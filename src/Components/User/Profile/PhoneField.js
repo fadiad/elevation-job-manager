@@ -1,18 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
-import NavBar from '../../AdminNavBar';
-
 
 import '../../../styles/fileCard.css'
 
 
 export class PhoneField extends Component {
-    // static propTypes = {};
-    changePoneNumber() {
-        console.log("hi");
-    }
-
+  
     render() {
         return (
             <div className='fileCard'>

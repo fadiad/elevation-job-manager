@@ -8,16 +8,16 @@ class EditQuestion extends Component {
 
     constructor() {
         super()
-        
+
         this.state = {
             status: ' ',
-            title : ' ',
-            question : ' ',  
-            solution : ' '   
+            title: ' ',
+            question: ' ',
+            solution: ' '
         }
         let title = " "
-        let question = " "   
-        let solution = " " 
+        let question = " "
+        let solution = " "
     }
 
     handleChangeQuestion = (event) => {
@@ -32,7 +32,7 @@ class EditQuestion extends Component {
         })
         console.log(this.state.title);
     }
-    handleChangeSulotion= (event) => {
+    handleChangeSulotion = (event) => {
         this.setState({
             solution: event.target.value
         })
@@ -42,19 +42,18 @@ class EditQuestion extends Component {
     }
 
     editQuestion = () => {
-            this.setState({
-             title: this.state.title === ' ' ? this.props.title :  this.state.title ,
-             question :this.state.question === ' ' ?  this.props.question :  this.state.question,
-             solution : this.props.solution === ' ' ? this.props.solution : this.state.solution
-         })
-            this.title = this.state.title === ' ' ? this.props.title :  this.state.title 
-            this.question = this.state.question === ' ' ?  this.props.question :  this.state.question
-            this.solution = this.state.solution === ' ' ? this.props.solution : this.state.solution
-            this.props.adminStore.editQuestion(this.props.questionId,  this.title , this.question ,  this.solution)
-            this.handleClose();
-        
+        this.setState({
+            title: this.state.title === ' ' ? this.props.title : this.state.title,
+            question: this.state.question === ' ' ? this.props.question : this.state.question,
+            solution: this.props.solution === ' ' ? this.props.solution : this.state.solution
+        })
+        this.title = this.state.title === ' ' ? this.props.title : this.state.title
+        this.question = this.state.question === ' ' ? this.props.question : this.state.question
+        this.solution = this.state.solution === ' ' ? this.props.solution : this.state.solution
+        this.props.adminStore.editQuestion(this.props.questionId, this.title, this.question, this.solution)
+        this.handleClose();
     }
-    
+
     render() {
         return (
             <Dialog
@@ -68,21 +67,21 @@ class EditQuestion extends Component {
                     }
                 }}
             >
-               
+
                 <DialogTitle>
                     <div>
                         Edit Question
                     </div>
                 </DialogTitle>
-                <TextField 
-                    id="outlined-basic" 
-                    label="Title" 
-                    variant="outlined" 
+                <TextField
+                    id="outlined-basic"
+                    label="Title"
+                    variant="outlined"
                     onChange={this.handleChangeTitle}
                     defaultValue={this.props.title}
 
                 />
-                <br/>
+                <br />
                 <TextField
                     id="outlined-multiline-static"
                     label="Question"
@@ -99,7 +98,7 @@ class EditQuestion extends Component {
                     // value={this.}
                     onChange={this.handleChangeSulotion}
                     rows={4}
-                    defaultValue={this.props.solution }
+                    defaultValue={this.props.solution}
                 />
                 <DialogActions>
                     <Button autoFocus onClick={this.handleClose}>

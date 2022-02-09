@@ -32,10 +32,34 @@ export class UserStore {
         this.userID = id
     }
 
-async getJobs(){
-    let Jobs = await axios.get(`http://localhost:8888/studentPage/jobs/${this.userID}`)
-    return Jobs.data
-}
+
+    sendEdits = async (name, lastName, password, email, phone) => {
+        let body = {
+            "userID": this.userID,
+            "name": name,
+            "lastName": lastName,
+            "password": password,
+            "phone": phone
+        }
+        let data = await fetch(`http://localhost:8888/studentPage/profileDetails`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        })
+        await this.getUserData(this.userID)
+
+        let respons = {
+            "statusCode": data.status,
+            "userData": this.userData
+        }
+        return respons
+        // return data.status
+    }
+
+    async getJobs() {
+        let Jobs = await axios.get(`http://localhost:8888/studentPage/jobs/${this.userID}`)
+        return Jobs.data
+    }
 
     async getSimulations() {
         let Simulations = await axios.get(`http://localhost:8888/studentPage/Simulations/${this.userID}`)
@@ -55,10 +79,10 @@ async getJobs(){
         })
         this.getProcesses(this.userID)
     }
-    async getUserData(id) {
-        let userData = await axios.get(`http://localhost:8888/studentPage/userData/${id}`)
-        this.userData = userData.data
-    }
+    // async getUserData(id) {
+    //     let userData = await axios.get(`http://localhost:8888/studentPage/userData/${id}`)
+    //     this.userData = userData.data
+    // }
 
     assignAsAccepted(processId) {
         let body = {
@@ -80,8 +104,8 @@ async getJobs(){
 
     async getUserData(userID) {
         let userData = await axios.get(`http://localhost:8888/studentPage/userData/${userID}`)
-        // console.log(userData.data[0]);
         this.userData = userData.data[0]
+        return this.userData
     }
 
 

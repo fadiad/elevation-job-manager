@@ -6,9 +6,6 @@ import TextField from '@mui/material/TextField';
 
 class DeleteQuestion extends Component {
 
-
-
-
     handleClose = () => {
         this.props.setCloseDialog()
     }
