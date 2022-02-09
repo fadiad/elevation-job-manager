@@ -33,13 +33,16 @@ app.use(session({
     cookie: { secure: true }
 }))
 
+// app.use(function (req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*')
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
+//     next()
+// })
 
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
-    next()
-})
+const buildPath = path.join(__dirname, '..', 'build');
+app.use(express.static(buildPath));
+
 
 app.use('/login', loginApi)
 app.use('/signup', signupApi)
@@ -55,11 +58,11 @@ app.use('/studentPage', (req, res, next) => {
 })
 app.use('/studentPage', studentapi)
 
-app.use('/adminPage', async(req, res, next) => {
+app.use('/adminPage', async (req, res, next) => {
     console.log("Entered /adminPage")
     console.log(req.session)
     await login.getUserData(req.session)
-        // if (login.isAdminLoggedIn(req.session)) {
+    // if (login.isAdminLoggedIn(req.session)) {
     next();
     // } else {
     //     res.status(401).send('you are not an Admin - you dont have a permission')
@@ -68,7 +71,7 @@ app.use('/adminPage', async(req, res, next) => {
 
 app.use('/adminPage', adminApi)
 
-app.get('/logout', async(req, res) => {
+app.get('/logout', async (req, res) => {
     req.session.destroy()
     await login.destroySession();
     // res.clearCookie('userId');
@@ -76,6 +79,6 @@ app.get('/logout', async(req, res) => {
 })
 const port = 8888
 
-app.listen(process.env.PORT || port, function() {
+app.listen(process.env.PORT || port, function () {
     console.log(`Running on port ${port}`)
 })
