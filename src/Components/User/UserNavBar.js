@@ -9,8 +9,8 @@ import WorkIcon from '@mui/icons-material/Work';
 
 import Stack from '@mui/material/Stack';
 import { ThemeProvider } from '@mui/material/styles';
-import '../styles/navBar.css';
-import theme from './theme';
+import '../../styles/navBar.css';
+import theme from '../theme';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import cookie from 'react-cookies'

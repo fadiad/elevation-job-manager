@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import NavBar from '../../AdminNavBar';
+import NavBar from '../AdminNavBar';
 import '../../../styles/Admin.css'
 import '../../theme';
 import DisplayQuestion from './DisplayQuestion';
