@@ -100,7 +100,7 @@ export class AdminStore {
     async sendJobToUser(company: String, jobNumber: String, jobTitle: String, description: String, link: String, date: Date, usersSelected) {
         let body = {
             userId: 1,
-            adminId: 3,
+            adminId: this.adminId,
             company: company,
             jobNumber: jobNumber,
             jobTitle: jobTitle,
@@ -116,12 +116,7 @@ export class AdminStore {
             body: JSON.stringify(body),
         })
         console.log(data);
-        // .then(data => {
-        //     console.log(data);                
-        //     // this.getUserData(this.userID)
-        // }).catch(err => {
-        //     console.log(err)
-        // })
+       
     }
     async getUser() {
         this.users = []

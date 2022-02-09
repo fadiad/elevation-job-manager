@@ -35,8 +35,16 @@ class DisplayJobs extends Component {
     }
     async componentDidMount() {
         const jobs = await this.props.userStore.getJobs()
+        
+        if (jobs !== undefined) {
+            for (let i = 0; i < jobs.length; i++) {
+                if (jobs[i].creatingJobDate !== null) {
+                    jobs[i].creatingJobDate = jobs[i].creatingJobDate.toString().slice(0, 10)
+                }
+            }
+        }
         this.setState({
-            jobs: jobs
+            jobs: jobs === undefined ? [] : jobs
         })
         console.log(jobs);
     }
@@ -59,7 +67,7 @@ class DisplayJobs extends Component {
                             </TableHead>
                             <TableBody>
                                 {this.state.jobs.map((row, index) => (
-                                    <TableRow key={row.id}>
+                                    <TableRow key={index}>
                                         <TableCell>
                                             <Grid container>
                                                 <Grid item lg={6}>

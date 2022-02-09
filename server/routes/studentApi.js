@@ -20,9 +20,9 @@ router.get('/jobs/:id', async function (req, res) {
 
     let jobs = await sequelize.query(
         `
-    SELECT *
-    from joboffer As jOffer  inner join job As j On jOffer.candidateId =j.id 
-    WHERE jOffer.candidateId = '${req.params.id}'
+        SELECT *
+        from joboffer As jOffer  inner join job As j On jOffer.jobId =j.id 
+        WHERE jOffer.candidateId ='${req.params.id}'
     `)
     res.send(jobs[0])
 })
