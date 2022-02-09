@@ -73,7 +73,8 @@ export class AdminStore {
             addSimulationDate: action,
             getStatistics: action,
             getCohorts: action,
-            addCohort: action
+            addCohort: action,
+            addAdmin:action
         })
     }
 
@@ -301,7 +302,14 @@ export class AdminStore {
         })
         this.getCohorts()
     }
-
+    async addAdmin(newAdmin){
+       let result = await  fetch(`http://localhost:8888/adminPage/admin`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newAdmin)
+        })
+        return result.status
+    }
     addSimulationDate = async (primaryDate, secondaryDate1, secondaryDate2) => {
         let body = {
             interviewId: this.interviewId,

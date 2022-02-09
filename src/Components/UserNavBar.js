@@ -16,11 +16,10 @@ import { Link } from 'react-router-dom';
 import cookie from 'react-cookies'
 
 
-class NavBar extends Component {
+class UserNavBar extends Component {
     logout = () => {
         console.log("entered logout")
         axios.get("http://localhost:8888/logout", function (res) {
-            console.log(res);
             <Redirect to="/" />
         })
         cookie.remove('userID', { path: '/' })
@@ -63,4 +62,4 @@ class NavBar extends Component {
         );
     }
 }
-export default NavBar;
+export default UserNavBar;

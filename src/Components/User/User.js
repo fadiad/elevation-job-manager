@@ -12,6 +12,7 @@ import AddProcess from './AddProcess';
 import '../../styles/User.css'
 import ShowSimulation from './ShowSimulations';
 import PickSimualtionDate from './PickSimualtionDate';
+import cookie from 'react-cookies'
 
 
 class User extends Component {
@@ -23,10 +24,10 @@ class User extends Component {
         }
     }
 
-    componentDidMount = () => {
-        this.props.userStore.getUserData(this.props.userStore.userID)
-        this.props.userStore.getProcesses(this.props.userStore.userID)
-        this.props.userStore.getSimulationsOfInterView()
+    async componentDidMount() {
+        await this.props.userStore.getUserData(this.props.userStore.userID)
+        await this.props.userStore.getProcesses(this.props.userStore.userID)
+        await this.props.userStore.getSimulationsOfInterView()
     }
 
     setOpenDialog = () => { this.setState({ openDialog: true }) }

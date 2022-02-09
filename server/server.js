@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(
     cors({
         origin: ["http://localhost:3000"],
-        methods: ["GET", "POST", "PUT" , "DELETE" ],
+        methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true,
     })
 );
@@ -27,12 +27,13 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-        secret: crypto.randomBytes(16).toString("hex"),
-        resave: true,
-        saveUninitialized: true,
-        cookie: { secure: true }
-    }))
-   
+    secret: crypto.randomBytes(16).toString("hex"),
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: true }
+}))
+
+
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
@@ -45,7 +46,7 @@ app.use('/signup', signupApi)
 app.use('/studentPage', (req, res, next) => {
     // if (login.isStudentLoggedIn(req.session)) {
     console.log("entered /studentPage")
-    console.log(req.session.id)
+    console.log(req.session)
     next();
     // } else {
     //     res.send('you are not a Student - you dont have a permission')

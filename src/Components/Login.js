@@ -5,6 +5,8 @@ import { Grid, Paper, TextField, Button, Typography, ThemeProvider } from '@mate
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import theme from './theme';
+import cookie from 'react-cookies'
+
 const Login = (props) => {
 
     const [email, setEmail] = useState("");
@@ -13,7 +15,7 @@ const Login = (props) => {
     const handleEmail = (event) => setEmail(event.target.value)
     const handlePassword = (event) => setPassword(event.target.value)
 
-    const paperStyle = { padding:50 , height: '50vh', width: 280, margin: "50px auto" }
+    const paperStyle = { padding: 50, height: '50vh', width: 280, margin: "50px auto" }
     const logoStyle = { display: "flex", width: "40px" }
     const btnstyle = { margin: '8px 0' }
 
@@ -23,13 +25,15 @@ const Login = (props) => {
             password: password
         })
             .then((response) => {
+                cookie.save('userID', response.data.id)
+                
                 if (response.data.isAdmin) {
-                    props.setUser(response.data.id,"admin");
-                    <Redirect to='/adminPage' />
+                    cookie.save('role', "admin")
+                    props.setUser(response.data.id, "admin");
                 } else if (response.data.isAdmin === false) {
-                    props.setUser(response.data.id,"student");
-                    <Redirect to='/studentPage' />
-                }else{
+                    cookie.save('role', "student")
+                    props.setUser(response.data.id, "student");
+                } else {
                     <Redirect to='/' />
                 }
             })
@@ -44,12 +48,12 @@ const Login = (props) => {
                 </Grid>
                 <TextField label='Email' placeholder='Enter email' fullWidth required onChange={handleEmail} />
                 <TextField label='Password' placeholder='Enter password' type='password' fullWidth required onChange={handlePassword} />
-                 <ThemeProvider theme={theme}>
+                <ThemeProvider theme={theme}>
                     <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth onClick={login}>Sign in</Button>
                 </ThemeProvider>
                 <Typography > Do you have an account ?
-                    
-                    <Link to="/signup" style={{color:'#658ec6',"text-decoration":"none"}}>
+
+                    <Link to="/signup" style={{ color: '#658ec6', "text-decoration": "none" }}>
                         Sign Up
                     </Link>
                 </Typography>

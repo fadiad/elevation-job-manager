@@ -23,21 +23,27 @@ class App extends Component {
       role: "",
       userID: 0
     }
+    // this.temp
   }
 
-  // componentWillMount() {
-  //   this.setUser(cookie.load('userID'), cookie.load('role'))
-  // }
+  componentWillMount () {
+    console.log("App componentWillMount")
+    this.setUser(parseInt(cookie.load('userID')),cookie.load('role'))
+  }
+
+  componentDidMount () {
+    console.log("App componentDidMount")
+    console.log(cookie.load('userID')+ cookie.load('role'))
+    this.setUser(parseInt(cookie.load('userID')),cookie.load('role'))
+  }
 
   setUser = (id, role) => {
-    this.setState({ userID: id, role: role }, () => {
-      if (role === "admin")
-        this.props.adminStore.adminId = this.state.userID
-      else
-        this.props.userStore.userID = this.state.userID
-    })
-    // cookie.save('userID', id)
-    // cookie.save('role', role)
+    if(role==="admin"){
+      this.props.adminStore.adminId = id;
+    }else if (role==="student"){
+      this.props.userStore.userID = id;
+    }
+    this.setState({ userID: id, role: role })
   }
 
   render() {
@@ -49,10 +55,8 @@ class App extends Component {
           <div>
             <Route path="/" exact render={() => <Login setUser={this.setUser} />} />
 
-            <Route path="/studentPage" exact render={() => <User />} />
-            <Route path="/studentPage/displayJobs" exact render={() => <DisplayJobs />} />
-
-            <Route path="/adminPage" exact render={() => <Admin />} />
+            <Route path="/studentPage" exact render={() => <User setUser={this.setUser}/>} />
+            <Route path="/adminPage" exact component={() => <Admin setUser={this.setUser}/>} />
             <Route path="/adminPage/question" exact render={() => <Questions />} />
             <Route path="/adminPage/Jobs" exact render={() => <Jobs />} />
             <Route path="/adminPage/Settings" exact render={() => <Settings />} />

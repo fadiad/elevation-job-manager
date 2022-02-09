@@ -10,7 +10,8 @@ import Stack from '@mui/material/Stack';
 import theme from '../../theme';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker'; class AddCohort extends Component {
+import DatePicker from '@mui/lab/DatePicker'; 
+class AddCohort extends Component {
     constructor() {
         super()
         this.state = {
