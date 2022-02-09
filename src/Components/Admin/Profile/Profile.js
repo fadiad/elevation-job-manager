@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import NameField from './NameField';
 import PasswordField from './PasswordField';
@@ -8,7 +7,7 @@ import PhoneField from './PhoneField';
 import EditProfile from './EditProfile';
 import { observer, inject } from 'mobx-react';
 import EditIcon from '@mui/icons-material/Edit';
-import NavBar from '../../AdminNavBar';
+import NavBar from '../AdminNavBar';
 
 import '../../../styles/fileCard.css'
 
@@ -34,15 +33,6 @@ export class Profile extends Component {
         })
     }
 
-    // async componentDidUpdate(){
-    //     let adminDate = await this.props.adminStore.getAdminData()
-    //     console.log(adminDate);
-    //     this.setState({
-    //         adminData: adminDate
-    //     })
-    // }
-
-
     sendEdits = (name, lastName, password, email, phone) => {
         return this.props.adminStore.sendEdits(name, lastName, password, email, phone)
     }
@@ -54,7 +44,10 @@ export class Profile extends Component {
         return (
             <div >
                 <NavBar />
+                <div className='page'>
+                    <h1>Profile</h1>
                 <div className='Profile'>
+                    
                     <EditIcon onClick={this.setOpenDialog} className='EditIcon' />
 
                     <EditProfile
@@ -70,6 +63,7 @@ export class Profile extends Component {
                     <EmailField email={this.state.adminData.email} />
                     <AdminType type={this.state.adminData.type} />
                     <PhoneField phone={this.state.adminData.phone} />
+                </div>
                 </div>
             </div>
         );

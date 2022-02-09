@@ -19,9 +19,9 @@
 }
 
 .TableContainer {
-    max-width: 950;
+    /* max-width: 950; */
     border-radius: 15;
-    margin: 10px 10px;
+    /* margin: 10px 10px; */
 }
 
 .table {

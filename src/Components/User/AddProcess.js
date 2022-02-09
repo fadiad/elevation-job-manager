@@ -140,13 +140,13 @@ class AddProcess extends Component {
             console.log("i added process");
             let status = await this.props.userStore.addProcess(this.state.companyName, this.state.jobTitle, this.state.location, this.state.foundBy, this.state.link)
             if (status == 200) {
-                this.handleSuccess()
-                setTimeout(() => {
+                // this.handleSuccess()
+                // setTimeout(() => {
                     this.handleClose();
-                    this.setState({
-                        openSuccess: false
-                    })
-                }, 3000);
+                //     this.setState({
+                //         openSuccess: false
+                //     })
+                // }, 3000);
             }else{
                 this.handleFail()
             }

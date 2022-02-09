@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import NavBar from '../../AdminNavBar';
+import NavBar from '../AdminNavBar';
 import ChooseNotifications from './ChooseNotifications';
 import AddCohort from './AddCohort';
 import AddAdmin from './AddAdmin';

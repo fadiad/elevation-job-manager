@@ -29,3 +29,12 @@
 #main-header {
     background-color: rgb(204 221 243);
 }
+
+.page {
+    margin: auto 10%;
+}
+
+h1 {
+    margin: auto 10%;
+    margin-bottom: 15px;
+}

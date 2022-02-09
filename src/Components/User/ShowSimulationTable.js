@@ -26,6 +26,7 @@ class ShowSimulationTable extends Component {
                             <TableCell align="center">JOB TITLE</TableCell>
                             <TableCell align="center">INTERVIEW DATE</TableCell>
                             <TableCell align="center">SIMULATION DATE</TableCell>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -39,8 +40,9 @@ class ShowSimulationTable extends Component {
                                 <TableCell align="center">{row.jobTitle}</TableCell>
                                 <TableCell align="center">{row.date}</TableCell>
                                 <TableCell align="center">{row.simulationDate}</TableCell>
+                                
                             </TableRow>
-                        ))} 
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>

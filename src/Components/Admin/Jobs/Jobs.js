@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import NavBar from '../../AdminNavBar';
+import NavBar from '../AdminNavBar';
 import CreateJobAndSendToUser from './CreateJobAndSendToUser';
-// import '../../../styles/Admin.css';
+import '../../../styles/Admin.css';
 // import '../../theme';
 import Users from './Users';
 class Jobs extends Component {
@@ -12,8 +12,9 @@ class Jobs extends Component {
         return (
             <div >
                 <NavBar />
-                <div >
-                    <CreateJobAndSendToUser></CreateJobAndSendToUser>
+                <div className='page' >
+                    <h1>New Job</h1>
+                    <CreateJobAndSendToUser />
                 </div>
             </div>
         );
