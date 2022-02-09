@@ -1,0 +1,14 @@
+.puttons1{
+    margin: 20px;
+    display: grid;
+    column-gap: 5px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.puttons2{
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+

@@ -9,6 +9,8 @@ import { TextField, Checkbox, FormControlLabel, FormGroup } from '@mui/material'
 import Typography from '@mui/material/Typography';
 import AccordionSummary from '@mui/material/AccordionSummary';
 
+import '../../../styles/questions.css'
+
 class Questions extends Component {
     constructor() {
         super();
@@ -17,14 +19,14 @@ class Questions extends Component {
             changeCompany: "",
             inputValue: "",
             jobTitle: "",
-            HR : true ,
-            technical : true
+            HR: true,
+            technical: true
         }
     }
     onChangeHR = () => {
-            this.setState({
-                HR: this.state.HR  ? false : true
-            })
+        this.setState({
+            HR: this.state.HR ? false : true
+        })
     }
     onChangeTechnical = () => {
         this.setState({
@@ -57,43 +59,46 @@ class Questions extends Component {
     render() {
         this.props.adminStore.qustions
         return (
-            <div className='questions'>
+            <div >
                 <NavBar />
-                <br></br>
-                <br></br>
-                <FormGroup row={true}>
-                    <FormControlLabel onChange={this.onChangeHR} control={<Checkbox defaultChecked />} label="Technical" />
-                    <FormControlLabel onChange={this.onChangeTechnical} control={<Checkbox defaultChecked/>} label="HR" />
-                    <TextField id="outlined-basic" onChange={this.onChangeCompany} label="Company" variant="outlined" />
-                    <TextField id="outlined-basic" onChange={this.onChangeJob} label="Job" variant="outlined" />
+                <div className='questions'>
+                    <div className='form'>
+                        <div >
+                            <TextField id="outlined-basic" onChange={this.onChangeCompany} label="Company" variant="outlined" />
+                        </div>
+                        <div >
+                            <TextField id="outlined-basic" onChange={this.onChangeJob} label="Job" variant="outlined" />
+                        </div>
+                        <div>
+                            <FormControlLabel onChange={this.onChangeHR} control={<Checkbox defaultChecked />} label="Technical" />
+                            <FormControlLabel onChange={this.onChangeTechnical} control={<Checkbox defaultChecked />} label="HR" />
+                        </div>
+                    </div>
+                    <br></br>
 
-                </FormGroup>
-                <br></br>
+                    <AccordionSummary
+                        aria-controls="panel1bh-content"
+                        id="main-header"
+                    >
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>company </Typography>
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#ff96aa' }}>Job </Typography>
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interview Type </Typography>
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Date</Typography>
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interviewed </Typography>
 
-                <AccordionSummary
-                    aria-controls="panel1bh-content"
-                    id="main-header"
-                >
-                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>company </Typography>
-                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#ff96aa' }}>Job </Typography>
-                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interview Type </Typography>
-                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Date</Typography>
-                    <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interviewed </Typography>
-
-                </AccordionSummary>
-                {/* {this.props.catalog.filter(cat => cat.isRented == true && cat.title.toLowerCase().includes(this.inputValue.toLowerCase())). */}
-                {this.props.adminStore.qustions.filter(q => 
-                q.interviewType.includes(this.state.HR === true ?"" : "HR" ) &&
-                q.interviewType.includes(this.state.technical === true ? "" : "Technical" ) && 
-                q.jobTitle.toLowerCase().includes(this.state.jobTitle.toLowerCase()) &&
-                q.companyName.toLowerCase().includes(this.state.changeCompany.toLowerCase())).map((row, index) => {
-                    return (
-                        <DisplayQuestion row={row} index={index} />
-
-                    )
-                }
-                )}
-
+                    </AccordionSummary>
+                    {/* {this.props.catalog.filter(cat => cat.isRented == true && cat.title.toLowerCase().includes(this.inputValue.toLowerCase())). */}
+                    {this.props.adminStore.qustions.filter(q =>
+                        q.interviewType.includes(this.state.HR === true ? "" : "HR") &&
+                        q.interviewType.includes(this.state.technical === true ? "" : "Technical") &&
+                        q.jobTitle.toLowerCase().includes(this.state.jobTitle.toLowerCase()) &&
+                        q.companyName.toLowerCase().includes(this.state.changeCompany.toLowerCase())).map((row, index) => {
+                            return (
+                                <DisplayQuestion row={row} index={index} />
+                            )
+                        }
+                        )}
+                </div>
             </div>
         );
     }

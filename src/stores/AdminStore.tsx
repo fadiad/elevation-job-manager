@@ -12,6 +12,7 @@ import { fillterWantedNotificationsWhenGetThem, fillterNotificatios, allNots } f
 import { User } from './User';
 export class AdminStore {
     adminId: Number;
+    adminData: Object;
     interviewId: Number;
     adminName: String;
     statusByFilter: String;
@@ -26,6 +27,7 @@ export class AdminStore {
     users: Array<User>;
     constructor() {
         this.users = [];
+        this.adminData = {};
         this.usersInterViews = [];
         this.adminName = ' ';
         this.adminId = 3;
@@ -53,6 +55,7 @@ export class AdminStore {
         makeAutoObservable(this, {
             usersInterViews: observable,
             adminName: observable,
+            adminData: observable,
             generalStatistics: observable,
             qustions: observable,
             qustion: observable,
@@ -75,17 +78,10 @@ export class AdminStore {
     }
 
     sendEdits = async (name, lastName, password, email, phone) => {
-
         let body = {
-            "adminId": this.adminId,
-            "name": name,
-            "lastName": lastName,
-            "password": password,
-            "email": email,
-            "phone": phone
+            "adminId": this.adminId, "name": name, "lastName": lastName,
+            "password": password, "email": email, "phone": phone
         }
-        console.log(body);
-
 
         let data = await fetch(`http://localhost:8888/adminPage/profileDetails`, {
             method: 'PUT',
@@ -194,6 +190,7 @@ export class AdminStore {
             body: JSON.stringify(questionData),
         })
             .then(data => {
+                this.getQustions()
                 console.log(data);
             }).catch(err => {
                 console.log(err)
@@ -209,13 +206,11 @@ export class AdminStore {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
-
             })
-            .then(
-                () => {
-                    console.log("delete Question work");
-                });
-
+            .then(data => {
+                this.getQustions()
+                console.log("delete Question work");
+            });
     }
     async addSulotion(questionId: Number, sulotion: String) {
         let body = {
@@ -229,8 +224,6 @@ export class AdminStore {
         })
             .then(data => {
                 console.log(data);
-
-                // this.getUserData(this.userID)
             }).catch(err => {
                 console.log(err)
             })
@@ -238,7 +231,8 @@ export class AdminStore {
 
     async getAdminData() {
         let user = await axios.get(`http://localhost:8888/adminPage/AdminAllData/${this.adminId}`)
-        return user.data[0]
+        this.adminData = user.data[0]
+        return this.adminData
     }
 
     async getQustions() {

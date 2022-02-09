@@ -43,7 +43,7 @@ router.get('/Processes', function (req, res) {
 
 router.get('/userData/:id', function (req, res) { // id : user id 
     sequelize
-        .query(`SELECT c.id , status , isEmployeed , cohort ,cv ,
+        .query(`SELECT c.id , status , isEmployeed , cohort ,cv , password,
                        firstName , lastName , email , phone
         FROM Candidate AS c  , UserProporties AS u
         WHERE c.id = '${req.params.id}' AND c.id = u.id`)
@@ -329,7 +329,7 @@ async function sentQuestionEmail(questionData) {
                 from: 'elevation744@gmail.com',
                 to: admin.email,
                 subject: "student added a new question from an interview",
-                text: 'Hello ' + admin.firstName + " ,  A new question was added from " +  questionData[0].jobTitle + " a " + questionData[0].type +  " job interview at " + questionData[0].companyName
+                text: 'Hello ' + admin.firstName + " ,  A new question was added from " + questionData[0].jobTitle + " a " + questionData[0].type + " job interview at " + questionData[0].companyName
             };
         }
         transporter.sendMail(mailOptions, function (error, info) {
@@ -366,7 +366,7 @@ router.post('/interviewSimlationDate/:id', async function (req, res) {
     where id=${interviewId} `
     let result = await sequelize.query(update)
     let SimlationData = await sequelize.query(
-    `
+        `
     USE jobManagerDB;
     select u.firstName , u.lastName
     from interview As i inner join process As p On i.processId = p.id
@@ -374,11 +374,11 @@ router.post('/interviewSimlationDate/:id', async function (req, res) {
                         inner join userproporties As u On u.id = c.id
                         where i.id = '${interviewId}'
     `)
-    sentSimlationEmail(date , SimlationData[0])
+    sentSimlationEmail(date, SimlationData[0])
     res.send(result)
 })
 
-async function sentSimlationEmail(date ,questionData) {
+async function sentSimlationEmail(date, questionData) {
     let adminData = await sequelize.query(`
     select  a.id , u.email , u.firstName
     from admin As a inner join userproporties As u  on a.id = u.id
@@ -395,13 +395,13 @@ async function sentSimlationEmail(date ,questionData) {
             }
         });
         let mailOptions
-            mailOptions = {
-                from: 'elevation744@gmail.com',
-                to: admin.email,
-                subject: "student added a new question from an interview",
-                text: 'Hello ' + admin.firstName + questionData[0].firstName + " " +  questionData[0].idkeidek + "chose the date " +  date  + " for an interview simulation"
-            };
-        
+        mailOptions = {
+            from: 'elevation744@gmail.com',
+            to: admin.email,
+            subject: "student added a new question from an interview",
+            text: 'Hello ' + admin.firstName + questionData[0].firstName + " " + questionData[0].idkeidek + "chose the date " + date + " for an interview simulation"
+        };
+
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
@@ -418,32 +418,42 @@ router.delete('/Simulation/:id', async function (req, res) {
     res.send(result)
 })
 // -------------------------------------
+router.put('/profileDetails', async function (req, res) {
+
+    if (req.body.name) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+                firstName = "${req.body.name}"
+              WHERE
+                  id = "${req.body.userID}"`)
+    }
+
+    if (req.body.lastName) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+                lastName = "${req.body.lastName}"
+              WHERE
+                id = "${req.body.userID}"`)
+    }
+
+    if (req.body.password) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+              password = "${req.body.password}"
+              WHERE
+                id = "${req.body.userID}"`)
+    }
+
+    if (req.body.phone) {
+        await sequelize.query(`UPDATE userproporties 
+              SET         
+                phone = ${req.body.phone}
+              WHERE
+                id = "${req.body.userID}"`)
+    }
+    res.send("sucess")
+})
+
 
 module.exports = router;
 
-/*
-
-You can send an object such as bellow , to the link http://localhost:8888/studentPage/processes/id
-to save a process to a specific user , AND the id in the link belonges to the user.
-{
-    "companyName" : "sony",
-    "jobTitle" : "team manager",
-    "location" : "tel aviv",
-    "foundBy":"friend",
-    "link" : "link...",
-    "UserId": 1
-}
-
-
-
-You can send an object such as bellow , to the link http://localhost:8888/studentPage/interviews/1
-to save an enterview to a specific process , AND the id in the link belonges to the process.
-
-{
-    "type" : "phone",
-    "interviewerName" : "amir",
-    "status" : "pending",
-    "processId":1
-}
-
-*/

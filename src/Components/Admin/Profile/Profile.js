@@ -6,14 +6,11 @@ import EmailField from './EmailField';
 import AdminType from './AdminType';
 import PhoneField from './PhoneField';
 import EditProfile from './EditProfile';
-
 import { observer, inject } from 'mobx-react';
 import EditIcon from '@mui/icons-material/Edit';
-
+import NavBar from '../../AdminNavBar';
 
 import '../../../styles/fileCard.css'
-
-
 
 
 export class Profile extends Component {
@@ -37,33 +34,43 @@ export class Profile extends Component {
         })
     }
 
+    // async componentDidUpdate(){
+    //     let adminDate = await this.props.adminStore.getAdminData()
+    //     console.log(adminDate);
+    //     this.setState({
+    //         adminData: adminDate
+    //     })
+    // }
+
 
     sendEdits = (name, lastName, password, email, phone) => {
-        this.props.adminStore.sendEdits(name, lastName, password, email, phone)
-        // console.log(statusCode);
-        // this.setState({
-        //     adminData: adminDate
-        // })
+        return this.props.adminStore.sendEdits(name, lastName, password, email, phone)
     }
 
+
+
     render() {
+
         return (
-            <div className='Profile'>
-                <EditIcon onClick={this.setOpenDialog} className='EditIcon' />
+            <div >
+                <NavBar />
+                <div className='Profile'>
+                    <EditIcon onClick={this.setOpenDialog} className='EditIcon' />
 
-                <EditProfile
-                    openDialog={this.state.openDialog}
-                    setOpenDialog={this.setOpenDialog}
-                    setCloseDialog={this.setCloseDialog}
-                    Password={this.state.adminData.password}
-                    sendEdits={this.sendEdits}
-                />
+                    <EditProfile
+                        openDialog={this.state.openDialog}
+                        setOpenDialog={this.setOpenDialog}
+                        setCloseDialog={this.setCloseDialog}
+                        Password={this.state.adminData.password}
+                        sendEdits={this.sendEdits}
+                    />
 
-                <NameField firstName={this.state.adminData.firstName} lastName={this.state.adminData.lastName} />
-                <PasswordField Password={this.state.adminData.Password} />
-                <EmailField email={this.state.adminData.email} />
-                <AdminType type={this.state.adminData.type} />
-                <PhoneField phone={this.state.adminData.phone} />
+                    <NameField firstName={this.state.adminData.firstName} lastName={this.state.adminData.lastName} />
+                    <PasswordField Password={this.state.adminData.Password} />
+                    <EmailField email={this.state.adminData.email} />
+                    <AdminType type={this.state.adminData.type} />
+                    <PhoneField phone={this.state.adminData.phone} />
+                </div>
             </div>
         );
     }
