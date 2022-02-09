@@ -56,14 +56,17 @@ class App extends Component {
             <Route path="/" exact render={() => <Login setUser={this.setUser} />} />
 
             <Route path="/studentPage" exact render={() => <User setUser={this.setUser}/>} />
+            <Route path="/studentPage/displayJobs" exact component={() => <DisplayJobs setUser={this.setUser}/>} />
+            <Route path="/studentPage/Profile" exact render={() => <UserProfile />} />
+
             <Route path="/adminPage" exact component={() => <Admin setUser={this.setUser}/>} />
             <Route path="/adminPage/question" exact render={() => <Questions />} />
             <Route path="/adminPage/Jobs" exact render={() => <Jobs />} />
             <Route path="/adminPage/Settings" exact render={() => <Settings />} />
+            <Route path="/adminPage/Profile" exact render={() => <Profile />} />
+
             <Route path="/signup" exact render={() => <Signup />} />
 
-            <Route path="/adminPage/Profile" exact render={() => <Profile />} />
-            <Route path="/studentPage/Profile" exact render={() => <UserProfile />} />
 
 
             {

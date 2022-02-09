@@ -74,7 +74,7 @@ export class AdminStore {
             getStatistics: action,
             getCohorts: action,
             addCohort: action,
-            addAdmin:action
+            addAdmin: action
         })
     }
 
@@ -90,6 +90,11 @@ export class AdminStore {
             body: JSON.stringify(body)
         })
         return data.status
+    }
+    async getSimulations() {
+        let Simulations = await axios.get(`http://localhost:8888/adminPage/Simulations/${this.adminId}`)
+        
+        return Simulations.data
     }
 
     async sendJobToUser(company: String, jobNumber: String, jobTitle: String, description: String, link: String, date: Date, usersSelected) {
@@ -238,54 +243,56 @@ export class AdminStore {
 
     async getQustions() {
         let qustionsFromServer = await axios.get("http://localhost:8888/adminPage/qustions")
-        let id = qustionsFromServer.data[0].InterviewId
-        this.qustions = []
-        if (qustionsFromServer !== undefined) {
-            this.qustions.push(new Qustions(
-                qustionsFromServer.data[0].InterviewId,
-                qustionsFromServer.data[0].type,
-                qustionsFromServer.data[0].companyName,
-                qustionsFromServer.data[0].jobTitle,
-                qustionsFromServer.data[0].firstName,
-                qustionsFromServer.data[0].lastName,
-                qustionsFromServer.data[0].date
-
-            ))
-            this.qustion = new Qustion(
-                qustionsFromServer.data[0].questionId,
-                qustionsFromServer.data[0].title,
-                qustionsFromServer.data[0].question,
-                qustionsFromServer.data[0].solution
-            )
-            this.qustions[0].qustion.push(this.qustion)
-        }
-        for (let i = 1; i < qustionsFromServer.data.length; i++) {
-            if (qustionsFromServer.data[i].InterviewId == id) {
-                this.qustion = new Qustion(
-                    qustionsFromServer.data[i].questionId,
-                    qustionsFromServer.data[i].title,
-                    qustionsFromServer.data[i].question,
-                    qustionsFromServer.data[i].solution
-                )
-                this.qustions[this.qustions.length - 1].qustion.push(this.qustion)
-            } else {
+        if (qustionsFromServer.data[0] !== undefined) {
+            let id = qustionsFromServer.data[0].InterviewId
+            this.qustions = []
+            if (qustionsFromServer !== undefined) {
                 this.qustions.push(new Qustions(
-                    qustionsFromServer.data[i].InterviewId,
-                    qustionsFromServer.data[i].type,
-                    qustionsFromServer.data[i].companyName,
-                    qustionsFromServer.data[i].jobTitle,
-                    qustionsFromServer.data[i].firstName,
-                    qustionsFromServer.data[i].lastName,
-                    qustionsFromServer.data[i].date,
+                    qustionsFromServer.data[0].InterviewId,
+                    qustionsFromServer.data[0].type,
+                    qustionsFromServer.data[0].companyName,
+                    qustionsFromServer.data[0].jobTitle,
+                    qustionsFromServer.data[0].firstName,
+                    qustionsFromServer.data[0].lastName,
+                    qustionsFromServer.data[0].date
+
                 ))
                 this.qustion = new Qustion(
-                    qustionsFromServer.data[i].questionId,
-                    qustionsFromServer.data[i].title,
-                    qustionsFromServer.data[i].question,
-                    qustionsFromServer.data[i].solution
+                    qustionsFromServer.data[0].questionId,
+                    qustionsFromServer.data[0].title,
+                    qustionsFromServer.data[0].question,
+                    qustionsFromServer.data[0].solution
                 )
-                this.qustions[this.qustions.length - 1].qustion.push(this.qustion)
-                id = qustionsFromServer.data[i].InterviewId
+                this.qustions[0].qustion.push(this.qustion)
+            }
+            for (let i = 1; i < qustionsFromServer.data.length; i++) {
+                if (qustionsFromServer.data[i].InterviewId == id) {
+                    this.qustion = new Qustion(
+                        qustionsFromServer.data[i].questionId,
+                        qustionsFromServer.data[i].title,
+                        qustionsFromServer.data[i].question,
+                        qustionsFromServer.data[i].solution
+                    )
+                    this.qustions[this.qustions.length - 1].qustion.push(this.qustion)
+                } else {
+                    this.qustions.push(new Qustions(
+                        qustionsFromServer.data[i].InterviewId,
+                        qustionsFromServer.data[i].type,
+                        qustionsFromServer.data[i].companyName,
+                        qustionsFromServer.data[i].jobTitle,
+                        qustionsFromServer.data[i].firstName,
+                        qustionsFromServer.data[i].lastName,
+                        qustionsFromServer.data[i].date,
+                    ))
+                    this.qustion = new Qustion(
+                        qustionsFromServer.data[i].questionId,
+                        qustionsFromServer.data[i].title,
+                        qustionsFromServer.data[i].question,
+                        qustionsFromServer.data[i].solution
+                    )
+                    this.qustions[this.qustions.length - 1].qustion.push(this.qustion)
+                    id = qustionsFromServer.data[i].InterviewId
+                }
             }
         }
     }
@@ -302,8 +309,8 @@ export class AdminStore {
         })
         this.getCohorts()
     }
-    async addAdmin(newAdmin){
-       let result = await  fetch(`http://localhost:8888/adminPage/admin`, {
+    async addAdmin(newAdmin) {
+        let result = await fetch(`http://localhost:8888/adminPage/admin`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newAdmin)
@@ -343,7 +350,6 @@ export class AdminStore {
     }
 
     async getStatisticsByFilter() {
-
         let FilterBy = {
             status: this.statusByFilter,
             filter: this.CohortByFilter
@@ -351,7 +357,6 @@ export class AdminStore {
         let Statistics = await axios.get('http://localhost:8888/adminPage/Statistics', {
             params: { cohort: this.CohortByFilter, interViewStatus: this.statusByFilter }
         })
-
         this.statisticsByFilter = Statistics.data
     }
 
@@ -360,11 +365,8 @@ export class AdminStore {
         let users = await axios.get("http://localhost:8888/adminPage/interviews"
             , { params: { cohort: this.CohortByFilter, interViewStatus: this.statusByFilter } });
         users.data.forEach(e => {
-
-            // console.log(e.id);
             this.usersInterViews.push(new UserInterview(e.id, e.firstName, e.lastName, e.email, e.cohort, e.companyName, e.jobTitle, e.type, e.date, e.status,e.simulationDate))
         });
     }
-
 }
 

@@ -7,17 +7,26 @@ import Filter from './Filter'
 import NavBar from '../AdminNavBar';
 import '../../../styles/Admin.css';
 import '../../theme';
-
+import Button from '@mui/material/Button';
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import ShowSimulation from './ShowSimulation';
 
 class Admin extends Component {
-
+    constructor() {
+        super()
+        this.state = {
+            openSimulationDialog: false
+        }
+    }
     componentDidMount() {
         this.props.adminStore.getAdminData()
     }
+    setOpenSimulationDialog = () => { this.setState({ openSimulationDialog: true }) }
+    setCloseSimulationDialog = () => { this.setState({ openSimulationDialog: false }) }
+
     render() {
         return (
             <div>
-
                 <NavBar />
                 <div className='page'>
                     <Filter />
@@ -25,8 +34,14 @@ class Admin extends Component {
                         <GeneralStatistics />
                         <StatisticsByFilter />
                     </div>
-                    <h2>INTERVIEWS</h2>
+                    <h2>INTERVIEWS</h2>                    
+                    <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Show Simulations</Button>
                     <UsersInterviews setOpenDialog={this.setOpenDialog} />
+                    <ShowSimulation
+                        openDialog={this.state.openSimulationDialog}
+                        setOpenDialog={this.setOpenSimulationDialog}
+                        setCloseDialog={this.setCloseSimulationDialog}
+                    />
                 </div>
             </div>
         );
