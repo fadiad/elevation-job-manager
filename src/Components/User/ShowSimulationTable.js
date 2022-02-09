@@ -26,7 +26,6 @@ class ShowSimulationTable extends Component {
                             <TableCell align="center">JOB TITLE</TableCell>
                             <TableCell align="center">INTERVIEW DATE</TableCell>
                             <TableCell align="center">SIMULATION DATE</TableCell>
-                            <TableCell align="center">Zoom Line</TableCell>
 
                         </TableRow>
                     </TableHead>
@@ -41,13 +40,7 @@ class ShowSimulationTable extends Component {
                                 <TableCell align="center">{row.jobTitle}</TableCell>
                                 <TableCell align="center">{row.date}</TableCell>
                                 <TableCell align="center">{row.simulationDate}</TableCell>
-                                <TableCell align="center">
-                                    <a href="https://zoom.us/j/3428607229?pwd=VzFnV2tkY3p6c2dQbFdFcjEyOVlKUT09"><span>                                <TableCell align="center">
-                                        <a href="https://zoom.us/j/3428607229?pwd=VzFnV2tkY3p6c2dQbFdFcjEyOVlKUT09">
-                                            <span>Zoom Line</span>
-                                        </a>
-                                    </TableCell></span></a>
-                                </TableCell>
+                                
                             </TableRow>
                         ))}
                     </TableBody>

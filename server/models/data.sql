@@ -1,4 +1,9 @@
 USE jobManagerDB;
+            select i.simulationDate , u.firstName , u.lastName , i.type, p.companyName
+            from simulation As s inner join interview As i On s.interviewId = i.id
+            inner join process As p On p.id = i.processId 
+            inner join candidate As c On c.id = p.UserId
+            inner join userproporties As u On u.id = c.id
 SELECT * 
 from userproporties
 where email = 'anbalhalabi@gmail.com'
