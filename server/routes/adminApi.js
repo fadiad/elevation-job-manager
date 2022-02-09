@@ -222,14 +222,16 @@ router.get('/interviews', async function(req, res) {
     let user
     if (cohort === 'all' && interViewStatus === 'all') {
         user = await sequelize.query(`    
-            select i.id , u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
+            select i.id , u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status  ,DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate        
+            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
             on u.id = p.UserId inner join interview As i
             on p.id = i.processId
         `)
     } else if (cohort === 'all') {
         user = await sequelize.query(`    
-            select i.id ,u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
+            select i.id ,u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status   ,DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate       
+            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
             on u.id = p.UserId inner join interview As i
             on p.id = i.processId
@@ -237,7 +239,8 @@ router.get('/interviews', async function(req, res) {
         `)
     } else if (interViewStatus === 'all') {
         user = await sequelize.query(`    
-            select i.id , u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
+            select i.id , u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status   ,DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate          
+            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
             on u.id = p.UserId inner join interview As i
             on p.id = i.processId
@@ -245,7 +248,8 @@ router.get('/interviews', async function(req, res) {
         `)
     } else {
         user = await sequelize.query(`    
-            select i.id, u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status            from UserProporties As u inner join candidate As c 
+            select i.id, u.firstName , u.lastName ,u.email, c.cohort , p.companyName  , p.jobTitle, i.type , i.date , i.status ,DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate 
+            from UserProporties As u inner join candidate As c 
             on  u.id = c.id inner join process As p 
             on u.id = p.UserId inner join interview As i
             on p.id = i.processId

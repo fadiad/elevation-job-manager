@@ -5,7 +5,7 @@ import { observable, action, makeAutoObservable } from 'mobx'
 export class UserInterview {
 
 
-    constructor(interviewId, firstName, lastName, email, cohort, companyName, jobTitle, type, date, status) {
+    constructor(interviewId, firstName, lastName, email, cohort, companyName, jobTitle, type, date, status, simulationDate) {
         this.id = interviewId,
             this.firstName = firstName,
             this.lastName = lastName,
@@ -15,7 +15,8 @@ export class UserInterview {
             this.jobTitle = jobTitle,
             this.type = type,
             this.date = date,
-            this.status = status
+            this.status = status,
+            this.simulationDate = simulationDate
 
         makeAutoObservable(this, {
             firstName: observable,
@@ -26,10 +27,10 @@ export class UserInterview {
             jobTitle: observable,
             type: observable,
             date: observable,
-            status: observable
+            status: observable,
+            simulationDate: observable
         })
     }
 
 
 }
-

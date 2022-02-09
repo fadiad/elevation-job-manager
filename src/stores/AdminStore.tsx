@@ -368,7 +368,7 @@ export class AdminStore {
         users.data.forEach(e => {
 
             // console.log(e.id);
-            this.usersInterViews.push(new UserInterview(e.id, e.firstName, e.lastName, e.email, e.cohort, e.companyName, e.jobTitle, e.type, e.date, e.status))
+            this.usersInterViews.push(new UserInterview(e.id, e.firstName, e.lastName, e.email, e.cohort, e.companyName, e.jobTitle, e.type, e.date, e.status,e.simulationDate))
         });
     }
 
