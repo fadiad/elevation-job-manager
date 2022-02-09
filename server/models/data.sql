@@ -149,6 +149,13 @@ INSERT INTO questions VALUES(NULL , "array list questions" ,
             "create new array list" , "", 146)
 
 USE jobManagerDB;
+          select *
+        from Interview As i 
+        where i.processId = '${processId}' && i.status != "Passed"
+
+        where i.processId = '${processId}' && i.status != "Passed"
+  from Process As P INNER JOIN Interview As i On p.id = i.processId
+  where p.id = 68
 INSERT INTO questions VALUES(NULL , "about my self" , 
             "tel me about my self" , "", 146)
 
@@ -159,7 +166,15 @@ USE jobManagerDB;
         inner join notificationtype As nt On nt.id = nfa.notificationId
         where  a.id =31 && nt.type1 = 'newInterview' && nt.type2= '${interviewType}'
 USE jobManagerDB;
-Delete from userproporties ;
+Delete from interview 
+where interview.processId = 68 ;
+-- nfa.isNotified
+USE jobManagerDB;
+        select  nt.type1 ,nt.type2
+        from admin As a inner join userproporties As u  on a.id = u.id
+        inner join notificationforadmin As nfa On nfa.adminId = u.id 
+        inner join notificationtype As nt On nt.id = nfa.notificationId
+        where  a.id ='31' && nt.type1 = 'newInterview' && nt.type2= 'Phone'
 
                             userproporties           cohort
                     Candidate             admin

@@ -29,7 +29,6 @@ class Admin extends Component {
             <div>
                 <NavBar />
                 <Filter />
-                adminName : {this.props.adminStore.adminName}
                 <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Show Simulations</Button>
 
                 <div className='all-statistics'>

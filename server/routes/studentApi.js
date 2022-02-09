@@ -146,6 +146,7 @@ function interviewDatePassedByDays(iDate, days) {
 // =============================================
 router.post('/interviews', async function (req, res) {
     let date = req.body.date.toString().slice(0, 10)
+    updateStatus(req.body.processId)
     let query = `INSERT INTO Interview(type , date ,interviewerName,status,processId)
         VALUES("${req.body.type}", "${date}" ,"${req.body.interViewerName}","${req.body.status}",${req.body.processId});`
     let result = await sequelize.query(query)
@@ -157,6 +158,22 @@ router.post('/interviews', async function (req, res) {
     sentEmail(interviewData[0][0].interviewerId, interviewData[0][0].processId, interviewData[0][0].status)
     res.send(result)
 })
+async function updateStatus(processId) {
+
+    let interviews = await sequelize.query(
+        `
+    select *
+    from Interview As i 
+    where i.processId = '${processId}' && i.status != "Passed"
+    `)
+    if (interviews[0] !== 0) {
+        for (let i = 0; i < interviews[0].length; i++) {
+            let query = `Update interview SET STATUS="Passed" WHERE id='${interviews[0][i].id}' AND processId=${processId};`
+            let result = await sequelize.query(query)
+            // sentEmail(interviews[0][i].id, processId, "Passed")
+        }
+    }
+}
 
 router.post('/interViewStatus/:id', async function (req, res) {
     let interViewId = req.body.interViewId;
@@ -197,81 +214,85 @@ async function sentEmail(interViewId, processId, status) {
     const interviewType = userData[0][0].type
     const CompanyName = userData[0][0].companyName
     const date = userData[0].date
-    adminData[0].forEach(async admin => {
+    if (interviewType !== 'Phone') {
 
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'elevation744',
-                pass: 'Atedna4!@#'
-            }
-        });
-        const isNotifiedByNewInterviewAndType = await sequelize.query(`
-        select  nfa.isNotified
-        from admin As a inner join userproporties As u  on a.id = u.id
-        inner join notificationforadmin As nfa On nfa.adminId = u.id 
-        inner join notificationtype As nt On nt.id = nfa.notificationId
-        where  a.id ='${admin.id}' && nt.type1 = 'newInterview' && nt.type2= '${interviewType}'
+
+        adminData[0].forEach(async admin => {
+
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'elevation744',
+                    pass: 'Atedna4!@#'
+                }
+            });
+            const isNotifiedByNewInterviewAndType = await sequelize.query(`
+            select  nfa.isNotified
+            from admin As a inner join userproporties As u  on a.id = u.id
+            inner join notificationforadmin As nfa On nfa.adminId = u.id 
+            inner join notificationtype As nt On nt.id = nfa.notificationId
+            where  a.id ='${admin.id}' && nt.type1 = 'newInterview' && nt.type2= '${interviewType}'
+            `)
+            const isNotifiedByContractInterview = await sequelize.query(`
+            select  nfa.isNotified 
+            from admin As a inner join userproporties As u  on a.id = u.id
+            inner join notificationforadmin As nfa On nfa.adminId = u.id 
+            inner join notificationtype As nt On nt.id = nfa.notificationId
+            where  a.id ='${admin.id}' && nt.type1 = 'Contract' && nt.type2= 'General'
+            LIMIT 1;
         `)
-        const isNotifiedByContractInterview = await sequelize.query(`
+            const isNotifiedByPassFailInterviewAndType = await sequelize.query(`
         select  nfa.isNotified 
         from admin As a inner join userproporties As u  on a.id = u.id
         inner join notificationforadmin As nfa On nfa.adminId = u.id 
         inner join notificationtype As nt On nt.id = nfa.notificationId
-        where  a.id ='${admin.id}' && nt.type1 = 'Contract' && nt.type2= 'General'
-        LIMIT 1;
-    `)
-        const isNotifiedByPassFailInterviewAndType = await sequelize.query(`
-    select  nfa.isNotified 
-    from admin As a inner join userproporties As u  on a.id = u.id
-    inner join notificationforadmin As nfa On nfa.adminId = u.id 
-    inner join notificationtype As nt On nt.id = nfa.notificationId
-    where  a.id ='${admin.id}' && nt.type1 = 'Pass/Fail' && nt.type2= '${interviewType}'
-    `)
-        let mailOptions
+        where  a.id ='${admin.id}' && nt.type1 = 'Pass/Fail' && nt.type2= '${interviewType}'
+        `)
+            let mailOptions
 
-        if (status === "Scheduled" && isNotifiedByNewInterviewAndType[0][0].isNotified) {
-            mailOptions = {
-                from: 'elevation744@gmail.com',
-                to: admin.email,
-                subject: userName + " " + lastName + " ,  has " + interviewType + " interview",
-                text: 'Hello ' + admin.firstName + " , " + userName + " " + lastName + ' has a new interview on ' + date + " at " + CompanyName
-            };
-        }
-
-
-        if (status === "Passed" && isNotifiedByContractInterview[0][0].isNotified) {
-            mailOptions = {
-                from: 'elevation744@gmail.com',
-                to: admin.email,
-                subject: userName + " " + lastName + " ,  Passed the " + interviewType + " interview",
-                text: 'Hello ' + admin.firstName + " , " + userName + " " + lastName + ' passed the interview and signed a contract with ' + CompanyName
-            };
-        } else if (status === "Failed" && isNotifiedByPassFailInterviewAndType[0][0].isNotified) {
-            mailOptions = {
-                from: 'elevation744@gmail.com',
-                to: admin.email,
-                subject: userName + " " + lastName + " ,  Failed the " + interviewType + " interview",
-                text: 'Hello ' + admin.firstName + " , " + userName + " " + lastName + ' failed the interview in ' + CompanyName
-            };
-        } else if (status === "Passed" && isNotifiedByPassFailInterviewAndType[0][0].isNotified) {
-            mailOptions = {
-                from: 'elevation744@gmail.com',
-                to: admin.email,
-                subject: userName + " " + lastName + " ,  Passed the " + interviewType + " interview",
-                text: 'Hello ' + adminName + " , " + userName + " " + lastName + ' Passed the interview in ' + CompanyName
-            };
-        }
-
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
+            if (status === "Scheduled" && isNotifiedByNewInterviewAndType[0][0].isNotified) {
+                mailOptions = {
+                    from: 'elevation744@gmail.com',
+                    to: admin.email,
+                    subject: userName + " " + lastName + " ,  has " + interviewType + " interview",
+                    text: 'Hello ' + admin.firstName + " , " + userName + " " + lastName + ' has a new interview on ' + date + " at " + CompanyName
+                };
             }
-        })
 
-    });
+
+            if (status === "Passed" && isNotifiedByContractInterview[0][0].isNotified) {
+                mailOptions = {
+                    from: 'elevation744@gmail.com',
+                    to: admin.email,
+                    subject: userName + " " + lastName + " ,  Passed the " + interviewType + " interview",
+                    text: 'Hello ' + admin.firstName + " , " + userName + " " + lastName + ' passed the interview and signed a contract with ' + CompanyName
+                };
+            } else if (status === "Failed" && isNotifiedByPassFailInterviewAndType[0][0].isNotified) {
+                mailOptions = {
+                    from: 'elevation744@gmail.com',
+                    to: admin.email,
+                    subject: userName + " " + lastName + " ,  Failed the " + interviewType + " interview",
+                    text: 'Hello ' + admin.firstName + " , " + userName + " " + lastName + ' failed the interview in ' + CompanyName
+                };
+            } else if (status === "Passed" && isNotifiedByPassFailInterviewAndType[0][0].isNotified) {
+                mailOptions = {
+                    from: 'elevation744@gmail.com',
+                    to: admin.email,
+                    subject: userName + " " + lastName + " ,  Passed the " + interviewType + " interview",
+                    text: 'Hello ' + adminName + " , " + userName + " " + lastName + ' Passed the interview in ' + CompanyName
+                };
+            }
+
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            })
+
+        });
+    }
 }
 router.post('/processStatus', async function (req, res) {
 
@@ -330,7 +351,7 @@ async function sentQuestionEmail(questionData) {
                 from: 'elevation744@gmail.com',
                 to: admin.email,
                 subject: "student added a new question from an interview",
-                text: 'Hello ' + admin.firstName + " ,  A new question was added from " +  questionData[0].jobTitle + " a " + questionData[0].type +  " job interview at " + questionData[0].companyName
+                text: 'Hello ' + admin.firstName + " ,  A new question was added from " + questionData[0].jobTitle + " a " + questionData[0].type + " job interview at " + questionData[0].companyName
             };
         }
         transporter.sendMail(mailOptions, function (error, info) {
@@ -367,7 +388,7 @@ router.post('/interviewSimlationDate/:id', async function (req, res) {
     where id=${interviewId} `
     let result = await sequelize.query(update)
     let SimlationData = await sequelize.query(
-    `
+        `
     USE jobManagerDB;
     select u.firstName , u.lastName
     from interview As i inner join process As p On i.processId = p.id
@@ -375,11 +396,11 @@ router.post('/interviewSimlationDate/:id', async function (req, res) {
                         inner join userproporties As u On u.id = c.id
                         where i.id = '${interviewId}'
     `)
-    sentSimlationEmail(date , SimlationData[0])
+    sentSimlationEmail(date, SimlationData[0])
     res.send(result)
 })
 
-async function sentSimlationEmail(date ,questionData) {
+async function sentSimlationEmail(date, questionData) {
     let adminData = await sequelize.query(`
     select  a.id , u.email , u.firstName
     from admin As a inner join userproporties As u  on a.id = u.id
@@ -396,13 +417,13 @@ async function sentSimlationEmail(date ,questionData) {
             }
         });
         let mailOptions
-            mailOptions = {
-                from: 'elevation744@gmail.com',
-                to: admin.email,
-                subject: "student added a new question from an interview",
-                text: 'Hello ' + admin.firstName + questionData[0].firstName + " " +  questionData[0].idkeidek + "chose the date " +  date  + " for an interview simulation"
-            };
-        
+        mailOptions = {
+            from: 'elevation744@gmail.com',
+            to: admin.email,
+            subject: "student added a new question from an interview",
+            text: 'Hello ' + admin.firstName + questionData[0].firstName + " " + questionData[0].idkeidek + "chose the date " + date + " for an interview simulation"
+        };
+
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
