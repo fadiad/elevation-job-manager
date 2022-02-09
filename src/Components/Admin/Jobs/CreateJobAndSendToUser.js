@@ -8,6 +8,9 @@ import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import { Button, TextField } from '@mui/material';
 import theme from '../../theme';
 import DateMomentUtils from '@date-io/moment'
+
+import '../../../styles/jops.css'
+
 import {
     Select,
     MenuItem,
@@ -38,9 +41,9 @@ class CreateJobAndSendToUser extends Component {
             link: '',
             selectAllUser: false,
             users: [],
-            cohort : 'all',
-            status : 'all',
-            usersSelected : []
+            cohort: 'all',
+            status: 'all',
+            usersSelected: []
         }
         let cohort = 'all'
         let status = 'all'
@@ -49,11 +52,11 @@ class CreateJobAndSendToUser extends Component {
         const users = await this.props.adminStore.getUser()
         let tempArray = []
         users.map((row, index) => (
-            tempArray.push({"id" : row.id , "cohort" : row.cohort , "status" : row.status})
+            tempArray.push({ "id": row.id, "cohort": row.cohort, "status": row.status })
         ))
         this.setState({
-            users: tempArray ,
-            usersSelected : tempArray
+            users: tempArray,
+            usersSelected: tempArray
         })
         console.log(tempArray);
     }
@@ -86,59 +89,66 @@ class CreateJobAndSendToUser extends Component {
         this.cohort = e.target.value
         let tempUserArray = this.state.users;
         let usersSelected = tempUserArray.filter(user =>
-            user.status.includes(this.state.status === 'all'? '' : this.state.status) &&
-            user.cohort.includes(this.cohort === 'all'? '' : this.cohort))
+            user.status.includes(this.state.status === 'all' ? '' : this.state.status) &&
+            user.cohort.includes(this.cohort === 'all' ? '' : this.cohort))
         console.log(usersSelected);
         this.setState({
             cohort: e.target.value,
-            usersSelected : usersSelected
+            usersSelected: usersSelected
         })
     }
     StatusChange = (e) => {
         this.status = e.target.value
         let tempUserArray = this.state.users;
-        let usersSelected =tempUserArray.filter(user =>
-            user.status.includes(this.status === 'all'? '' : this.status) &&
-            user.cohort.includes(this.state.cohort === 'all'? '' : this.state.cohort))
+        let usersSelected = tempUserArray.filter(user =>
+            user.status.includes(this.status === 'all' ? '' : this.status) &&
+            user.cohort.includes(this.state.cohort === 'all' ? '' : this.state.cohort))
         console.log(usersSelected);
         this.setState({
             status: e.target.value,
-            usersSelected : usersSelected
+            usersSelected: usersSelected
         })
     }
     send = () => {
         console.log(this.state.usersId);
 
         let date = new Date()
-        this.props.adminStore.sendJobToUser(this.state.company, this.state.jobNumber, this.state.jobTitle, this.state.description, this.state.link, date , this.state.usersSelected)
+        this.props.adminStore.sendJobToUser(this.state.company, this.state.jobNumber, this.state.jobTitle, this.state.description, this.state.link, date, this.state.usersSelected)
     }
     render() {
         return (
-            <div>
-                <TextField id="outlined-basic" onChange={this.handleChangeCompany} label="Company" variant="outlined" />
-                <TextField id="outlined-basic" onChange={this.handleChangeJobNumber} label="Job Number" variant="outlined" />
-                <TextField id="outlined-basic" onChange={this.handleChangeJobTitle} label="Job Title" variant="outlined" />
-                <TextField id="outlined-basic" onChange={this.handleChangeDescription} label="Description" variant="outlined" />
-                <TextField id="outlined-basic" onChange={this.handleChangeLink} label="Link" variant="outlined" />
-                <Button onClick={this.send}>send</Button>
-                <FormControl className='FormControl' >
-                    <InputLabel className='InputLabel'>Cohort</InputLabel>
-                    <Select className='Select' onChange={this.CohortChange}>
-                        <MenuItem value={'all'}>all</MenuItem>
-                        <MenuItem value={'Atidna 1'}>Atidna 1</MenuItem>
-                        <MenuItem value={'Atidna 2'}>Atidna 2</MenuItem>
-                        <MenuItem value={'Atidna 3'}>Atidna 3</MenuItem>
-                        <MenuItem value={'Atidna 4'}>Atidna 4</MenuItem>
-                    </Select>
-                </FormControl>
-                <FormControl className='FormControl' >
-                    <InputLabel className='InputLabel'>Status</InputLabel>
-                    <Select className='Select' onChange={this.StatusChange}>
-                        <MenuItem value={'all'}>all</MenuItem>
-                        <MenuItem value={'Student'}>Student</MenuItem>
-                        <MenuItem value={'Graduate'}>Graduate</MenuItem>
-                    </Select>
-                </FormControl>
+            <div >
+                <div className='puttons1'>
+                    <TextField id="outlined-basic" onChange={this.handleChangeCompany} label="Company" variant="outlined" />
+                    <TextField id="outlined-basic" onChange={this.handleChangeJobNumber} label="Job Number" variant="outlined" />
+                    <TextField id="outlined-basic" onChange={this.handleChangeJobTitle} label="Job Title" variant="outlined" />
+                    <TextField id="outlined-basic" onChange={this.handleChangeDescription} label="Description" variant="outlined" />
+                    <TextField id="outlined-basic" onChange={this.handleChangeLink} label="Link" variant="outlined" />
+
+                </div>
+                <div className='puttons2'>
+                    <FormControl className='FormControl' >
+                        <InputLabel className='InputLabel'>Cohort</InputLabel>
+                        <Select className='Select' onChange={this.CohortChange}>
+                            <MenuItem value={'all'}>all</MenuItem>
+                            <MenuItem value={'Atidna 1'}>Atidna 1</MenuItem>
+                            <MenuItem value={'Atidna 2'}>Atidna 2</MenuItem>
+                            <MenuItem value={'Atidna 3'}>Atidna 3</MenuItem>
+                            <MenuItem value={'Atidna 4'}>Atidna 4</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl className='FormControl' >
+                        <InputLabel className='InputLabel'>Status</InputLabel>
+                        <Select className='Select' onChange={this.StatusChange}>
+                            <MenuItem value={'all'}>all</MenuItem>
+                            <MenuItem value={'Student'}>Student</MenuItem>
+                            <MenuItem value={'Graduate'}>Graduate</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <Button onClick={this.send}>send</Button>
+                </div>
+
+                {/* <div className='table'> */}
                 <TableContainer component={Paper} className='TableContainer'>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
@@ -179,8 +189,8 @@ class CreateJobAndSendToUser extends Component {
                         </TableHead>
                         <TableBody>
                             {this.props.adminStore.users.filter(user =>
-                                user.status.includes(this.state.status === 'all'? '' : this.state.status) &&
-                                user.cohort.includes(this.state.cohort === 'all'? '' : this.state.cohort)).map((row, index) => (
+                                user.status.includes(this.state.status === 'all' ? '' : this.state.status) &&
+                                user.cohort.includes(this.state.cohort === 'all' ? '' : this.state.cohort)).map((row, index) => (
                                     <TableRow key={row.firstName}>
                                         <TableCell>
                                             <Grid container>
@@ -229,6 +239,7 @@ class CreateJobAndSendToUser extends Component {
                     </Table>
                 </TableContainer>
             </div>
+            // </div>
         );
     }
 }

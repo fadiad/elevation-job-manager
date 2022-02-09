@@ -10,10 +10,11 @@ class Jobs extends Component {
 
     render() {
         return (
-            <div className='Filter'>
-                {/* <NavBar /> */}
-                <CreateJobAndSendToUser></CreateJobAndSendToUser>
-                {/* <Users></Users> */}
+            <div >
+                <NavBar />
+                <div >
+                    <CreateJobAndSendToUser></CreateJobAndSendToUser>
+                </div>
             </div>
         );
     }

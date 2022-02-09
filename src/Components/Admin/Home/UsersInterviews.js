@@ -44,7 +44,7 @@ class UsersInterviews extends Component {
 
 
   handleChangePage = (event, newPage) => {
-    
+
     this.setState({
       page: newPage
     })
@@ -55,11 +55,12 @@ class UsersInterviews extends Component {
       rowsPerPage: event.target.value,
       page: 0
     })
-  
+
   }
 
   componentDidMount() {
     this.props.adminStore.getUsersInterviews()
+    console.log(this.props.adminStore.usersInterViews)
   }
 
   render() {
@@ -125,19 +126,22 @@ class UsersInterviews extends Component {
                         }
                       >{row.status}</Typography>
                     </TableCell>
-
-                    <TableCell style={{ display: (row.status !== 'Scheduled' && 'none') }} >
-
-                      <ThemeProvider theme={theme}>
-                        <Button variant="contained" onClick={() => {
-                          this.props.adminStore.interviewId = row.id
-                          console.log(this.props.adminStore.interviewId);
-                          this.setOpenDialog()
-                        }} startIcon={<InsertInvitationIcon />}>Schedule Simulation</Button>
-                      </ThemeProvider>
+                    <TableCell >
+                    {row.simulationDate}
+                      <Grid item lg={2}>
+                        <Typography className='simulayionDate'>{row.simulatoinDate}</Typography>
+                        <Typography variant='body2'>
+                          <ThemeProvider theme={theme}>
+                            <Button style={{ display: (row.status !== 'Scheduled' && 'none') }} variant="contained" onClick={() => {
+                              this.props.adminStore.interviewId = row.id
+                              console.log(this.props.adminStore.interviewId);
+                              this.setOpenDialog()
+                            }} startIcon={<InsertInvitationIcon />}>Schedule</Button>
+                          </ThemeProvider>
+                        </Typography>
+                      </Grid>
 
                     </TableCell>
-
 
                   </TableRow>
                 ))
