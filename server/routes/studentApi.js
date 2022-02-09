@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 
 
 const Sequelize = require('sequelize');
+const { and } = require('sequelize');
 const sequelize = new Sequelize('mysql://root:@localhost/jobManagerDB')
 sequelize
     .authenticate()
@@ -43,7 +44,7 @@ router.get('/Processes', function (req, res) {
 
 router.get('/userData/:id', function (req, res) { // id : user id 
     sequelize
-        .query(`SELECT c.id , status , isEmployeed , cohort ,cv , password,
+        .query(`SELECT c.id , status , isEmployeed , cohort ,cv ,
                        firstName , lastName , email , phone
         FROM Candidate AS c  , UserProporties AS u
         WHERE c.id = '${req.params.id}' AND c.id = u.id`)
@@ -68,7 +69,7 @@ router.get('/processes/:id', function (req, res) { // id : user id
     sequelize
         .query(`SELECT p.id , p.companyName , p.jobTitle , p.location , p.foundBy , p.link , p.status
     FROM Candidate AS c  , Process AS p
-    WHERE UserId = '${req.params.id}' AND c.id = p.UserId  ORDER BY p.status DESC`)
+    WHERE UserId = '${req.params.id}' AND c.id = p.UserId  ORDER BY p.status= 'In progress' DESC`)
         .then(function ([results, metadata]) {
             res.send(results)
         })
@@ -113,8 +114,8 @@ async function updateInterViewsStatusByDate(processId) {
 
     sequelize
         .query(`SELECT i.id,  i.date , i.status 
-                FROM Process AS p , Interview AS i
-                WHERE i.processId = '${processId}' AND  p.id = i.processId`)
+                FROM  Interview AS i
+                WHERE i.processId = '${processId}'  and i.status ='Scheduled'`)
         .then(async function ([results, metadata]) {
             console.log(results);
             for (let interview of results) {
@@ -143,17 +144,17 @@ function interviewDatePassedByDays(iDate, days) {
     }
 }
 
-// =============================================
 router.post('/interviews', async function (req, res) {
     let date = req.body.date.toString().slice(0, 10)
-    updateStatus(req.body.processId)
+    await updateStatus(req.body.processId)
     let query = `INSERT INTO Interview(type , date ,interviewerName,status,processId)
         VALUES("${req.body.type}", "${date}" ,"${req.body.interViewerName}","${req.body.status}",${req.body.processId});`
     let result = await sequelize.query(query)
-    let interviewData = await sequelize.query(`
-    select i.id as interviewerId , p.id as processId , i.status,  i.type  
-    from Interview AS i inner join process As p On i.processId=p.id 
-    where i.id =  ${result[0]}
+    let interviewData = await sequelize.query(
+    `
+        select i.id as interviewerId , p.id as processId , i.status,  i.type  
+        from Interview AS i inner join process As p On i.processId=p.id 
+        where i.id =  ${result[0]}
     `)
     sentEmail(interviewData[0][0].interviewerId, interviewData[0][0].processId, interviewData[0][0].status)
     res.send(result)
@@ -161,16 +162,16 @@ router.post('/interviews', async function (req, res) {
 async function updateStatus(processId) {
 
     let interviews = await sequelize.query(
-        `
-    select *
-    from Interview As i 
-    where i.processId = '${processId}' && i.status != "Passed"
-    `)
+    `
+        select *
+        from Interview As i 
+        where i.processId = '${processId}' && i.status != "Passed"
+    `
+    )
     if (interviews[0] !== 0) {
         for (let i = 0; i < interviews[0].length; i++) {
             let query = `Update interview SET STATUS="Passed" WHERE id='${interviews[0][i].id}' AND processId=${processId};`
             let result = await sequelize.query(query)
-            // sentEmail(interviews[0][i].id, processId, "Passed")
         }
     }
 }
@@ -179,7 +180,6 @@ router.post('/interViewStatus/:id', async function (req, res) {
     let interViewId = req.body.interViewId;
     let processId = req.body.processId;
     let status = req.body.status;
-
     let query = `Update interview SET STATUS="${status}" WHERE id=${interViewId} AND processId=${processId};`
     let result = await sequelize.query(query)
     if (status === "Failed") {
@@ -187,7 +187,6 @@ router.post('/interViewStatus/:id', async function (req, res) {
         await sequelize.query(processQuery)
     }
     sentEmail(interViewId, processId, status)
-
     res.send(result)
 })
 
@@ -440,6 +439,8 @@ router.delete('/Simulation/:id', async function (req, res) {
     res.send(result)
 })
 // -------------------------------------
+
+
 router.put('/profileDetails', async function (req, res) {
 
     if (req.body.name) {
@@ -475,7 +476,30 @@ router.put('/profileDetails', async function (req, res) {
     }
     res.send("sucess")
 })
-
-
 module.exports = router;
+/*
 
+You can send an object such as bellow , to the link http://localhost:8888/studentPage/processes/id
+to save a process to a specific user , AND the id in the link belonges to the user.
+{
+    "companyName" : "sony",
+    "jobTitle" : "team manager",
+    "location" : "tel aviv",
+    "foundBy":"friend",
+    "link" : "link...",
+    "UserId": 1
+}
+
+
+
+You can send an object such as bellow , to the link http://localhost:8888/studentPage/interviews/1
+to save an enterview to a specific process , AND the id in the link belonges to the process.
+
+{
+    "type" : "phone",
+    "interviewerName" : "amir",
+    "status" : "pending",
+    "processId":1
+}
+
+*/

@@ -108,6 +108,7 @@ VALUES(NULL, "Technical" , "2022-02-13","sheme","Scheduled",65);
 
 USE jobManagerDB;
 select * 
+from userproporties As u inner join Candidate As c On u.id = c.id
 from  Process As p inner join  Interview As i  On i.processId=p.id
 
 USE jobManagerDB;
@@ -166,10 +167,26 @@ USE jobManagerDB;
         inner join notificationtype As nt On nt.id = nfa.notificationId
         where  a.id =31 && nt.type1 = 'newInterview' && nt.type2= '${interviewType}'
 USE jobManagerDB;
-Delete from interview 
-where interview.processId = 68 ;
+Delete from  Process
+where Process.id = 79 ;
 -- nfa.isNotified
 USE jobManagerDB;
+SELECT *
+FROM Candidate 
+where interview.processId = 79
+USE jobManagerDB;
+  select *
+    FROM simulation As s inner join interview As i On s.InterviewId = i.id
+
+USE jobManagerDB;
+Update Candidate SET isEmployeed=0 WHERE id=33 AND processId=${processId};
+USE jobManagerDB;
+select *
+from Candidate As c inner join userproporties As u On c.id = u.id
+
+USE jobManagerDB;
+    select *
+    from Interview As i 
         select  nt.type1 ,nt.type2
         from admin As a inner join userproporties As u  on a.id = u.id
         inner join notificationforadmin As nfa On nfa.adminId = u.id 

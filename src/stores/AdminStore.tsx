@@ -93,6 +93,7 @@ export class AdminStore {
     }
     async getSimulations() {
         let Simulations = await axios.get(`http://localhost:8888/adminPage/Simulations/${this.adminId}`)
+        
         return Simulations.data
     }
 
@@ -349,7 +350,6 @@ export class AdminStore {
     }
 
     async getStatisticsByFilter() {
-
         let FilterBy = {
             status: this.statusByFilter,
             filter: this.CohortByFilter
@@ -357,7 +357,6 @@ export class AdminStore {
         let Statistics = await axios.get('http://localhost:8888/adminPage/Statistics', {
             params: { cohort: this.CohortByFilter, interViewStatus: this.statusByFilter }
         })
-
         this.statisticsByFilter = Statistics.data
     }
 
@@ -366,11 +365,8 @@ export class AdminStore {
         let users = await axios.get("http://localhost:8888/adminPage/interviews"
             , { params: { cohort: this.CohortByFilter, interViewStatus: this.statusByFilter } });
         users.data.forEach(e => {
-
-            // console.log(e.id);
             this.usersInterViews.push(new UserInterview(e.id, e.firstName, e.lastName, e.email, e.cohort, e.companyName, e.jobTitle, e.type, e.date, e.status,e.simulationDate))
         });
     }
-
 }
 
