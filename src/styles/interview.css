@@ -1,9 +1,46 @@
 .interview {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    background-color: aliceblue;
-    /* box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.8); */
+    background-color: #e6ebef24;
+    /* box-shadow: 5px 5px 10px 2px rgba(224, 224, 224, 0.8); */
+    /* border-style: outset; */
+    /* border-color: rgb(255, 255, 255); */
     padding: 5px;
     margin: 5px;
     text-align: center;
+}
+
+.passIcons{
+     border-radius: 10px;
+    /*border-style: groove; */
+
+    color: rgb(129, 202, 129);
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.failIcons{
+    border-radius: 10px;
+    /* border-radius: 10px;
+    border-style: groove; */
+    color: rgb(143, 19, 19);
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+
+.failIcons:hover {
+    background-color: rgb(221, 208, 208);
+}
+
+.passIcons:hover {
+    background-color: rgb(140, 180, 143);
+    color: white;
+}
+
+
+.questionIcons:hover{
+    background-color: rgb(141, 182, 216);
+    border-radius: 10px;
+    color: white;
 }

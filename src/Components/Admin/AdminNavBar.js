@@ -9,8 +9,8 @@ import WorkIcon from '@mui/icons-material/Work';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Stack from '@mui/material/Stack';
 import { ThemeProvider } from '@mui/material/styles';
-import '../styles/navBar.css';
-import theme from './theme';
+import '../../styles/navBar.css';
+import theme from '../theme';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import cookie from 'react-cookies';
@@ -27,8 +27,8 @@ class AdminNavBar extends Component {
             profile : "secondary"
         }
     }
-    setColorIconHome = async () => {
-        await this.setState({
+    setColorIconHome = () => {
+        this.setState({
             home: "primary",
             questions: "secondary",
             jobs : "secondary" ,
@@ -89,7 +89,7 @@ class AdminNavBar extends Component {
                 <Stack className='nav-Buttons' spacing={4} direction="row">
                     <ThemeProvider theme={theme}>
                         <Link exact to="/adminPage">
-                            <IconButton  onClick={this.setColorIconHome} className='icon' aria-label="home" color={this.state.home} size="large">
+                            <IconButton  onClick={this.setColorIconHome} className='icon' color={this.state.home} size="large">
                                 <span className='tooltiptext'>Home</span>
                                 <HomeIcon fontSize="inherit" />
                             </IconButton>
@@ -114,7 +114,7 @@ class AdminNavBar extends Component {
                         </Link>
                         
                         <Link to="/adminPage/profile">
-                            <IconButton className='icon' aria-label='Profile' color='secondary' size="large">
+                            <IconButton className='icon' aria-label='Profile' color={this.state.profile} size="large">
                                 <span className='tooltiptext'>Profile</span>
                                 <AccountCircleSharpIcon fontSize='inherit' />
                             </IconButton>

@@ -4,7 +4,7 @@ import UsersInterviews from './UsersInterviews';
 import GeneralStatistics from './GeneralStatistics'
 import StatisticsByFilter from './StatisticsByFilter'
 import Filter from './Filter'
-import NavBar from '../../AdminNavBar';
+import NavBar from '../AdminNavBar';
 import '../../../styles/Admin.css';
 import '../../theme';
 import Button from '@mui/material/Button';
@@ -28,19 +28,21 @@ class Admin extends Component {
         return (
             <div>
                 <NavBar />
-                <Filter />
-                <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Show Simulations</Button>
-
-                <div className='all-statistics'>
-                    <GeneralStatistics />
-                    <StatisticsByFilter />
-                </div>
-                <UsersInterviews setOpenDialog={this.setOpenDialog} />
-                <ShowSimulation
+                <div className='page'>
+                    <Filter />
+                    <div className='all-statistics'>
+                        <GeneralStatistics />
+                        <StatisticsByFilter />
+                    </div>
+                    <h2>INTERVIEWS</h2>                    
+                    <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Show Simulations</Button>
+                    <UsersInterviews setOpenDialog={this.setOpenDialog} />
+                    <ShowSimulation
                         openDialog={this.state.openSimulationDialog}
                         setOpenDialog={this.setOpenSimulationDialog}
                         setCloseDialog={this.setCloseSimulationDialog}
                     />
+                </div>
             </div>
         );
     }

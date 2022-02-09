@@ -4,8 +4,10 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
-import '../../../styles/editDialog.css'
+import Stack from '@mui/material/Stack';
+import { ThemeProvider } from '@mui/material/styles';
+import '../../../styles/editDialog.css';
+import theme from '../../theme';
 
 export class EditProfile extends Component {
 
@@ -242,8 +244,12 @@ export class EditProfile extends Component {
                 </div>
 
                 <div className='Buttons'>
-                    <Button style={{ margin: "10px" }} size="medium" variant="contained" onClick={this.sendEdits}>Send Edits</Button>
-                    <Button size="medium" variant="contained" onClick={this.handleClose}>cancel</Button>
+                    <Stack style={{margin:"0px 30%"}} spacing={2} direction="row">
+                        <ThemeProvider theme={theme}>
+                            <Button size="medium" variant="contained" onClick={this.sendEdits}>Send Edits</Button>
+                            <Button sx={{ bgcolor: 'text.primary' }} size="medium" variant="contained" onClick={this.handleClose}>cancel</Button>
+                        </ThemeProvider>
+                    </Stack>
                 </div>
 
 
