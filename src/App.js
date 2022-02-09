@@ -65,6 +65,8 @@ class App extends Component {
             <Route path="/adminPage/Profile" exact render={() => <Profile />} />
             <Route path="/studentPage/Profile" exact render={() => <UserProfile />} />
 
+            <Route path="/studentPage/displayJobs" exact render={() => <DisplayJobs />} />
+
 
             {
               role === "admin" ? <Redirect to='/adminPage' /> :
