@@ -3,7 +3,7 @@ import "../../../styles/PieChartByFilter.css";
 import React from "react";
 import { PieChart, Pie, Cell, Legend } from "recharts";
 import '../../../styles/Admin.css';
-const COLORS = ["#426696", "#ff96aa"];
+const COLORS = ["rgb(130 165 211)", "#ff96aaab"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({

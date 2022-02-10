@@ -12,6 +12,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import theme from '../../theme';
+import '../../../styles/Admin.css';
 
 class AddAdmin extends Component {
     constructor() {
@@ -70,7 +71,7 @@ class AddAdmin extends Component {
 
     render() {
         return (
-            <div>
+            <div className='page'>
                 <Accordion expanded={this.state.expanded === 'panel1'} onChange={this.togglePanel('panel1')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}

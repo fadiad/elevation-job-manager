@@ -11,6 +11,8 @@ import theme from '../../theme';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker'; 
+import '../../../styles/Admin.css';
+
 class AddCohort extends Component {
     constructor() {
         super()
@@ -47,7 +49,7 @@ class AddCohort extends Component {
 
     render() {
         return (
-            <div>
+            <div className='page'>
                 <Accordion expanded={this.state.expanded === 'panel1'} onChange={this.togglePanel('panel1')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}

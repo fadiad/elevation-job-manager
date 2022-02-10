@@ -6,11 +6,11 @@ import StatisticsByFilter from './StatisticsByFilter'
 import Filter from './Filter'
 import NavBar from '../AdminNavBar';
 import '../../../styles/Admin.css';
-import '../../theme';
 import Button from '@mui/material/Button';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import ShowSimulation from './ShowSimulation';
-
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../../theme';
 class Admin extends Component {
     constructor() {
         super()
@@ -34,13 +34,24 @@ class Admin extends Component {
                         <GeneralStatistics />
                         <StatisticsByFilter />
                     </div>
-                    <h2>INTERVIEWS</h2>                    
-                    <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Show Simulations</Button>
+                    <h2>INTERVIEWS</h2>
+                    <div className='showSimulation'>
+                        <ThemeProvider theme={theme}>
+                            <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Show Simulations</Button>
+                        </ThemeProvider>
+                    </div>
                     <UsersInterviews setOpenDialog={this.setOpenDialog} />
-                    <ShowSimulation
+                    <ShowSimulation className='MuiDialog-paperFullWidth'
                         openDialog={this.state.openSimulationDialog}
                         setOpenDialog={this.setOpenSimulationDialog}
                         setCloseDialog={this.setCloseSimulationDialog}
+                        // maxWidth = {'xs'}
+                        PaperProps={{
+                            sx: {
+                                width: "50%",
+                                maxHeight: "20%"
+                            }
+                        }}
                     />
                 </div>
             </div>

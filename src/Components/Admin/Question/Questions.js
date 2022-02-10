@@ -62,32 +62,30 @@ class Questions extends Component {
             <div >
                 <NavBar />
                 <div className='questions'>
+                    <h1>Questions Bank</h1>
                     <div className='form'>
-                        <div >
-                            <TextField id="outlined-basic" onChange={this.onChangeCompany} label="Company" variant="outlined" />
-                        </div>
-                        <div >
-                            <TextField id="outlined-basic" onChange={this.onChangeJob} label="Job" variant="outlined" />
-                        </div>
-                        <div>
-                            <FormControlLabel onChange={this.onChangeHR} control={<Checkbox defaultChecked />} label="Technical" />
-                            <FormControlLabel onChange={this.onChangeTechnical} control={<Checkbox defaultChecked />} label="HR" />
-                        </div>
+
+                        <TextField id="outlined-basic" onChange={this.onChangeCompany} label="Company" variant="outlined" />
+                        <TextField id="outlined-basic" onChange={this.onChangeJob} label="Job" variant="outlined" />
+                        <FormControlLabel onChange={this.onChangeHR} control={<Checkbox defaultChecked />} label="Technical" />
+                        <FormControlLabel onChange={this.onChangeTechnical} control={<Checkbox defaultChecked />} label="HR" />
                     </div>
                     <br></br>
-
+                    <div className='table-header'>
                     <AccordionSummary
                         aria-controls="panel1bh-content"
                         id="main-header"
                     >
-                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>company </Typography>
+                        <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Company </Typography>
                         <Typography sx={{ width: '20%', flexShrink: 0, color: '#ff96aa' }}>Job </Typography>
                         <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interview Type </Typography>
                         <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Date</Typography>
                         <Typography sx={{ width: '20%', flexShrink: 0, color: '#426696' }}>Interviewed </Typography>
 
                     </AccordionSummary>
+                    </div>
                     {/* {this.props.catalog.filter(cat => cat.isRented == true && cat.title.toLowerCase().includes(this.inputValue.toLowerCase())). */}
+                    <div className='questions'>
                     {this.props.adminStore.qustions.filter(q =>
                         q.interviewType.includes(this.state.HR === true ? "" : "HR") &&
                         q.interviewType.includes(this.state.technical === true ? "" : "Technical") &&
@@ -98,6 +96,7 @@ class Questions extends Component {
                             )
                         }
                         )}
+                        </div>
                 </div>
             </div>
         );
