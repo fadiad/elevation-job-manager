@@ -1,9 +1,7 @@
 .interviews-titles {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    /* background-color: rgb(66 102 150); */
+    background-color: #ff96aa4d;
     padding: 14px;
-    /* color: white; */
-    background-color: #ccddf3 ;
-
+    border-radius: 15px;
 }

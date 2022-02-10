@@ -16,7 +16,7 @@ sequelize
         console.error('Unable to connect to the database:', err);
     })
 
-router.get('/jobs/:id', async function (req, res) {
+router.get('/jobs/:id', async function(req, res) {
 
     let jobs = await sequelize.query(
         `
@@ -26,7 +26,7 @@ router.get('/jobs/:id', async function (req, res) {
     `)
     res.send(jobs[0])
 })
-router.get('/user', async function (req, res) {
+router.get('/user', async function(req, res) {
     const email = req.query.email
     let user = await sequelize.query(`    
     select * 
@@ -37,22 +37,22 @@ router.get('/user', async function (req, res) {
     res.send(user[0][0])
 })
 
-router.get('/Processes', function (req, res) {
+router.get('/Processes', function(req, res) {
     const arrProcesses = mocData.processes
     res.send(arrProcesses)
 })
 
-router.get('/userData/:id', function (req, res) { // id : user id 
+router.get('/userData/:id', function(req, res) { // id : user id 
     sequelize
         .query(`SELECT c.id , status , isEmployeed , cohort ,cv ,
                        firstName , lastName , email , phone
         FROM Candidate AS c  , UserProporties AS u
         WHERE c.id = '${req.params.id}' AND c.id = u.id`)
-        .then(function ([results, metadata]) {
+        .then(function([results, metadata]) {
             res.send(results)
         })
 })
-router.get('/Simulations/:id', async function (req, res) { // id : user id 
+router.get('/Simulations/:id', async function(req, res) { // id : user id 
 
     let Simulations = await sequelize.query(
         `
@@ -65,17 +65,17 @@ router.get('/Simulations/:id', async function (req, res) { // id : user id
     res.send(Simulations[0])
 })
 
-router.get('/processes/:id', function (req, res) { // id : user id 
+router.get('/processes/:id', function(req, res) { // id : user id 
     sequelize
         .query(`SELECT p.id , p.companyName , p.jobTitle , p.location , p.foundBy , p.link , p.status
     FROM Candidate AS c  , Process AS p
     WHERE UserId = '${req.params.id}' AND c.id = p.UserId  ORDER BY p.status= 'In progress' DESC`)
-        .then(function ([results, metadata]) {
+        .then(function([results, metadata]) {
             res.send(results)
         })
 })
 
-router.post('/processes/:id', async function (req, res) { // id : user id
+router.post('/processes/:id', async function(req, res) { // id : user id
 
     let query = `INSERT INTO Process (id,companyName,jobTitle,location,foundBy,link,UserId)
                 VALUES(NULL,'${req.body.companyName}','${req.body.jobTitle}','${req.body.location}','${req.body.foundBy}','${req.body.link}',${req.params.id});`
@@ -85,15 +85,15 @@ router.post('/processes/:id', async function (req, res) { // id : user id
         .query(`SELECT p.id , p.companyName , p.jobTitle , p.location , p.foundBy , p.link , p.status
 FROM Candidate AS c  , Process AS p
 WHERE UserId = '${req.params.id}' AND c.id = p.UserId`)
-        .then(function ([results, metadata]) {
+        .then(function([results, metadata]) {
             res.send(results)
         })
-    // res.send(result)
+        // res.send(result)
 })
 
 // =============================================
 
-router.get('/interviews/:id', async function (req, res) { // id : process id 
+router.get('/interviews/:id', async function(req, res) { // id : process id 
 
     await updateInterViewsStatusByDate(req.params.id)
 
@@ -102,7 +102,7 @@ router.get('/interviews/:id', async function (req, res) { // id : process id
         .query(`SELECT i.id, i.type , i.date , DATE_FORMAT(i.simulationDate, "%Y-%m-%d %T") as simulationDate , i.interviewerName , i.status , i.processId
     FROM Process AS p , Interview AS i
     WHERE i.processId = '${req.params.id}' AND  p.id = i.processId`)
-        .then(function ([results, metadata]) {
+        .then(function([results, metadata]) {
             res.send(results)
         })
 })
@@ -116,7 +116,7 @@ async function updateInterViewsStatusByDate(processId) {
         .query(`SELECT i.id,  i.date , i.status 
                 FROM  Interview AS i
                 WHERE i.processId = '${processId}'  and i.status ='Scheduled'`)
-        .then(async function ([results, metadata]) {
+        .then(async function([results, metadata]) {
             console.log(results);
             for (let interview of results) {
                 if (interviewDatePassedByDays(interview.date, threeWeeks)) {
@@ -144,14 +144,14 @@ function interviewDatePassedByDays(iDate, days) {
     }
 }
 
-router.post('/interviews', async function (req, res) {
+router.post('/interviews', async function(req, res) {
     let date = req.body.date.toString().slice(0, 10)
     await updateStatus(req.body.processId)
     let query = `INSERT INTO Interview(type , date ,interviewerName,status,processId)
         VALUES("${req.body.type}", "${date}" ,"${req.body.interViewerName}","${req.body.status}",${req.body.processId});`
     let result = await sequelize.query(query)
     let interviewData = await sequelize.query(
-    `
+        `
         select i.id as interviewerId , p.id as processId , i.status,  i.type  
         from Interview AS i inner join process As p On i.processId=p.id 
         where i.id =  ${result[0]}
@@ -162,7 +162,7 @@ router.post('/interviews', async function (req, res) {
 async function updateStatus(processId) {
 
     let interviews = await sequelize.query(
-    `
+        `
         select *
         from Interview As i 
         where i.processId = '${processId}' && i.status != "Passed"
@@ -176,7 +176,7 @@ async function updateStatus(processId) {
     }
 }
 
-router.post('/interViewStatus/:id', async function (req, res) {
+router.post('/interViewStatus/:id', async function(req, res) {
     let interViewId = req.body.interViewId;
     let processId = req.body.processId;
     let status = req.body.status;
@@ -282,7 +282,7 @@ async function sentEmail(interViewId, processId, status) {
                 };
             }
 
-            transporter.sendMail(mailOptions, function (error, info) {
+            transporter.sendMail(mailOptions, function(error, info) {
                 if (error) {
                     console.log(error);
                 } else {
@@ -293,7 +293,7 @@ async function sentEmail(interViewId, processId, status) {
         });
     }
 }
-router.post('/processStatus', async function (req, res) {
+router.post('/processStatus', async function(req, res) {
 
     console.log(req.body)
     let processQuery = `Update Process SET status="Passed" WHERE id=${req.body.processId};`
@@ -305,7 +305,7 @@ router.post('/processStatus', async function (req, res) {
     res.send("result")
 })
 
-router.post('/question', async function (req, res) {
+router.post('/question', async function(req, res) {
     const interviewId = req.body.interviewId
 
     let query = `INSERT INTO Questions(id ,title , question , solution , InterviewId  )
@@ -319,7 +319,7 @@ router.post('/question', async function (req, res) {
             where q.InterviewId = '${interviewId}'
         `)
     sentQuestionEmail(questionData[0])
-    // res(result)
+        // res(result)
 })
 async function sentQuestionEmail(questionData) {
     let adminData = await sequelize.query(`
@@ -353,7 +353,7 @@ async function sentQuestionEmail(questionData) {
                 text: 'Hello ' + admin.firstName + " ,  A new question was added from " + questionData[0].jobTitle + " a " + questionData[0].type + " job interview at " + questionData[0].companyName
             };
         }
-        transporter.sendMail(mailOptions, function (error, info) {
+        transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
                 console.log(error);
             } else {
@@ -363,7 +363,7 @@ async function sentQuestionEmail(questionData) {
     });
 }
 // -------------------------------------
-router.get('/simulationDates/:id', async function (req, res) {
+router.get('/simulationDates/:id', async function(req, res) {
     console.log("simulationDates")
     let userId = req.params.id
     let simualtionDataQuery = `select s.id as "SimulationId", c.id as "UserID",p.id as "ProcessID",p.companyName,p.jobTitle,i.id as "interviewId",i.type,i.date,i.simulationDate,
@@ -378,18 +378,15 @@ router.get('/simulationDates/:id', async function (req, res) {
     res.send(result[0])
 })
 
-router.post('/interviewSimlationDate/:id', async function (req, res) {
+router.post('/interviewSimlationDate/:id', async function(req, res) {
     let userId = req.params.id
     let interviewId = req.body.interviewId
     let date = req.body.date
-    //Set simulationDate=DATE_FORMAT(${date}, "%d/%m/%Y %r") 
+        //Set simulationDate=DATE_FORMAT(${date}, "%d/%m/%Y %r") 
     let update = `UPDATE Interview Set simulationDate="${date}"
     where id=${interviewId} `
     let result = await sequelize.query(update)
-    let SimlationData = await sequelize.query(
-        `
-    USE jobManagerDB;
-    select u.firstName , u.lastName
+    let SimlationData = await sequelize.query(`select u.firstName , u.lastName
     from interview As i inner join process As p On i.processId = p.id
                         inner join candidate As c  On c.id = p.UserId
                         inner join userproporties As u On u.id = c.id
@@ -423,7 +420,7 @@ async function sentSimlationEmail(date, questionData) {
             text: 'Hello ' + admin.firstName + questionData[0].firstName + " " + questionData[0].idkeidek + "chose the date " + date + " for an interview simulation"
         };
 
-        transporter.sendMail(mailOptions, function (error, info) {
+        transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
                 console.log(error);
             } else {
@@ -432,16 +429,16 @@ async function sentSimlationEmail(date, questionData) {
         })
     });
 }
-router.delete('/Simulation/:id', async function (req, res) {
-    let sId = req.body.simulationId
-    let deleteQuery = `Delete from Simulation where id=${sId}`
-    let result = await sequelize.query(deleteQuery)
-    res.send(result)
-})
-// -------------------------------------
+router.delete('/Simulation/:id', async function(req, res) {
+        let sId = req.body.simulationId
+        let deleteQuery = `Delete from Simulation where id=${sId}`
+        let result = await sequelize.query(deleteQuery)
+        res.send(result)
+    })
+    // -------------------------------------
 
 
-router.put('/profileDetails', async function (req, res) {
+router.put('/profileDetails', async function(req, res) {
 
     if (req.body.name) {
         await sequelize.query(`UPDATE userproporties 

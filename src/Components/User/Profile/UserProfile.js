@@ -13,6 +13,7 @@ import UserNavBar from '../UserNavBar'
 
 import { observer, inject } from 'mobx-react';
 import EditIcon from '@mui/icons-material/Edit';
+import '../../../styles/User.css'
 import '../../../styles/fileCard.css'
 
 
@@ -61,23 +62,26 @@ export class UserProfile extends Component {
         return (
             <div >
                 <UserNavBar />
-                <div className='Profile'>
-                    <EditIcon onClick={this.setOpenDialog} className='EditIcon' />
+                <div className='page'>
+                    <h1>Profile</h1>
+                    <div className='Profile'>
+                        <EditIcon onClick={this.setOpenDialog} className='EditIcon' />
 
-                    <EditProfile
-                        openDialog={this.state.openDialog}
-                        setOpenDialog={this.setOpenDialog}
-                        setCloseDialog={this.setCloseDialog}
-                        Password={this.state.userData.password}
-                        sendEdits={this.sendEdits}
-                    />
+                        <EditProfile
+                            openDialog={this.state.openDialog}
+                            setOpenDialog={this.setOpenDialog}
+                            setCloseDialog={this.setCloseDialog}
+                            Password={this.state.userData.password}
+                            sendEdits={this.sendEdits}
+                        />
 
-                    <NameField firstName={this.state.userData.firstName} lastName={this.state.userData.lastName} />
-                    <PasswordField />
-                    <EmailField email={this.state.userData.email} />
-                    <PhoneField phone={this.state.userData.phone} />
-                    <StatusField status={this.state.userData.status} />
-                    <CohortField cohort={this.state.userData.cohort} />
+                        <NameField firstName={this.state.userData.firstName} lastName={this.state.userData.lastName} />
+                        <PasswordField />
+                        <EmailField email={this.state.userData.email} />
+                        <PhoneField phone={this.state.userData.phone} />
+                        <StatusField status={this.state.userData.status} />
+                        <CohortField cohort={this.state.userData.cohort} />
+                    </div>
                 </div>
             </div>
         );

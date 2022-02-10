@@ -9,9 +9,17 @@
     justify-content: space-between;
 }
 
-
-.processContainer{
+.processContainer {
     margin-left: 200px;
     margin-right: 200px;
     margin-top: 50px;
+}
+
+.page {
+    margin: auto 10%;
+}
+
+h1 {
+    margin: auto 10%;
+    margin-bottom: 15px;
 }

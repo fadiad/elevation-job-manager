@@ -12,6 +12,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import '../../styles/process.css'
+import '../../styles/User.css'
 import AddInterview from './AddInterview';
 import Accepted from './Accepted'
 
@@ -95,8 +96,8 @@ class Process extends Component {
                             <h4>{this.props.process.link}</h4>
                         </div> */}
                             <div className='interviews-header'>
-                                <h2>Interviews</h2>
-                                <Stack spacing={2} direction="row">
+                                <h3>Interviews</h3>
+                                <Stack className='page' spacing={2} direction="row">
                                     <ThemeProvider theme={theme}>
                                         <Button variant="text" disabled={this.props.process.status !== "In progress"} startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>Add Interview</Button>
                                         <Button variant="text" disabled={this.props.process.status !== "In progress"} startIcon={<TaskAltSharpIcon />} onClick={this.setAcceptedOpenDialog}>Accepted</Button>
