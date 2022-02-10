@@ -96,7 +96,7 @@ class Process extends Component {
                             <h4>{this.props.process.link}</h4>
                         </div> */}
                             <div className='interviews-header'>
-                                <h3>Interviews</h3>
+                                <h3 style={{color: "#3c2727a8", background_color:"aliceblue"}}>Interviews</h3>
                                 <Stack className='page' spacing={2} direction="row">
                                     <ThemeProvider theme={theme}>
                                         <Button variant="text" disabled={this.props.process.status !== "In progress"} startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>Add Interview</Button>
