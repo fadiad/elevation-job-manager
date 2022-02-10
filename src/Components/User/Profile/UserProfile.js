@@ -7,7 +7,7 @@ import PhoneField from './PhoneField';
 import StatusField from './StatusField';
 import CohortField from './CohortField';
 import EditProfile from './EditProfile';
-import UserNavBar from '../../UserNavBar'
+import UserNavBar from '../UserNavBar'
 
 
 

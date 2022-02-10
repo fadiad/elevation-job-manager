@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 
-import UserNavBar from '../UserNavBar'
+import UserNavBar from './UserNavBar'
 import '../../styles/jops.css'
 
 import {
@@ -49,11 +49,10 @@ class DisplayJobs extends Component {
 
                             <TableHead>
                                 <TableRow>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>companyName</TableCell>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>Date</TableCell>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>creatingJobDate</TableCell>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>jobNumber</TableCell>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>jobTitle</TableCell>
+                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>company </TableCell>
+                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>creating Job Date</TableCell>
+                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>job Number</TableCell>
+                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>job Title</TableCell>
                                     <TableCell className='tableHeaderCell' style={{ color: "white" }}>link</TableCell>
                                     <TableCell className='tableHeaderCell' style={{ color: "white" }}>description</TableCell>
                                     <TableCell className='tableHeaderCell' style={{ color: "white" }}></TableCell>
@@ -76,7 +75,6 @@ class DisplayJobs extends Component {
                                                 </Grid>
                                             </Grid>
                                         </TableCell>
-                                        <TableCell > {row.Date} </TableCell>
                                         <TableCell >{row.creatingJobDate}</TableCell>
                                         <TableCell > {row.jobNumber} </TableCell>
                                         <TableCell >{row.jobTitle}</TableCell>

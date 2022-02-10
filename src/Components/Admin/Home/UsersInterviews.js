@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
@@ -64,6 +65,7 @@ class UsersInterviews extends Component {
   }
 
   render() {
+    console.log("amir");
     return (
       <div>
 
@@ -71,7 +73,6 @@ class UsersInterviews extends Component {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>NAME</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>COHORT</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>JOB TITLE</TableCell>
@@ -80,15 +81,12 @@ class UsersInterviews extends Component {
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>DATE</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>STATUS</TableCell>
                 <TableCell className='tableHeaderCell' style={{ color: "white" }}>SIMULATION</TableCell>
-
               </TableRow>
             </TableHead>
-
             <TableBody>
               {this.props.adminStore.usersInterViews.slice(
                 this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage).map((row, index) => (
                   <TableRow key={row.firstName}>
-
                     <TableCell>
                       <Grid container>
                         <Grid item lg={2}>
@@ -100,20 +98,16 @@ class UsersInterviews extends Component {
                         </Grid>
                       </Grid>
                     </TableCell>
-
                     <TableCell > {row.cohort} </TableCell>
-
                     <TableCell >{row.jobTitle}</TableCell>
                     <TableCell >{row.companyName}</TableCell>
                     <TableCell >{row.type}</TableCell>
                     <TableCell >{row.date}</TableCell>
                     <TableCell >
-
                       <Typography
                         className='status1'
                         style={
                           {
-
                             backgroundColor:
                               (
                                 (row.status === 'Pending' && 'gray') ||
@@ -129,10 +123,11 @@ class UsersInterviews extends Component {
                     <TableCell >
                     {row.simulationDate}
                       <Grid item lg={2}>
-                        <Typography className='simulayionDate'>{row.simulatoinDate}</Typography>
+                      {/* simulationDate: null */}
+                        <Typography  className='simulayionDate'>{row.simulatoinDate}</Typography>
                         <Typography variant='body2'>
                           <ThemeProvider theme={theme}>
-                            <Button style={{ display: (row.status !== 'Scheduled' && 'none') }} variant="contained" onClick={() => {
+                            <Button style={{ display: row.status !== 'Scheduled'  && 'none'  }} variant="contained" onClick={() => {
                               this.props.adminStore.interviewId = row.id
                               console.log(this.props.adminStore.interviewId);
                               this.setOpenDialog()

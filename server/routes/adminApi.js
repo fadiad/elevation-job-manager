@@ -380,7 +380,7 @@ router.get('/Statistics', async function(req, res) {
         select  p.UserId
         from candidate As c  inner join process As p 
         on c.id = p.UserId inner join Interview As i on i.processId = p.id
-        where c.isEmployeed = 0 and c.cohort = '${req.query.cohort}' 
+        where c.isEmployeed = 0 and c.cohort = '${req.query.cohort}'  and  p.status ='In progress'
         GROUP BY p.UserId)
         `)
 
@@ -440,9 +440,9 @@ router.get('/Statistics', async function(req, res) {
 
         let student = await sequelize.query(`    
         
- select count(*) As NumberOfStudent
- from  candidate
-  where candidate.id In
+        select count(*) As NumberOfStudent
+        from  candidate
+        where candidate.id In
       (select p.UserId 
       from candidate As c inner join process As p 
       on  c.id = p.UserId 

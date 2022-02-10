@@ -68,7 +68,6 @@ class App extends Component {
             <Route path="/signup" exact render={() => <Signup />} />
 
 
-            <Route path="/studentPage/displayJobs" exact render={() => <DisplayJobs />} />
 
 
             {

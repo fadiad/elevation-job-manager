@@ -36,7 +36,7 @@ class Interview extends Component {
                 <div>{interview.interViewerName}</div>
                 <div>{interview.date}</div>
                 <div>{interview.simulationDate}</div>
-                <div><QuestionMarkIcon  className='questionIcons'/></div>
+                <div><QuestionMarkIcon  className='questionIcons' onClick={this.setOpenQuestionDialog}/></div>
                 {/* <div><Button variant="outlined" startIcon={<QuestionMarkIcon />} onClick={this.setOpenQuestionDialog}></Button></div> */}
                 <div>{interview.status === "Scheduled" || interview.status === "Pending" ?
                     <div >
