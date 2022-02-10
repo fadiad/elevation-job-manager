@@ -4,8 +4,27 @@ USE jobManagerDB;
             inner join process As p On p.id = i.processId 
             inner join candidate As c On c.id = p.UserId
             inner join userproporties As u On u.id = c.id
+USE jobManagerDB;
+        select count(*) As NumberOfemployed
+        from candidate AS c
+        where  c.id In(
+        select  p.UserId
+        from candidate As c  inner join process As p 
+        on c.id = p.UserId inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and c.cohort =  'Atidna 4' and  p.status ='In progress'
+        GROUP BY p.UserId)
+
+        select  p.status
+        from candidate As c  inner join process As p 
+        on c.id = p.UserId inner join Interview As i on i.processId = p.id
+        where c.isEmployeed = 0 and c.cohort =  'Atidna 4' and  p.status ='In progress'
+
+    SELECT p.id As processId , i.id As interviewId , i.status As interviewStatus , p.status As processStatus
+    from Process As p inner join interview As i On p.id = i.processId
+    from joboffer As jOffer  inner join job As j On jOffer.jobId =j.id 
+    WHERE jOffer.candidateId = 33
 SELECT * 
-from userproporties
+from userproporties As u inner join candidate As c On u.id = c.id
 where email = 'anbalhalabi@gmail.com'
 USE jobManagerDB;
 INSERT INTO userproporties VALUES( Null ,Null,"lotem","lotem","elevation744@gmail.com","0507339214","1234" , true );

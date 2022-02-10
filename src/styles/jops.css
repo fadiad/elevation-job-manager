@@ -12,6 +12,13 @@
     column-gap: 5px;
 }
 
+.jobs{
+    margin-left: 200px;
+    margin-top: 70px;
+    margin-right: 200px;
+}
+
+
 .buttons2 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

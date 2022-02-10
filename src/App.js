@@ -69,6 +69,7 @@ class App extends Component {
 
 
 
+
             {
               role === "admin" ? <Redirect to='/adminPage' /> :
                 role === "student" ? <Redirect to='/studentPage' /> : null

@@ -14,6 +14,9 @@ import theme from '../theme';
 import '../../styles/process.css'
 import AddInterview from './AddInterview';
 import Accepted from './Accepted'
+
+import LinkIcon from '@mui/icons-material/Link';
+
 class Process extends Component {
 
     constructor() {
@@ -74,33 +77,35 @@ class Process extends Component {
         return (
             <div className='Process'>
                 <div class="mdc-card">
-                    <div className='status-circle'><CircleIcon style={this.statusStyle()} /></div>
+
                     <h3 className='icon' onClick={this.toggleInterViews}>{this.state.icon}</h3>
                     <h3>{this.props.process.companyName}</h3>
                     <h3>{this.props.process.jobTitle}</h3>
                     <h3>{this.props.process.location}</h3>
+                    <h3> <a href={this.props.process.link} target="_blank" > <LinkIcon /></a> </h3>
+                    <h4 style={{ color: "#ff96aa" }}>{this.props.process.status}</h4>
+
+                    {/* <div className='status-circle'><CircleIcon style={this.statusStyle()} /></div> */}
                 </div>
-                {this.state.expand ?
-                    <div>
-                        <div className='process-sub'>
+                {
+                    this.state.expand ?
+                        <div>
+                            {/* <div className='process-sub'>
                             <h4>{this.props.process.foundBy}</h4>
                             <h4>{this.props.process.link}</h4>
-                        </div>
-                        <div className='interviews-header'>
-                            <div>
+                        </div> */}
+                            <div className='interviews-header'>
                                 <h2>Interviews</h2>
-                            </div>
-                            <div>
                                 <Stack spacing={2} direction="row">
                                     <ThemeProvider theme={theme}>
                                         <Button variant="text" disabled={this.props.process.status !== "In progress"} startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>Add Interview</Button>
-                                        <Button variant="contained" disabled={this.props.process.status !== "In progress"} startIcon={<TaskAltSharpIcon />} onClick={this.setAcceptedOpenDialog}>Accepted</Button>
+                                        <Button variant="text" disabled={this.props.process.status !== "In progress"} startIcon={<TaskAltSharpIcon />} onClick={this.setAcceptedOpenDialog}>Accepted</Button>
                                     </ThemeProvider>
                                 </Stack>
                             </div>
-                        </div>
-                        <Interviews setProcessUnActive={this.setProcessUnActive} interviews={this.props.process.interviews} />
-                    </div> : null}
+                            <Interviews setProcessUnActive={this.setProcessUnActive} interviews={this.props.process.interviews} />
+                        </div> : null
+                }
 
                 <Accepted
                     openDialog={this.state.AcceptedOpenDialog}
@@ -116,7 +121,7 @@ class Process extends Component {
                     processId={this.props.process.id}
                     setCloseDialog={this.setCloseDialog}
                 ></AddInterview>
-            </div>
+            </div >
         );
     }
 

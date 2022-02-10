@@ -39,31 +39,38 @@ class User extends Component {
         return (
             <div>
                 <NavBar />
+                <div className='processContainer'>
 
-                <div className='user-home-header'>
-                    <Stack spacing={2} width={"20%"}>
-                        <ThemeProvider theme={theme}>
-                            <Button variant="contained" startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>Add Process</Button>
-                            <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Show Simulations</Button>
-                        </ThemeProvider>
-                    </Stack>
+                    <div className='user-home-header'>
+                        <Stack spacing={0} width={"20%"}>
+                            <ThemeProvider theme={theme}>
+                                <Button variant="contained" startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>Add Process</Button>
+                            </ThemeProvider>
+                        </Stack>
 
-                    <AddProcess
-                        openDialog={this.state.openDialog}
-                        setOpenDialog={this.setOpenDialog}
-                        setCloseDialog={this.setCloseDialog}
-                    />
-                    <ShowSimulation
-                        openDialog={this.state.openSimulationDialog}
-                        setOpenDialog={this.setOpenSimulationDialog}
-                        setCloseDialog={this.setCloseSimulationDialog}
-                    />
-                    <PickSimualtionDate />
+                        <Stack spacing={0} width={"20%"}>
+                            <ThemeProvider theme={theme}>
+                                <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Simulations</Button>
+                            </ThemeProvider>
+                        </Stack>
 
+                        <AddProcess
+                            openDialog={this.state.openDialog}
+                            setOpenDialog={this.setOpenDialog}
+                            setCloseDialog={this.setCloseDialog}
+                        />
+                        <ShowSimulation
+                            openDialog={this.state.openSimulationDialog}
+                            setOpenDialog={this.setOpenSimulationDialog}
+                            setCloseDialog={this.setCloseSimulationDialog}
+                        />
+                        <PickSimualtionDate />
+
+                    </div>
+                    <br />
+
+                    <Processes processes={this.props.userStore.processes} userId={this.props.userStore.userID} />
                 </div>
-                <br />
-
-                <Processes processes={this.props.userStore.processes} userId={this.props.userStore.userID} />
             </div>
         );
     }

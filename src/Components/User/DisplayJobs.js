@@ -1,18 +1,11 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import { ThemeProvider } from '@mui/material/styles';
-import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
-import { Link } from 'react-router-dom';
-// import '../../theme';
-import theme from '../theme';
-// import '../theme';
-import { Button, TextField } from '@mui/material';
+
+import UserNavBar from './UserNavBar'
+import '../../styles/jops.css'
+
 import {
-    Select,
-    MenuItem,
-    FormControl,
-    InputLabel,
     Table,
     TableBody,
     TableCell,
@@ -22,9 +15,7 @@ import {
     Paper,
     Avatar,
     Grid,
-    Typography,
-    TablePagination,
-    Checkbox
+    Typography
 } from '@material-ui/core';
 class DisplayJobs extends Component {
     constructor() {
@@ -35,31 +26,43 @@ class DisplayJobs extends Component {
     }
     async componentDidMount() {
         const jobs = await this.props.userStore.getJobs()
+        
+        if (jobs !== undefined) {
+            for (let i = 0; i < jobs.length; i++) {
+                if (jobs[i].creatingJobDate !== null) {
+                    jobs[i].creatingJobDate = jobs[i].creatingJobDate.toString().slice(0, 10)
+                }
+            }
+        }
         this.setState({
-            jobs: jobs
+            jobs: jobs === undefined ? [] : jobs
         })
         console.log(jobs);
     }
     render() {
         return (
-            <div className='Filter'>
-                <div>
+            <div  >
+                <UserNavBar />
+                <div className='jobs'>
                     <TableContainer component={Paper} className='TableContainer'>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
+
                             <TableHead>
                                 <TableRow>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>companyName</TableCell>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>Date</TableCell>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>creatingJobDate</TableCell>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>jobNumber</TableCell>
-                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>jobTitle</TableCell>
+                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>company </TableCell>
+                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>creating Job Date</TableCell>
+                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>job Number</TableCell>
+                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}>job Title</TableCell>
                                     <TableCell className='tableHeaderCell' style={{ color: "white" }}>link</TableCell>
                                     <TableCell className='tableHeaderCell' style={{ color: "white" }}>description</TableCell>
+                                    <TableCell className='tableHeaderCell' style={{ color: "white" }}></TableCell>
                                 </TableRow>
+
                             </TableHead>
+
                             <TableBody>
                                 {this.state.jobs.map((row, index) => (
-                                    <TableRow key={row.id}>
+                                    <TableRow key={index}>
                                         <TableCell>
                                             <Grid container>
                                                 <Grid item lg={6}>
@@ -72,14 +75,13 @@ class DisplayJobs extends Component {
                                                 </Grid>
                                             </Grid>
                                         </TableCell>
-                                        <TableCell > {row.Date} </TableCell>
                                         <TableCell >{row.creatingJobDate}</TableCell>
                                         <TableCell > {row.jobNumber} </TableCell>
                                         <TableCell >{row.jobTitle}</TableCell>
 
                                         <TableCell >
                                             <a href={row.link} >
-                                                <span > {row.link}</span>
+                                                <span > Link</span>
                                             </a> </TableCell>
                                         <TableCell >{row.description}</TableCell>
                                         <TableCell >
@@ -89,7 +91,9 @@ class DisplayJobs extends Component {
                                     </TableRow>
                                 ))
                                 }
+
                             </TableBody>
+
                         </Table>
                     </TableContainer>
                 </div>
