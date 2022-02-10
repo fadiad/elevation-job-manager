@@ -88,7 +88,7 @@ router.get('/Simulations/:id', async function (req, res) { // id : user id
             inner join process As p On p.id = i.processId 
             inner join candidate As c On c.id = p.UserId
             inner join userproporties As u On u.id = c.id
-            where s.adminId = '${req.params.id}'
+
         `)
         res.send(Simulations[0])
 })
@@ -325,22 +325,17 @@ router.get('/Statistics', async function(req, res) {
         where c.isEmployeed = 0  and i.status = '${req.query.interViewStatus}'
         GROUP BY p.UserId)
         `)
-
-
         let student = await sequelize.query(`    
-        
- select count(*) As NumberOfStudent
- from  candidate
-  where candidate.id In
+      select count(*) As NumberOfStudent
+       from  candidate
+        where candidate.id In
       (select p.UserId 
       from candidate As c inner join process As p 
       on  c.id = p.UserId 
       inner join Interview As i on i.processId = p.id
       where i.status = '${req.query.interViewStatus}'
       GROUP BY p.UserId)
-
         `)
-
         let employed = await sequelize.query(`    
         select count(*) As NumberOfemployed
         from candidate As c
@@ -363,7 +358,6 @@ router.get('/Statistics', async function(req, res) {
         where c.isEmployeed = 0 and i.status = '${req.query.interViewStatus}'
         GROUP BY  c.id)
         `)
-
         let NotActive = unEmployed[0][0].NumberOfemployed - inProcess[0][0].NumberOfemployed
         obj = {
             student: student[0][0].NumberOfStudent,

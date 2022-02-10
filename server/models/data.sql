@@ -5,15 +5,15 @@ USE jobManagerDB;
             inner join candidate As c On c.id = p.UserId
             inner join userproporties As u On u.id = c.id
 USE jobManagerDB;
-        select count(*) As NumberOfemployed
-        from candidate AS c
-        where  c.id In(
-        select  p.UserId
-        from candidate As c  inner join process As p 
-        on c.id = p.UserId inner join Interview As i on i.processId = p.id
-        where c.isEmployeed = 0 and c.cohort =  'Atidna 4' and  p.status ='In progress'
-        GROUP BY p.UserId)
-
+            select i.simulationDate , u.firstName , u.lastName , i.type, p.companyName
+            from simulation As s inner join interview As i On s.interviewId = i.id
+            inner join process As p On p.id = i.processId 
+            inner join candidate As c On c.id = p.UserId
+            inner join userproporties As u On u.id = c.id
+            where s.adminId = 200
+SELECT * 
+FROM simulation As s INNER JOIN interview As i 
+select s.InterviewId = i.id
         select  p.status
         from candidate As c  inner join process As p 
         on c.id = p.UserId inner join Interview As i on i.processId = p.id

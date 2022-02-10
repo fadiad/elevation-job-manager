@@ -8,7 +8,7 @@ import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import { Button, TextField } from '@mui/material';
 import theme from '../../theme';
 import DateMomentUtils from '@date-io/moment'
-
+import SendIcon from '@mui/icons-material/Send';
 import '../../../styles/jops.css'
 
 import {
@@ -150,7 +150,8 @@ class CreateJobAndSendToUser extends Component {
                             <MenuItem value={'Graduate'}>Graduate</MenuItem>
                         </Select>
                     </FormControl>
-                    <Button variant="contained" onClick={this.send}>send</Button>
+                    <SendIcon onClick={this.send} style={{margin : 18 +'px'}}>send</SendIcon>
+                    {/* <Button variant="contained" onClick={this.send}>send</Button> */}
                 </div>
 
                 <div className='table'>
