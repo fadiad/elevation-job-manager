@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import '../../../styles/Admin.css'
 
 class ShowSimulationTable extends Component {
     constructor() {
@@ -30,17 +30,17 @@ class ShowSimulationTable extends Component {
             simulations: simulationsData === undefined ? [] : simulationsData
         })
     }
-
+     paperStyle = { padding: 10, width: 450, margin: "10px auto"}
     render() {
         return (
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableContainer style={this.paperStyle} className='MuiDialog-paperFullWidth'>
+                <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell align="center">Interviewed</TableCell>
-                            <TableCell align='center'>SimulationDate </TableCell>
+                            <TableCell align='center'>Simulation Date </TableCell>
                             <TableCell align="center">Type</TableCell>
-                            <TableCell align="center">CompanyName</TableCell>
+                            <TableCell align="center">Company Name</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

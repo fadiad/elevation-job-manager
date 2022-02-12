@@ -9,7 +9,7 @@ const theme = createTheme({
             main: '#426696',
             contrastText: '#fff',
         }
-    },
+    }
 });
 
 export default theme;

@@ -40,20 +40,13 @@ class User extends Component {
             <div>
                 <NavBar />
                 <div className='processContainer'>
-
                     <div className='user-home-header'>
-                        <Stack spacing={0} width={"20%"}>
+                        <Stack spacing={2} direction="row" maxHeight={"40px"}>
                             <ThemeProvider theme={theme}>
                                 <Button variant="contained" startIcon={<AddSharpIcon />} onClick={this.setOpenDialog}>Add Process</Button>
-                            </ThemeProvider>
-                        </Stack>
-
-                        <Stack spacing={0} width={"20%"}>
-                            <ThemeProvider theme={theme}>
                                 <Button variant="contained" startIcon={<EventAvailableIcon />} onClick={this.setOpenSimulationDialog}>Simulations</Button>
                             </ThemeProvider>
                         </Stack>
-
                         <AddProcess
                             openDialog={this.state.openDialog}
                             setOpenDialog={this.setOpenDialog}
@@ -65,10 +58,8 @@ class User extends Component {
                             setCloseDialog={this.setCloseSimulationDialog}
                         />
                         <PickSimualtionDate />
-
                     </div>
                     <br />
-
                     <Processes processes={this.props.userStore.processes} userId={this.props.userStore.userID} />
                 </div>
             </div>

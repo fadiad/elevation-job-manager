@@ -2,14 +2,13 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import '../../../styles/Admin.css'
-import '../../theme';
-import { ThemeProvider } from '@mui/material/styles';
-import InsertInvitationIcon from '@mui/icons-material/InsertInvitation';
 import { Button, TextField } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme';
 import DateMomentUtils from '@date-io/moment'
 import SendIcon from '@mui/icons-material/Send';
-import '../../../styles/jops.css'
+import '../../../styles/jops.css';
+import '../../../styles/Admin.css';
 
 import {
     Select,
@@ -27,7 +26,8 @@ import {
     Grid,
     Typography,
     TablePagination,
-    Checkbox
+    Checkbox,
+    MuiThemeProvider
 } from '@material-ui/core';
 
 class CreateJobAndSendToUser extends Component {
@@ -117,7 +117,7 @@ class CreateJobAndSendToUser extends Component {
     }
     render() {
         return (
-            <div >
+            <div className='page' >
                 <div className='buttons1'>
                     <div className='row1'>
                         <TextField id="outlined-basic" onChange={this.handleChangeCompany} label="Company" variant="outlined" />

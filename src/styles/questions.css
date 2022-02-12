@@ -1,9 +1,18 @@
-.questions{
-    margin: 30px;
+.questions {
+    margin: auto 10%;
 }
 
+h1 {
+    margin-bottom: 15px;
+}
 
-.form{
-    display: grid;
-    grid-template-columns: 1fr  1fr  1fr;
+.form {
+    margin: auto 10%;
+    display: flex;
+    flex-flow: row;
+    column-gap: 15px;
+}
+
+.table-header {
+    margin: auto 10%;
 }

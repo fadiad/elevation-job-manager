@@ -38,3 +38,12 @@ h1 {
     margin: auto 10%;
     margin-bottom: 15px;
 }
+
+.showSimulation {
+    float: right;
+    margin: 5px;
+}
+
+.MuiDialog-paperFullWidth {
+    width: calc(50% - 64px);
+}

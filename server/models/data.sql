@@ -1,17 +1,18 @@
 USE jobManagerDB;
             select i.simulationDate , u.firstName , u.lastName , i.type, p.companyName
-            from simulation As s inner join interview As i On s.interviewId = i.id
-            inner join process As p On p.id = i.processId 
-            inner join candidate As c On c.id = p.UserId
-            inner join userproporties As u On u.id = c.id
+            from joboffer As jo inner join job As j On .interviewId = i.id
+            where 
+ USE jobManagerDB;
+select   u.id , u.firstName , p.id As processId  , i.id As interviewId , p.companyName
+from interview As i inner join process As p On i.processId = p.id 
+                    inner join candidate As c On c.id = p.UserId
+                    inner join userproporties As u On  u.id =c.id
+
 USE jobManagerDB;
-            select i.simulationDate , u.firstName , u.lastName , i.type, p.companyName
-            from simulation As s inner join interview As i On s.interviewId = i.id
-            inner join process As p On p.id = i.processId 
-            inner join candidate As c On c.id = p.UserId
-            inner join userproporties As u On u.id = c.id
-            where s.adminId = 200
-SELECT * 
+Delete from  interview 
+where id = 223 ;
+-- nfa.isNotified
+SELECT * 35
 FROM simulation As s INNER JOIN interview As i 
 select s.InterviewId = i.id
         select  p.status
@@ -191,8 +192,8 @@ USE jobManagerDB;
         inner join notificationtype As nt On nt.id = nfa.notificationId
         where  a.id =31 && nt.type1 = 'newInterview' && nt.type2= '${interviewType}'
 USE jobManagerDB;
-Delete from  Process
-where Process.id = 79 ;
+Delete from  interview
+where interview.id = 35 ;
 -- nfa.isNotified
 USE jobManagerDB;
 SELECT *

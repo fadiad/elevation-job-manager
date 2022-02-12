@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import '../../../styles/Admin.css';
-import '../../theme';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -10,20 +8,25 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button } from '@mui/material';
 import AddSulotion from './AddSulotion';
-import  DeleteQuestion from './DeleteQuestion'
-import  EditQuestion from './EditQuestion'
+import DeleteQuestion from './DeleteQuestion'
+import EditQuestion from './EditQuestion';
+import { Grid, Paper, TextField } from '@material-ui/core';
+import Stack from '@mui/material/Stack';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../../theme';
+import '../../../styles/Admin.css';
 class DisplayQuestion extends Component {
     constructor() {
         super();
         this.state = {
             expanded: false,
             idQustion: 1,
-            openSulotionDialog: false ,
-            openEditDialog : false ,
-            openDeleteDialog : false ,
-            title : "",
-            qustion : "" ,
-            solution : ""
+            openSulotionDialog: false,
+            openEditDialog: false,
+            openDeleteDialog: false,
+            title: "",
+            qustion: "",
+            solution: ""
         }
     }
     setOpenSulotionDialog = () => {
@@ -68,6 +71,7 @@ class DisplayQuestion extends Component {
         }
         this.setState({ expanded: isExp })
     };
+    paperStyle = { width: 500, margin: "5px auto" }
 
     render() {
         this.props.adminStore.qustions
@@ -92,56 +96,61 @@ class DisplayQuestion extends Component {
                     </AccordionSummary>
                     {this.props.row.qustion.map((q, index) => {
                         return (
-                            <div className='question'>
-                            <AccordionDetails >
-                                <h2>{index + 1} :</h2>
-                                <Typography >
-                                    <span style={{ color: '#426696' }}>TITLE :</span>
-                                    {q.title}
-                                </Typography>
-                                <br></br>
-                                <Typography>
-                                    <span style={{ color: '#426696' }}>QUESTION :</span>
-                                    {q.qustion} 
-                                </Typography>
-                                <br></br>
-                                <Typography>
-                                    <span style={{ color: '#426696' }}>SOLUTION :</span>
-                                    {q.solution}
-                                </Typography>
-                                <br></br>
-                                <Button onClick={() => { this.setState({ idQustion: q.idQustion, openSulotionDialog: true }) }} >Add Sulotion</Button>
-                                <Button
-                                    onClick={
-                                        () => {
-                                            this.setState(
-                                                {
-                                                    idQustion: q.idQustion,
-                                                    openEditDialog: true ,
-                                                    title :   q.title ,
-                                                    qustion : q.qustion ,
-                                                    solution : q.solution 
-                                                }
-                                            )
-                                        }
-                                    }
-                                >Edit Question</Button>
-                                <Button
-                                    onClick={
-                                        () => {
-                                            this.setState(
-                                                {
-                                                    idQustion: q.idQustion,
-                                                    openDeleteDialog: true
-                                                }
-                                            )
-                                        }
-                                    }
-                                >Delete Question</Button>
-
-
-                            </AccordionDetails>
-                                    </div>
+                            // <div className='question'>
+                            <Grid>
+                                <Paper elevation={10} style={this.paperStyle}>
+                                    <AccordionDetails >
+                                        <Typography >
+                                            <span style={{ color: '#426696' }}>TITLE : </span>
+                                            {q.title}
+                                        </Typography>
+                                        <br></br>
+                                        <Typography>
+                                            <span style={{ color: '#426696' }}>QUESTION : </span>
+                                            {q.qustion}
+                                        </Typography>
+                                        <br></br>
+                                        <Typography>
+                                            <span style={{ color: '#426696' }}>SOLUTION : </span>
+                                            {q.solution}
+                                        </Typography>
+                                        <br></br>
+                                        <Stack  spacing={4} direction="row">
+                                            <ThemeProvider theme={theme}>
+                                                <Button variant="outlined" onClick={() => { this.setState({ idQustion: q.idQustion, openSulotionDialog: true }) }} >Add Solution</Button>
+                                                <Button variant="outlined"
+                                                    onClick={
+                                                        () => {
+                                                            this.setState(
+                                                                {
+                                                                    idQustion: q.idQustion,
+                                                                    openEditDialog: true,
+                                                                    title: q.title,
+                                                                    qustion: q.qustion,
+                                                                    solution: q.solution
+                                                                }
+                                                            )
+                                                        }
+                                                    }
+                                                >Edit Question</Button>
+                                                <Button variant="outlined"
+                                                    onClick={
+                                                        () => {
+                                                            this.setState(
+                                                                {
+                                                                    idQustion: q.idQustion,
+                                                                    openDeleteDialog: true
+                                                                }
+                                                            )
+                                                        }
+                                                    }
+                                                >Delete Question</Button>
+                                            </ThemeProvider>
+                                            </Stack>
+                                    </AccordionDetails>
+                                </Paper>
+                            </Grid>
+                            //</div>
                         )
                     })
                     }
@@ -152,21 +161,21 @@ class DisplayQuestion extends Component {
                     questionId={this.state.idQustion}
 
                     openDeleteDialog={this.state.openDeleteDialog}
-                    setOpenDialog={this.setOpenDeleteDialog }
+                    setOpenDialog={this.setOpenDeleteDialog}
                     setCloseDialog={this.setCloseDeleteDialog}
                 />
                 <EditQuestion
                     questionId={this.state.idQustion}
-                    title =   {this.state.title} 
-                    question = {this.state.qustion} 
-                    solution = {this.state.solution}
+                    title={this.state.title}
+                    question={this.state.qustion}
+                    solution={this.state.solution}
                     openEditDialog={this.state.openEditDialog}
                     setOpenDialog={this.setOpenEditDialog}
                     setCloseDialog={this.setCloseEditDialog}
                 />
 
                 <AddSulotion
-                    solution = {this.state.solution}
+                    solution={this.state.solution}
                     questionId={this.state.idQustion}
                     openSulotionDialog={this.state.openSulotionDialog}
                     setOpenDialog={this.setOpenSulotionDialog}

@@ -9,9 +9,12 @@ class Settings extends Component {
         return(
             <div>
                 <NavBar />
+                <div className='page'>
+                    <h1>Settings</h1>
                 <ChooseNotifications />
                 <AddCohort />
                 <AddAdmin />
+                </div>
             </div>
         );
     }

@@ -32,8 +32,7 @@ class ShowSimulations extends Component {
                 <Dialog
                     onClose={this.handleClose}
                     open={this.props.openDialog}
-                    fullWidth
-                    maxWidth = {'l'}
+                    maxWidth = {'s'}
                     PaperProps={{
                         sx: {
                             maxHeight: "100%"

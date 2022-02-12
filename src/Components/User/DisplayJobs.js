@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 
 import UserNavBar from './UserNavBar'
 import '../../styles/jops.css'
-
+import '../../styles/User.css'
 import {
     Table,
     TableBody,
@@ -26,7 +26,7 @@ class DisplayJobs extends Component {
     }
     async componentDidMount() {
         const jobs = await this.props.userStore.getJobs()
-        
+
         if (jobs !== undefined) {
             for (let i = 0; i < jobs.length; i++) {
                 if (jobs[i].creatingJobDate !== null) {
@@ -43,7 +43,8 @@ class DisplayJobs extends Component {
         return (
             <div  >
                 <UserNavBar />
-                <div className='jobs'>
+                <div className='page'>
+                    <h1>Job Offers</h1>
                     <TableContainer component={Paper} className='TableContainer'>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
 

@@ -18,6 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import Stack from '@mui/material/Stack';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme';
+import '../../../styles/Admin.css';
 export class ChooseNotifications extends Component {
 
     constructor() {
@@ -84,12 +85,12 @@ export class ChooseNotifications extends Component {
             })
         }
     }
-    paperStyle = { width: 280, margin: "0px auto" }
+    paperStyle = { padding: 50, width: 280, margin: "0px auto" }
     btnstyle = { padding: '10px 50px 0px' }
 
     render() {
         return (
-            <div>
+            <div className='page'>
                 <Accordion expanded={this.state.expanded === 'panel1'} onChange={this.handleChange('panel1')}>
 
                     <AccordionSummary
@@ -103,7 +104,7 @@ export class ChooseNotifications extends Component {
                     <AccordionDetails>
                         <Grid>
                             <Paper elevation={10} style={this.paperStyle}>
-                                <Stack spacing={2} direction="row" style={this.btnstyle}>
+                                <Stack spacing={2} direction="row" >
                                     <ThemeProvider theme={theme}>
                                         <Button size="medium" variant="contained" onClick={this.setNotifications}>set</Button>
                                         <Button size="medium" variant="contained" onClick={this.resetNotifications}>reset</Button>

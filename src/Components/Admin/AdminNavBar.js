@@ -74,7 +74,7 @@ class AdminNavBar extends Component {
     }
     logout = () => {
         console.log("entered logout")
-        axios.get("http://localhost:8888/logout", function (res) {
+        axios.get("/logout", function (res) {
             <Redirect to="/" />
         })
         cookie.remove('userID', { path: '/' })
@@ -128,6 +128,7 @@ class AdminNavBar extends Component {
                     </ThemeProvider>
                 </Stack>
             </div>
+
         );
     }
 }
